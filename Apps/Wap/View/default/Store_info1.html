@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <!--<script type="text/javascript" src="/Public/Wap/js/swipe.js"></script>-->
+    <script type="text/javascript" src="/Public/Wap/js/common.js"></script>
+    <script type="text/javascript" src="/Public/Wap/js/web_app.js"></script>
+</head>
+<body>
+<header>
+    <div class="shopL-img">
+        <img src="{$store_info.store_banner}" onerror="this.src='__IMG__/logox2.png'" alt="">
+        <div class="shopL-word" style="background:url('__IMG__/579352f485cf7.jpg') no-repeat;background-size:16rem;">
+            <div class="lt">
+                <div class="imgWarp"><img src="{$store_info['store_label']}" onerror="this.src='__IMG__/logox2.png'" alt=""></div>
+                    <div class="gd">
+                        <if condition="$store_info['grade_id'] eq 2">
+                            <i class="myF icon-pinpai"></i>
+                        </if>
+                        <em>{$user_head.title}</em>
+                    </div>
+
+            </div>
+            <div class="rt">
+                <div class="gzRs left" style="display: none;">149万粉丝</div>
+                <div class="gz right" style="margin-top: .2rem;"><i class="iW2"></i><em style="margin-right: .1rem;">关注</em></div>
+            </div>
+        </div>
+    </div>
+    <div class="shopNav_btu">
+        <ul>
+            <li class="item">
+                <a class="index" data-href="{:U('get_index') . '?id=' . $store_info['store_id']}">
+                    <i class="myF icon-cf-c14"></i>
+                    <p>店铺首页</p>
+                </a>
+            </li>
+            <li class="item">
+                <a class="all" data-href="{:U('goodsList') . '?id=' . $store_info['store_id']}">
+                    <i class="myF icon-ku"></i>
+                    <p>全部商品</p>
+                </a>
+            </li>
+            <li class="item">
+                <a class="brief" data-href="{:U('introduce') . '?id=' . $store_info['store_id']}">
+                    <i class="myF icon-dianpujieshao"></i>
+                    <p>店铺介绍</p>
+                </a>
+            </li>
+            <li class="item">
+                <a class="active" data-href="{:U('active') . '?id=' . $store_info['store_id']}">
+                    <i class="myF icon-liwu"></i>
+                    <p>促销活动</p>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+
+<script type="text/javascript">
+    $(function(){
+        var obj = $('.shopNav_btu').find('li');
+        obj.on('click', function(){
+            obj.removeClass('cur');
+            $(this).addClass('cur');
+            WebApp.get($(this).find('a').data('href'),$('section'));
+        }).eq(0).click();
+        //$('.index').click();
+
+    });
+</script>
+<section></section>
+</body>
+</html>

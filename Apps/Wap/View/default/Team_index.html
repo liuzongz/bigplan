@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+</head>
+<body class="max768">
+<include file="Public:header1" />
+<div class="huiyuan" >
+    <ul class="mc-cnt">
+        <li>
+            <a class="lin sin flex" href="{:U('slist') . '?id=1&store_token='. $store_token}">
+            <div class="step1 flex">
+                <i class="myF icon-v1 lred"></i><em style="width: auto;" class="lred">会员</em>
+            </div>
+            <div class="step2 flex">
+                <span class="singular">{$myteam_v1.team_count}人：{$myteam_v1.order_count}单</span>
+                <span class="singular">赚取佣金：{$myteam_v1.level_amount}元</span>
+            </div>
+            <i class="myF icon-right right"></i>
+        </a>
+        </li>
+        <li> <a class="lin sin flex" href="{:U('slist') . '?id=2&store_token='. $store_token}">
+            <div class="step1 flex">
+                <i class="myF icon-v2 lred"></i><em style="width: auto;" class="lred">会员</em>
+            </div>
+            <div class="step2 flex">
+                <span class="singular">{$myteam_v2.team_count}人：{$myteam_v2.order_count}单</span>
+                <span class="singular">赚取佣金：{$myteam_v2.level_amount}元</span>
+            </div>
+            <i class="myF icon-right right"></i>
+        </a></li>
+        <li> <a class="lin sin flex" href="{:U('slist') . '?id=3&store_token='. $store_token}">
+            <div class="step1 flex">
+                <i class="myF icon-v3 lred"></i><em style="width: auto;" class="lred">会员</em>
+            </div>
+            <div class="step2 flex">
+                <span class="singular">{$myteam_v3.team_count}人：{$myteam_v3.order_count}单</span>
+                <span class="singular">赚取佣金：{$myteam_v3.level_amount}元</span>
+            </div>
+            <i class="myF icon-right right"></i>
+        </a></li>
+    </ul>
+    <div class="fenxian" ><a href="{:get_server('WAP_SERVER', '/Index/share', [C('store_token_name')=>$store_token,'rec'=>AesEnCrypt($user_info['user_id'])], 1)}" >分享二维码，赚取佣金</a></div>
+</div>
+</body>
+</html>

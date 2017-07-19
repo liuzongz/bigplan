@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .ad{height: 4rem;background-color: #f1731e;text-align: center;color: white;}
+        .ad .num{width:50%;}
+        .ad .num a{color:#fff;}
+        .ad .p1{padding-top:.6rem;}
+        .ad .p2{font-size: 1.5rem;}
+        .kp-tell{border-bottom: 1px solid #ccc;}
+        .kp-tell .w1{color:#de1a00;line-height: 1.5rem;padding:0 .2rem;}
+        .kp-tell .w2{line-height: 1.5rem;text-align: center;width:4rem;display: flex;display: -webkit-flex; color: #959595;}
+        .kp-tell .w2 i{font-size: .8rem;margin-left: .2rem;}
+        .kp-tell-word{padding: .2rem;}
+        .nav-tab-top1 ul{display: -webkit-box;display: -moz-box;display: -ms-box;display: -o-box;display: box;background: #fff;border-bottom: 1px solid #ccc;}
+        .nav-tab-top1 ul .cur{border-bottom: .1rem solid #ff6600;box-sizing: border-box;color: #ff6600;}
+        .nav-tab-top1 ul li { -webkit-box-flex: 1;-moz-box-flex: 1;-ms-box-flex: 1;-o-box-flex: 1;box-flex: 1; height: 2rem;line-height: 2rem;position: relative;text-align: center;}
+        .nav-tab-top1 ul li.cur a{display: block;color: #ff9600}
+        .nav-tab-top1 ul li a{display: block;color: #6d6d6d;}
+        .kpoption{padding: .6rem;}
+        .kpoption li{width: 50%;float: left;height: 1.65rem;padding: .4rem 0 .4rem 0; display: flex;display: -webkit-flex;}
+        .kpoption li a{display: flex;display: -webkit-flex;}
+        .kpoption li .juroud{width: 1.65rem;height: 1.65rem;border-radius: .5rem;background-color: red; line-height: 1.65rem;text-align: center;}
+        .kpoption li .juroud i{color: white;}
+        .kpoption li .jutext{margin-left: .3rem; height: 1.65rem;line-height: .8rem; -webkit-box-flex: 1;webkit-flex: 1;flex: 1;}
+        .kpoption li .jutext .sp1{font-size: .7rem;}
+        .kpoption li .jutext .sp2{}
+        .kpoption li .jutext .sp3{font-size: .4rem;color:#959595; }
+        .kpoption li .jutext1{line-height: 1.65rem;margin-left: .3rem;}
+        .hide p{line-height: 1.2rem;}
+        .xianxi{ line-height: 1.5rem;text-align: center;color: #ccc;border-bottom: 1px solid #ccc;}
+        .table2 tr.bor1 td{border-bottom: 1px solid #CCC;line-height:1.5rem;}
+        .table2 table{text-align: center;color: #000000;}
+        .table2 .jihuo a{background: #ff6600;color: #fff;padding:.1rem .2rem;border-radius: .1rem;}
+        .pagination{text-align: center;margin: 10px 0 10px;}
+        .pagination li{display:inline;margin:0 2px;}
+        .pagination li span,.pagination li a{padding:3px 4px;background:#fff;}
+        .pagination li span{color:#999;}
+        .pagination li a{border:1px solid #e2e2e2;}
+        .pagination li a span{color:#333;}
+        .mt30{margin-top: 30px}
+    </style>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="ad">
+    <div class="num left">
+        <a href="{:U('getkp')}">
+        <p class="p1">当前KP点</p>
+        <p class="p2">{$user_info.consume_total}</p>
+        </a>
+    </div>
+    <div class="num left">
+        <p class="p1">{$_CFG['integral_name']}余额</p>
+        <p class="p2">{$user_integral}</p>
+    </div>
+</div>
+<div class="kp-tell">
+    <div class="flex-wrap">
+        <div class="flex-con w1">
+            {$_CFG['integral_name']}返利规则须知及享受服务:
+        </div>
+        <div class="w2">
+            查看详情 <i style="font-size: .8rem;" class="myF icon-down"></i>
+        </div>
+    </div>
+    <p class="kp-tell-word none">
+        1、KP券激活成功后，将按不同额度的KP券发放红包。</br>
+        2、法定节假日不发放红包。</br>
+        3、激活后的KP券可以兑换成等额{$_CFG['integral_name']}。</br>
+        4、{$_CFG['integral_name']}可在商城兑换商品，需支付运费。</br>
+        5、当日KP券红包会在次日0点5分拨出。</br>
+        6、红包满100元可提取为商城余额，提取将收取<!--{$trouble}-->8%的手续费。</br>
+        7、商城余额可在商城购物或满100元申请提现转入您的支付宝。</br>
+    </p>
+</div>
+<div class="nav-tab-top1">
+    <ul>
+        <volist name="kp_type" id="type">
+            <li><a <if condition="$type['id'] eq $kp_info['id']"> class="cur" </if> href="{:U('Rebate/index') .                     '?id=' . $type['id']}" >{$type.nickname}</a></li>
+        </volist>
+    </ul>
+</div>
+<ul class="kpoption clearfix">
+    <li id="JS_getBrok">
+        <div class="juroud" style="background-color: #f4674c;"><i class="myF icon-tixian"></i></div>
+        <div class="jutext">
+            <span class="sp1">提取</span><span id="brok" class="sp2">￥0.00</span>
+            <p class="sp3">可提现金</p>
+        </div>
+    </li>
+    <li id="JS_getCash">
+        <div class="juroud" style="background-color: #6ca8f1;"><i class="myF icon-164duihuanquan-copy"></i></div>
+            <div class="jutext">
+            <span class="sp1">提取</span><span  id="cash">￥{$hkhp_cash}</span>
+            <p class="sp3">可用商城余额</p>
+            </div>
+    </li>
+    <li>
+        <a href="{:U('active')}">
+            <div class="juroud" style="background-color: #877be7;"><i class="myF icon-qianbao1"></i></div>
+            <div class="jutext1">
+                激活KP劵
+            </div>
+        </a>
+    </li>
+    <li>
+        <a  href="{:U('getkp')}" >
+            <div class="juroud" style="background-color: #81cb5c;"><i class="myF icon-zhuanrangzhuanqujihuo01"></i></div>
+            <div class="jutext1">
+                领取KP劵
+        </div>
+        </a>
+    </li>
+    <if condition="$is_admin">
+        <li>
+            <a href="{:U('query_kp')}">
+                <div class="juroud" style="background-color: #c87dc7;"><i class="myF icon-xitongguanli"></i></div>
+                <div class="jutext1">
+                    管理查询
+                </div>
+            </a>
+        </li>
+    </if>
+</ul>
+<div class="kp-zi">
+    <div class="flex-wrap">
+        <div class="flex-con" style="text-align: center;">
+            {:date('Y-m-d',$six_brok[0]['brok_time'])}返现：
+        </div>
+        <div class="flex-con" style="text-align: center;">
+            <span class="qian"  style="color:red;">{$six_brok[0]['three']}元</span>
+        </div>
+    </div>
+
+    <div class="hide none">
+        <volist name="six_brok" id="brok">
+            <p class="flex-wrap" style="text-align: center;">
+                <em class="flex-con">{:date('Y-m-d',$brok['brok_time'])}</em>
+                <em class="flex-con" style="color:red;">{$brok.three}元</em>
+            </p>
+        </volist>
+    </div>
+    <div class="xianxi" style="">
+        <em class="shouqi">查看近6天返现</em><i style="font-size: .8rem;" class="myF icon-down"></i></span>
+    </div>
+</div>
+<div class="table2">
+    <table width="100%" border="0">
+        <tbody>
+        <tr class="bor1">
+            <td >券号</td>
+            <td>状态</td>
+            <td>激活时间</td>
+            <td >{$_CFG['integral_name']}兑换</td>
+        </tr>
+        <volist name="kp_list" id="list" empty="$kp_empty">
+            <tr class="bor">
+                <td>{$list.number}</td>
+                <td>{$list.status_name}</td>
+                <td>{:date('Y-m-d',$list['receivetime'])}</td>
+                <td class="jihuo">
+                    <if condition="$list.status eq 1">
+                        <a href="javascript:void(0);" class="convert" data-id="{$list.id}">兑换</a>
+                    </if>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="pagination mtdd">
+    {$page}
+</div>
+<script>
+    $(function(){
+        $('.convert').on('click', function(){
+            var $id = $(this).data('id');
+            if (confirm('确认要兑换{$_CFG.integral_name}吗？兑换后只能在本平台兑物物品，且不能撤销操作！')) {
+                var result = function($result){
+                    alert($result.msg);
+                    if ($result.error == 200) {
+                        location.reload();
+                    }
+                };
+                Jiniu.ajax('{$url.kp_covert}','id=' + $id,result,'POST','JSON');
+            }
+        });
+        $('.w2').click(function() {
+            $('.kp-tell-word').toggleClass('none');
+            if($('.w2 i').hasClass('icon-down') == true){
+                $('.w2 i').removeClass('icon-down').addClass('icon-up');
+            }else $('.w2 i').removeClass('icon-up').addClass('icon-down');
+        })
+
+        $(".xianxi").on('click', function(){
+            $('.hide').toggleClass('none');
+            if($('.xianxi i').hasClass('icon-down') == true){
+                $('.xianxi i').removeClass('icon-down').addClass('icon-up');
+                $('.shouqi').text('收起');
+            }else {
+                $('.xianxi i').removeClass('icon-up').addClass('icon-down');
+                $('.shouqi').text('查看近6天返现基率');
+            };
+        });
+        var get_brok = function(ex){
+                    if (ex.error == 200) {
+                        $('#brok').text('￥' + ex.data.brok);
+                    }
+                },
+                set_brok = function (ex){
+                    if (ex.error == 201) {
+                        if (confirm(ex.msg)) {
+                            brok_ajax('',1);
+                        }
+                    } else  {
+                        if (ex.error == 200) {
+                            $('#cash').text(ex.data);
+                            $('#brok').text('￥0.00');
+                        }
+                        alert(ex.msg);
+                    }
+                },
+                set_cash = function(ex){
+                    if (ex.error == 201) {
+                        if (confirm(ex.msg)) {
+                            cash_ajax('',1);
+                        }
+                    } else if (ex.error == 202) {
+                        $('#cash').text('￥0.00');
+                        if (confirm(ex.msg)) {
+                            location.href = ex.data.url;
+                        }
+                    } else  {
+                        if (ex.error == 200) {
+                            $('#cash').text(ex.data);
+                            $('#brok').text('￥0.00');
+                        }
+                        alert(ex.msg);
+                    }
+                },
+                brok_ajax = function(ex,up) {
+                    up = (up == 1 ? 1 : 0);
+                    Jiniu.ajax('{$url.set_brok}&up=' + up,'',set_brok,'get','json');
+                },
+                cash_ajax = function(ex,up){
+                    up = (up == 1 ? 1 : 0);
+                    Jiniu.ajax('{$url.set_cash}&up=' + up,'',set_cash,'get','json');
+                };
+        Jiniu.ajax('{$url.get_brok}','',get_brok,'get','json');
+        $('#JS_getBrok').on('click',brok_ajax);
+        $('#JS_getCash').on('click',cash_ajax);  //
+    });
+</script>
+</body>
+</html>

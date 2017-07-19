@@ -1,0 +1,25 @@
+<div class="table_box confirmPage receipt_box ">
+    <div class="box_title">
+        <span class="left">发票</span>
+        <span class="right">
+            <input type="radio" name="receipt" class="receipt o-t-cb" id="JS_receipt_Enable" value="1" /> <label for="JS_receipt_Enable">使用</label>
+            <input type="radio" name="receipt" class="receipt o-t-cb" id="JS_receipt_Disable" checked value="0" /> <label for="JS_receipt_Disable">不使用</label>
+        </span>
+    </div>
+    <div class="box_content none">
+        <ul class="list">
+            <li class="item">
+                <div class="t left">发票类型</div>
+                <div class="c left"><select name="receipt_type" class="receipt_type"><volist name="invoice.invoice_type" id="inv"><option value="{$inv.rate}">{$inv.type}</option></volist></select></div>
+            </li>
+            <li class="item">
+                <div class="t left">发票内容</div>
+                <div class="c left"><select name="receipt_content" class="receipt_content"><volist name="invoice.invoice_content" id="inv"><option value="{$inv}">{$inv}</option></volist></select></div>
+            </li>
+            <li class="item">
+                <div class="t left">发票抬头</div>
+                <div class="c left"><input class="input_text receipt_title" type="text" name="receipt_title" /></div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>邀请有礼</title>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .flex{
+            display: flex;display: -webkit-flex;
+        }
+        .hongbao{width: 4.2rem;height: 6.6rem;margin-left: 1.28rem;padding: .4rem  .2rem 0 .2rem; line-height: 1.3; background:url("__IMG__/hongbao_01.png") center center no-repeat;  background-size: 4.6rem 7rem;font-size: 10px;color: #396ea2;  }
+        .rule{  width: 9.6rem;height: 7.1rem;padding: 0 .5rem;box-sizing: border-box;  align-items: center;-webkit-align-items: center;    line-height: 1.2;  justify-content: center;-webkit-justify-content: center;  font-size: 1em; color:#fff;  }
+        .btn{  width: 16rem; height:2rem;margin: 1.6rem 0;  align-items: center;-webkit-align-items: center;  justify-content: center;-webkit-justify-content: center;  background: url("__IMG__/btn_001.png") no-repeat center center;  background-size:14.88rem 2rem ;font-size: .65rem; color: #561706;  }
+        .myInvite{  position: relative;  width: 14.72rem;height: 6.3rem;margin: 0 auto;  align-items: center;-webkit-align-items: center;  justify-content: space-around;-webkit-justify-content: space-around;  background:url("__IMG__/yaoqing_01.png") no-repeat center center;  background-size: 14.72rem 6.3rem;color: #396ea2;font-size: 1.2em;  }
+        .myInvite .title{  position: absolute;top:.1rem;left:0;width: 100%;text-align: center; color: white;  }
+        .s-co{  color: #396ea2;  align-items: center;-webkit-align-items: center;  }
+        .s-co em{  background-color: #93bbe4;color: #fff;  padding: .15rem .3rem;border-radius: .5rem;  }
+        .tail{  line-height: 2.4rem;align-items: center;-webkit-align-items: center;  justify-content: center;-webkit-justify-content: center;  color: white;font-size: 1.1em;  }
+        .tail i{  width: 1.8rem;height: .1rem;display: block;  background: url("__IMG__/icon-line.png") no-repeat center center;  background-size: 1.8rem .05rem;  }
+        .stratum{  position: fixed;top:0;z-index: 99;  width: 16rem;height: 100%;background:rgba(0,0,0,.6);  }
+        .stratum .st-right{  position: absolute;right: 0;top:0;  width: 4.8rem;height:5.1rem;  background: url('__IMG__/toumin_tell.png') no-repeat center center;  background-size: 4.8rem 5.1rem;  }
+        .stratum .close-tell{  position: absolute;top:70%;  width: 16rem;letter-spacing: .1rem;  text-align: center;  color: white;font-size: 1.3em;  }
+    </style>
+</head>
+<body style="background-color: #396ea2;">
+<img style="width: 100%;" src="__IMG__/initve_01_01.jpg" alt="">
+<div class="flex" style="width: 16rem;">
+    <div class="hongbao">每邀请一个好友成功购买套餐,  即可领取20%现金红包</div>
+    <div class="rule flex">
+        1.点击下方按钮"立即邀请,拿奖励"打开活动页面;<br /><br />
+        2,将打开页面转发给好友;<br /><br />
+        3,好友通过活动页面进行注册
+    </div>
+</div>
+<if condition="$is_login">
+    <div  class="btn flex" onclick="$('.stratum').show();">立即邀请, 拿奖励</div>
+    <else/>
+    <a href="{$qr_url}" class="btn flex">打开二维码,扫描注册</a>
+</if>
+
+<div class="myInvite flex">
+    <if condition="$is_login">
+        <div class="title">我的分享</div>
+        <div>已邀请<em style="color:red;">{$invite_total}</em>人</div>
+        <div>赚取佣金<em style="color:red;">0</em>元</div>
+        <else/>
+        <div class="title">注册即领</div>
+        <div class="s-co flex"><em>不同行业经典案例</em>+<em>多种营销工具</em></div>
+    </if>
+</div>
+<if condition="$is_login">
+<a href="{$share_url}" class="btn flex">我的专属名片</a>
+</if>
+<div class="tail flex">
+    <i class="line" style="margin-right: .2rem;"></i>即牛  专业高效的拓客神器<i style="margin-left: .2rem;" class="line"></i></div>
+<div class="stratum none" >
+    <div class="st-right"></div>
+    <div class="close-tell" onclick="$('.stratum').hide();">我知道了</div>
+</div>
+</body>
+</html>
+

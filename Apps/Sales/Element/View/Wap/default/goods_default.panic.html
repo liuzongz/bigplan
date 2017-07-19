@@ -1,0 +1,136 @@
+<php>if($_activity->goods->data['act_starttime'] <= time()):</php>
+    <div class="pBuyg b5">
+        <div class="PanicPrice">
+            <div class="panicInt">
+                <em style="font-size: 1rem;">¥</em><em>{$_activity->price()->RMB}</em>
+            </div>
+            <div class="panicTime">
+                    <span class="opt5">
+                        <php> if(intval($_activity->goods->data['market_price']) != 0): </php>
+                        <del>¥{$_activity->goods->data['market_price']|price_format}</del>
+                        <php> endif;</php>
+                    </span>
+                <span class="timeOut2">已抢{$_activity->dataOfOrder|count}件</span>
+            </div>
+        </div>
+        <div class="layOutTime">
+            <div class="before_layOutTime bicon">
+                <div class="t5">已抢<em id="buyN">{$_activity->dataOfOrder|count}</em>/<em id="all">{$_activity->config['num']['value']}</em>件</div>
+                <div class="residualTime">
+                    <!--<progress value="33" max="100"></progress>-->
+                    <div class="bem5">
+                        <div id="w1" class="bbem1"></div>
+                        <div id="pen"  class="pen"></div>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $(function(){
+                                var buyN = $('#buyN').text();
+                                var all = $('#all').text();
+                                var pen = ((buyN/all)*100);
+                                var w1 = 4.5*(buyN/all);
+                                var w1Rem = w1 + 'rem';
+                                $('#w1').css('width',w1Rem);
+                                $('#pen').text("已抢" + pen.toFixed(2)+ "%");
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div> <!--限量秒杀中-->
+<php>else :</php>
+
+    <div class="pBuyg b4">
+        <div class="PanicPrice">
+            <div class="panicInt">
+                <em style="font-size: 1rem;">¥</em><em>{$_activity->price()->RMB}</em>
+            </div>
+            <div class="panicTime">
+
+                    <span class="opt4">
+                        <php> if(intval($_activity->goods->data['market_price']) != 0): </php>
+                        <del>¥{$_activity->goods->data['market_price']|price_format}</del>
+                        <php> endif;</php>
+                    </span>
+                <span class="timeOut4"><em id="timeDay"></em>开始</span>
+            </div>
+        </div>
+        <div class="layOutTime">
+            <div class="before_layOutTime">
+                <div class="t4">距离开抢还有</div>
+                <div class="residualTime">
+                    <em class="bem4 timeH">12</em><i class="bemi4">:</i>
+                    <em class="bem4 timeM">33</em><i class="bemi4">:</i>
+                    <em class="bem4 timeS">22</em><i class="bemi4">:</i>
+                    <em class="bem4 timeW">22</em>
+                </div>
+            </div>
+        </div>
+    </div> <!--限量开枪前-->
+
+<script>
+
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+    $(function getRTime(){
+        var now_time = new Date().getTime();
+        var act_endtime = "{$_activity->goods->data['act_starttime']}";//活动开始时间
+        var end_time = act_endtime * 1000;
+        var h ,m,s ,w;
+        var t = end_time - now_time;
+        h = checkTime(Math.floor(t / 1000 / 60 / 60));
+        m = checkTime(Math.floor(t / 1000 / 60 % 60));
+        s = checkTime(Math.floor(t / 1000 % 60));
+        w = checkTime(Math.floor(t / 10 % 100));
+        var dayT = Math.floor(t /(3600*24*1000));
+        var dayH = checkTime(Math.floor(((act_endtime +8*3600) %86400)/3600));
+        var dayM = checkTime(Math.floor((((act_endtime +8*3600) %86400)/60)%60));
+        var dayData = new Date(end_time);
+        var day=checkTime(dayData.getDate());
+        var month=checkTime(dayData.getMonth()+1);
+        if(dayT == 0) {
+            $('#timeDay').text('今天'+ dayH+':'+dayM + '点');
+        }
+        else if(dayT == 1){
+            $('#timeDay').text('明天' + dayH+':'+dayM + '点');
+        }else{
+            $('#timeDay').text(month + '月' + day + '日' + dayH+':'+dayM + '点');
+        }
+        if (t > 0) {
+            $('.timeH').text(h);
+            $('.timeM').text(m);
+            $('.timeS').text(s);
+            $('.timeW').text(w);
+        }else if(t <= 0){
+            $('.timeH').text('00');
+            $('.timeM').text('00');
+            $('.timeS').text('00');
+            $('.timeW').text('00');
+        }
+        setTimeout(getRTime,10);
+    });
+
+
+</script>
+
+<php>endIf;</php>
+
+<div class="salesVolume">
+    <div class="longName">{$_activity->goods->data['goods_name']}</div>
+    <div class="salesNum"><em>月销{$_activity->goods->data['sale_count']}笔</em></div>
+</div>  <!--商品名字以及销量   折扣和限时限样式-->
+<div class="activityName">
+    <!--<include file="Goods:price" />-->
+    <div class="n1"><img src="{:echo_img($_activity->data['act_image'])}" alt=""></div>
+    <div class="n2">{$_activity->goods->data['act_name']}</div>
+</div>  <!--活动名称介绍  折扣和限时限样式 -->
+<ul>
+    <li class="sty8 ">
+        <div class="warpHv"><i class="icon03 myF icon-yes"></i><em>官方认证</em><i class="icon03 myF icon-yes"></i><em>担保交易</em><i class="icon03 myF icon-yes"></i><em>线下体验店</em></div>
+    </li>
+</ul>

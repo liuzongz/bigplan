@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head>
+    <title></title>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .fenxian_img img{display: block;width: 100%;height: auto}
+        .lie{margin-top: 20px}
+        .lie li a{background: #ffffff;height:29px;margin-bottom: 15px;overflow: hidden;text-overflow: ellipsis;  white-space: nowrap;padding: 10px 0 10px 5px;}
+        .lie li.cli a{color: #f3730b}
+        .lie .empty{margin: 100px 0;text-align:center;}
+        .page{height:46px;line-height:46px;}
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+<div class="fenxian_img">
+    <img src="__IMG__/fenxian.jpg" />
+</div>
+<ul class="lie">
+    <volist name="share_list.list" id="list" empty="$empty_share">
+    <li class="cli" style="padding: 10px">
+        <p>
+            <a href="{$list.url}">{$list.title}</a>
+            <span style="text-align: right;float:right;">{$list.add_time}</span>
+            <div style="height:0;clear: both"></div>
+        </p>
+        <p class="description">{$list.description}</p>
+    </li>
+    </volist>
+</ul>
+<div class="page">
+    {$share_list.show}
+</div>
+</body>
+</html>

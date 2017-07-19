@@ -1,0 +1,32 @@
+<div class="backKp_xq">
+    <div class="upName_pcire">
+        <div class="ato1">
+            <i class="yuanF">返</i>
+            <php>if($_activity->config['kp']['value'] > 0):</php>
+                <em style="font-size: 1.5rem;">{$_activity->config['kp']['value']}</em>
+            <php>else:</php>
+                <em style="font-size: 1.5rem;">{$_activity->price()->RMB}</em>
+            <php>endif;</php>
+            <em style="font-size: .7rem;">kp点</em>
+        </div>
+        <div class="ato2">
+            <div class="upName">{$_activity->goods->data['goods_name']}
+                <php>if($_activity->goods->data['goods_short_name'] != ''):</php>
+                <em>[{$_activity->goods->data['goods_short_name']}]</em>
+                <php>endif;</php>
+            </div>
+            <div class="doPic">
+                <em style="font-size: .7rem;margin-right: .2rem;">¥{$_activity->price()->RMB}</em>
+                <php> if(intval($_activity->goods->data['market_price']) != 0): </php>
+                    <del style="font-size: .4rem;margin-right: .2rem;">原价：¥{$_activity->goods->data['market_price']|price_format}</del>
+                <php> endif;</php>
+                <em style="font-size: .6rem;float: right;">销量{$_activity->goods->data['sale_count']}笔</em>
+            </div>
+        </div>
+    </div>
+    <div class="tell_icon">
+        <div class="text1"><i class="icon03 myF icon-yes"></i><em>官方认证</em></div>
+        <div class="text2"><i class="icon03 myF icon-yes"></i><em>担保交易</em></div>
+        <div class="text3"><i class="icon03 myF icon-yes"></i><em>线下体验店</em></div>
+    </div>
+</div> <!--KP商品  名称已经价格 认证-->

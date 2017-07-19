@@ -1,0 +1,20 @@
+<li class="comImg">
+    <div class="bgHot none"><img src="__IMG__/hot.png" alt=""></div>
+    <a href="{$ll.url}">
+        <img src="{:echo_img($ll['goods_thumb'])}" />
+    </a>
+    <p class="">
+        <a class="sN_change" href="{$ll.url}">
+            {$ll.goods_name}
+        </a>
+    </p>
+    <div class="buy">
+        <!--<div class="moreTime">-->
+            <!--&lt;!&ndash;<div class="left"><del class="delSt">¥&lt;!&ndash;{$ll.stock_price}&ndash;&gt;129</del></div>&ndash;&gt;-->
+        <!--</div>-->
+        <div class="buyRMB">
+            <div class="left"><em class="danW">¥</em><em class="price">{$ll['deposit_price']?$ll['deposit_price']:$ll['goods_price_format']}</em></div>
+            <!--<div class="right">已售33件</div>-->
+        </div>
+    </div>
+</li>

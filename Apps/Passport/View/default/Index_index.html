@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>微品</title>
+    <meta name="keywords" content="微品" />
+    <meta name="description" content="微品" />
+    <meta http-equiv="MSThemeCompatible" content="Yes" />
+    <link rel="shortcut icon" href="__IMG__/jiniu.ico" />
+    <link rel="stylesheet" href="__CSS__/style.css" />
+    <link rel="stylesheet" href="__CSS__/swiper.min.css" />
+    <script src="__JS__/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="__JS__/swiper.min.js" type="text/javascript"></script>
+    <script src="__JS__/index.js" type="text/javascript"></script>
+</head>
+<body>
+<include file="Public:header" />
+<!--横幅滚动开始-->
+<div class="swiper-container swiper-container1">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="__IMG__/j_2.jpg" /> </div>
+        <div class="swiper-slide"><img src="__IMG__/j_2.jpg" /> </div>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<div class="content">
+    <div class="c-width">
+        <div class="con-letf">
+            <img class="c-mt" src="__IMG__/1_27.png" />
+            <img class="c-mt" src="__IMG__/1_37.png" />
+            <img class="c-mt" src="__IMG__/1_47.png" />
+        </div>
+        <div class="con-right">
+            <div class="swiper-container swiper-container2">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="__IMG__/1_03.jpg" /> </div>
+                    <div class="swiper-slide"><img src="__IMG__/1_03.jpg" /> </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="news">
+                <h4><a href="{:U('index/article_cat?id=11')}">新闻中心</a></h4>
+                <volist name="article_list" id="list">
+                <dl>
+                    <dt>
+                        <a href="{$list.url}" target="_blank">
+                            <img src="http://img1.gtimg.com/edu/pics/hv1/82/90/1740/113166532.jpg" width="90" height="60" alt="{$list.title}">
+                        </a>
+                    </dt>
+                    <dd><a href="{$list.url}" target="_blank">[ {$list.cat_name} ] {$list.title}</a></dd>
+                </dl>
+                </volist>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!--底部开始-->
+<include file="Public:footer" />
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <include file="Public:head2" />
+</head>
+<body>
+<style type="text/css">
+    .order_show{height:auto;overflow:hidden;}
+    .order_show .icon{height:5rem;background:url('__IMG__/submit.png') no-repeat center center;background-size:5rem;}
+    .order_show .info{padding: 0 .2rem;}
+    .order_show .info .r1{font-size:.8rem;font-weight:bold;text-align:center;}
+    .order_show .info .r2{color:#999;margin-top:1rem;}
+    .order_show .info .r3{margin-top:1rem;}
+    .order_show .info .r3 li.item{height:auto;overflow:hidden;zoom:1;padding:.1rem 0;}
+    .order_show .info .r3 .t{display:block;float:left;width:3.5rem;color:#666;}
+    .order_show .info .r3 .t2{width:5rem;}
+    .order_show .info .r3 .c{display:block;float:left;width:11.5rem;}
+    .order_show .info .r3 .c2{width:10rem;}
+    .order_show .info .r3 .c1{width:4rem;}
+    .order_pay{margin:0 auto;padding: .4rem;}
+    .order_pay ul.list{zoom:1;height:auto;overflow:hidden;padding:.5rem;}
+    /*.order_pay ul.list li.item{background:#efefef;border:1px solid #e2e2e2;width:6rem;height:2rem;*//*float:left;*//*text-align:center;line-height:2rem;margin:.5rem;}
+    .order_pay ul.list li.item.current{border-color:red;background:url('__IMG__/d_ture.gif') no-repeat right bottom #efefef}*/
+    .order_pay ul.list li.item{border-bottom:1px solid #e2e2e2;height:2rem;}
+    .order_pay ul.list li.item img{max-height:1.5rem; max-width: 2rem}
+    .order_pay ul.list li.item .img{display: inline-block;height: 1.5rem; width: 2rem;text-align: center;}
+    .order_pay ul.list li.item .name{display: inline-block;height: 1.5rem;position: absolute;top: .3rem;}
+    .order_pay ul.list li.item label{margin-top:.5rem;position: relative;display:block;}
+    .order_pay ul.list li.item input[type='radio']:checked{background-image:url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMzRweCIgaGVpZ2h0PSIzNXB4IiB2aWV3Qm94PSIwIDAgMzQgMzUiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+T3ZhbCAyIENvcHkgMjwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSJ2MC40IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4gICAgICAgIDxnIGlkPSIxLTEtSDVf5re35ZCI5pSv5LuYX+S9memineS4ujAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02ODcuMDAwMDAwLCAtODA1LjAwMDAwMCkiIGZpbGw9IiM0REQ5NjYiPiAgICAgICAgICAgIDxnIGlkPSLnrKzkuInmlrnmlK/ku5giIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjAwMDAwMCwgNzA2LjA4MjAzMSkiPiAgICAgICAgICAgICAgICA8ZyBpZD0i5b6u5L+hIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxLjAwMDAwMCwgNjYuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNzE5LjE1ODI2Nyw0Mi4yOTYwNzk1IEM3MjAuMzM1OTgyLDQ0LjYwODc0ODkgNzIxLDQ3LjIyNjgyOTYgNzIxLDUwIEM3MjEsNTkuMzg4ODQwNyA3MTMuMzg4ODQxLDY3IDcwNCw2NyBDNjk0LjYxMTE1OSw2NyA2ODcsNTkuMzg4ODQwNyA2ODcsNTAgQzY4Nyw0MC42MTExNTkzIDY5NC42MTExNTksMzMgNzA0LDMzIEM3MDkuMTY1NzA4LDMzIDcxMy43OTMyODMsMzUuMzA0MDIxNiA3MTYuOTExMTM5LDM4Ljk0MDQ3OSBMNzAyLjIwMzk5Nyw1My4wMTAxMTg1IEw2OTYuOTk5NzIzLDQ3LjgwNTg0NDcgTDY5NC4xOTAxMiw1MC42MTU0NDc2IEw3MDIuMjAzOTk3LDU4LjYyOTMyNDUgTDcxOS4xNTgyNjcsNDIuMjk2MDc5NSBaIiBpZD0iT3ZhbC0yLUNvcHktMiI+PC9wYXRoPiAgICAgICAgICAgICAgICA8L2c+ICAgICAgICAgICAgPC9nPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+');}
+    .order_pay ul.list li.item input[type='radio']{background-image:url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMzRweCIgaGVpZ2h0PSIzNXB4IiB2aWV3Qm94PSIwIDAgMzQgMzUiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+T3ZhbCAyIENvcHkgNDwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSJ2MC40IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4gICAgICAgIDxnIGlkPSIxLTEtSDVf5re35ZCI5pSv5LuYX+S9memineS4ujAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02ODcuMDAwMDAwLCAtOTA1LjAwMDAwMCkiIGZpbGw9IiNFQ0VDRUMiPiAgICAgICAgICAgIDxnIGlkPSLnrKzkuInmlrnmlK/ku5giIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xLjAwMDAwMCwgNzA2LjA4MjAzMSkiPiAgICAgICAgICAgICAgICA8ZyBpZD0icXHpkrHljIUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuMDAwMDAwLCAxNjYuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNzE5LjE1ODI2Nyw0Mi4yOTYwNzk1IEM3MjAuMzM1OTgyLDQ0LjYwODc0ODkgNzIxLDQ3LjIyNjgyOTYgNzIxLDUwIEM3MjEsNTkuMzg4ODQwNyA3MTMuMzg4ODQxLDY3IDcwNCw2NyBDNjk0LjYxMTE1OSw2NyA2ODcsNTkuMzg4ODQwNyA2ODcsNTAgQzY4Nyw0MC42MTExNTkzIDY5NC42MTExNTksMzMgNzA0LDMzIEM3MDkuMTY1NzA4LDMzIDcxMy43OTMyODMsMzUuMzA0MDIxNiA3MTYuOTExMTM5LDM4Ljk0MDQ3OSBMNzAyLjIwMzk5Nyw1My4wMTAxMTg1IEw2OTYuOTk5NzIzLDQ3LjgwNTg0NDcgTDY5NC4xOTAxMiw1MC42MTU0NDc2IEw3MDIuMjAzOTk3LDU4LjYyOTMyNDUgTDcxOS4xNTgyNjcsNDIuMjk2MDc5NSBaIiBpZD0iT3ZhbC0yLUNvcHktNCI+PC9wYXRoPiAgICAgICAgICAgICAgICA8L2c+ICAgICAgICAgICAgPC9nPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+');height:1rem;width:1rem;background-size:1rem;position: relative;margin-top:.3rem;}
+    .pay_btn{text-align:center;margin-bottom:1rem;}
+    .pay_btn .c-btn-oran-big{margin:0 auto;}
+    .c-btn-oran-big{width:90%;padding:.5rem;background:#AD0909;border:0;color:#fff;font-size:.6rem;}
+</style>
+<div class="main">
+    <include file="Public:header1" />
+    <div class="codeer">
+        <form action="{:strtolower($url['orderfrm_sub'])}" name="orderfrm" class="orderfrm" id="JS_orderfrm" method="post">
+            <input type="hidden" name="form_token" value="{$form_token}" />
+            <div class="order_show table_box confirmPage">
+                <div class="icon"></div>
+                <div class="info">
+                    <div class="r1">订单提交成功，请及时付款！</div>
+                    <div class="r2">为了保证及时处理您的订单，请于下单24小时内完成付款，若逾期未付款订单将被取消，需要重新下单</div>
+                    <div class="r3">
+                        <ul class="list">
+                            <li class="item"><span class="t">订 单   号：</span><span class="c red">{$order_info.order_sn}</span></li>
+                            <li class="item">
+                                <span class="t t1">商品数量：</span>
+                                <span class="c c1">{$order_info.goods_number}件</span>
+                                <if condition="$order_info.order_integral gt 0">
+                                <span class="t t1">使用{$_CFG.integral_name}：</span>
+                                <span class="c c1">{$order_info.order_integral}</span>
+                                </if>
+                            </li>
+                            <li class="item"><span class="t">订单金额：</span><span class="c rmb">{$order_info.order_amount} 元 </span></li>
+                            <li class="item"><span class="t">支付金额：</span><span class="c red rmb">{$order_info.pay_fee} 元 (在线支付)</span></li>
+                            <li class="item">
+                                <span class="t">配　　送：</span>
+                                <span class="c">
+                                    {$order_info.consignee} /
+                                    {$order_info.mobile} /
+                                    {$order_info.country_name}
+                                    {$order_info.province_name}
+                                    {$order_info.city_name}
+                                    {$order_info.district_name}
+                                    {$order_info.address} /
+                                    {$order_info.besttime_title} /
+                                    个人
+                                    <a href="#" class="none">修改地址</a>
+                                </span>
+                            </li>
+                            <li class="item">
+                                <span class="t t2">剩余付款时间：</span>
+                                <span class="t c2">
+                                    <span class="order_timeout K_Widget orange" data-widget_type="CountDown" data-widget_config="{'time':'<?php echo strtotime($order_info['add_time'])?>','horusCls':'horusCls','miniteCls':'miniteCls','secondCls':'secondCls','microsecCls':'microsecCls'}">
+                                        <em  id="t_d"></em>
+                                        <em  id="t_h"></em>
+                                        <em  id="t_m"></em>
+                                        <em  id="t_s"></em>
+                                    </span>
+                                          <script>
+                                              (function(){
+                                                  //订单有效天数
+                                                  var valid_day = 1;
+                                                  //订单添加时间
+                                                  var add_time = ("<?php echo strtotime($order_info['add_time'])?>") * 1000;
+                                                  //付款截止时间
+                                                  var end_time = add_time + 86400000 * valid_day;
+                                                  //打开网页服务器的时间
+                                                  var server_time = {:time()} * 1000;
+                                                  //打开网页本地的时间
+                                                  var local_time = new Date().getTime();
+                                                  //以本地时间创建计时器
+                                                  function get_deff_time(){
+                                                      return new Date().getTime()-local_time;
+                                                  }
+
+                                                  function getRTime(){
+                                                      var t = end_time - server_time - get_deff_time();
+                                                      if (t >= 0) {
+                                                          d = checkTime(Math.floor(t / 1000 / 60 / 60 / 24));
+                                                          h = checkTime(Math.floor(t / 1000 / 60 / 60 % 24));
+                                                          m = checkTime(Math.floor(t / 1000 / 60 % 60));
+                                                          s = checkTime(Math.floor(t / 1000 % 60));
+                                                          function checkTime(i) {
+                                                              if (i < 10) {
+                                                                  i = "0" + i;
+                                                              }
+                                                              return i;
+                                                          }
+                                                          document.getElementById("t_h").innerHTML = h + "时";
+                                                          document.getElementById("t_m").innerHTML = m + "分";
+                                                          document.getElementById("t_s").innerHTML = s + "秒";
+                                                      }
+                                                      else if(t < 0){
+                                                          document.getElementById('t_d').innerHTML="系统等待支付超过时限，请重新购买";
+                                                      }
+                                                      setTimeout(getRTime,1000);
+                                                  }
+                                                  getRTime();
+                                              })();
+                                   </script>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="order_pay order_show table_box">
+                <div class="box_title">选择支付方式</div>
+                <div class="box_content">
+                    <ul class="list" id="JS_pay">
+                        <volist name="pay_list" id="pay" empty="$empty_pay">
+                        <li class="item <if condition="$key eq 0">current</if>">
+                            <label>
+                                <span class="img"><img src="{$pay.pay_logo}" onerror="this.src='__IMG__/logox2.png'" /></span>
+                                <span class="name">{$pay.pay_name}</span>
+                                <input type="radio" class="input_radio" name="pay" value="{$pay.pay_id}" data-enabled="{$pay.enabled}" data-msg="{$pay.click_msg}" <if condition="$pay.selected eq 0">checked</if>  style="float:right;" />
+                            </label>
+                        </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="pay_btn">
+                <input type="button" name="paybtn" class="c-btn-oran-big" value="开始支付" />
+                <input type="hidden" name="order_sn" value="{$order_info.order_sn}" />
+                <input type="hidden" name="addr_id" value="{$order_info.address_id}" />
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){pay.init()});
+    var pay = {};
+    pay.init = function(){
+        var pay_list = $('#JS_pay').find('li.item');
+        pay_list.on('click',function(){
+            var that = $(this);
+            var input = $(this).find('input');
+            if (input.data('enabled') == 0) {
+                alert(input.data('msg'));
+                return false;
+            } else {
+                that.parent().children('li.item').removeClass('current');
+                that.addClass('current');
+                that.find('input').attr('checked',true);
+            }
+        });
+        $('.c-btn-oran-big').on('click', function(){
+            document.orderfrm.submit();
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<if condition="$goods.act_type eq 'discount'">
+    <include file="Active:discount" />
+    <elseif condition="$goods.act_type eq 'kp'"/>
+    <include file="Active:kp" />
+    <elseif condition="$goods.act_type eq 'team'"/>
+    <include file="Active:team" />
+    <elseif condition="$goods.act_type eq 'integral'"/>
+    <include file="Active:integral" />
+    <elseif condition="$goods.act_type eq 'panic'"/>
+    <include file="Active:panic" />
+    <else/>
+    <include file="Active:ordinary" />
+</if>

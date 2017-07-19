@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"><head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ihDDHwCX7FaUlPhKV1o9iQa5OLBAu0lE"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_41kbx4oao04ibe29.css">
+    <style type="text/css">
+        body{background-color: #eee;}
+        header{ max-width: 768px;background-color: #fff; }
+        .back{z-index: 99; position: absolute;top:0;left: 0; line-height: 2rem;width: 2rem;height: 2rem; text-align: center;}
+        .city_select{width:100%;height: 2rem;line-height: 2rem;text-align: center;}
+        .cityA{padding: .3rem 0; background: #fff;display:block;margin: .5rem 0;}
+        .ipk{margin: 0 .5rem;height: 1.4rem; background: #eee;border:1px solid #eee;border-radius: .1rem;}
+        .ipk .texL{line-height: 1.4rem;color: #a6a6a6;}
+        .ipk .iconS{width: 1.5rem;text-align: center;line-height: 1.4rem;}
+        .ipk .iconS i{font-size: .8rem;color: #a6a6a6;}
+        .gb{background-color:#fff;margin-top: .5rem;}
+        .gb .la{padding-left: .5rem;width: 1.5rem; line-height: 2rem;}
+        .gb .gc{line-height: 2rem;}
+        .gb .sr{ width: 2rem;text-align: center;line-height: 2rem;}
+
+
+    </style>
+</head>
+<header>
+    <div style="position: relative;">
+        <div class="back"><i class="myF icon-left"></i></div>
+        <div class="city_select">
+            选择收货地址
+        </div>
+    </div>
+</header>
+<section>
+    <a class="cityA" href="">
+        <div class="flex-wrap ipk">
+            <div class="iconS">
+                <i class="myF icon-sousuo-sousuo"></i>
+            </div>
+            <div class="flex-con texL">
+                查找小区/大厦/学校等
+            </div>
+        </div>
+    </a>
+    <a class="gb flex-wrap" style="color: #4a964d;" href="">
+        <div class="la">
+            <i class="myF icon-dingwei1"></i>
+        </div>
+        <div class="flex-con gc">
+            定位当前位置
+        </div>
+        <div class="sr">
+            <i class="myF icon-right"></i>
+        </div>
+    </a>
+</section>
+</html>

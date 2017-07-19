@@ -1,0 +1,21 @@
+<extend name="Order:refund_tpl" />
+<block name="main">
+
+
+
+    <div class="container">
+        <form action="{:U('returng_act')}" method="post" enctype="multipart/form-data">
+
+            <div style="clear: both"></div>
+            <input type="hidden" name="rec_id" value="{$II['rec_id']}">
+            <input type="hidden" name="id" value="{$II['id']}">
+            <input type="hidden" name="form_token" value="{$form_token}">
+            <if condition="$refund.next_button neq ''">
+                <div class="row">
+                    <button type="button" class="submit">{$refund.next_button}</button>
+                </div>
+            </if>
+
+        </form>
+    </div>
+</block>

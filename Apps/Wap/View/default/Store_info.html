@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/swipe.js"></script>
+    <script type="text/javascript" src="/Public/Wap/js/common.js"></script>
+</head>
+<body>
+<header>
+    <if condition="$store_info.grade_id eq 1">
+        <include file="Public:header3" />
+        <else />
+        <include file="Public:header4" />
+    </if>
+    <div class="shopL-img">
+        <img src="{$store_info.store_banner}" onerror="this.src='__IMG__/logox2.png'" alt="">
+        <div class="shopL-word">
+            <div class="lt">
+                <div class="imgWarp"><img src="{$store_info['store_label']}" onerror="this.src='__IMG__/logox2.png'" alt=""></div>
+
+                <div class="gd">
+                    <if condition="$store_info['grade_id'] eq 2">
+                        <i class="myF icon-pinpai"></i>
+                    </if>
+                    <em>{$user_head.title}</em>
+                </div>
+
+            </div>
+            <div class="rt">
+                <div class="gzRs left" style="display: none;">149万粉丝</div>
+                <div class="gz right" style="margin-top: .2rem;"><i class="iW2"></i><em style="margin-right: .1rem;">关注</em></div>
+            </div>
+        </div>
+    </div>
+    <div class="shopNav_btu">
+        <ul>
+            <li <php>if(U()==U('info')) echo "class='cur'"</php>>
+                <a href="{:U('info',$II)}">
+                    <i class="myF icon-cf-c14"></i>
+                    <p>店铺首页</p>
+                </a>
+            </li>
+            <li <php>if(U()==U('goodsList')) echo "class='cur'"</php>>
+            <a href="{:U('goodsList',$II)}">
+                <i class="myF icon-ku"></i>
+                <p>全部商品</p>
+            </a>
+            </li>
+            <li <php>if(U()==U('storeInfo')) echo "class='cur'"</php>>
+            <a href="{:U('storeInfo',$II)}">
+                <i class="myF icon-dianpujieshao"></i>
+                <p>店铺介绍</p>
+            </a>
+            </li>
+            <li <php>if(U()==U('active')) echo "class='cur'"</php>>
+            <a href="{:U('active',$II)}">
+                <i class="myF icon-liwu"></i>
+                <p>促销活动</p>
+            </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+<section>
+    {:xss_filter($goods['store_desc'])}
+    <if condition="empty($goods['store_desc'])">
+        <div class="comBack-all">
+            <div class="comBack">
+
+                <ul class="comCp">
+                    <div style="height:5rem;overflow:hidden;text-align:center;line-height:5rem;font-size:.6rem;">该店铺暂时还未提供介绍信息！</div>
+                </ul>
+
+            </div>
+        </div>
+    </if>
+</section>
+
+</body>
+</html>

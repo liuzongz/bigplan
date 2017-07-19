@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .carK,.carI{text-align: center;}
+        .carI i{font-size: 5rem;color:#a6a6a6;}
+        .carK p{line-height: 1rem;display: inline-flex;}
+        .carK p i{color:red;}
+        em.noneBj{float: right;position: absolute;right: .2rem;top:.25rem;}
+        .yfLh{line-height: 2.3rem;}
+        .backTop{bottom: 5rem;!important;}
+    </style>
+</head>
+<body >
+<include file="Public:header1" />
+
+        <div class="flow_list">
+            <if condition="$total['list']">
+                <form action="{$checkout_addr}" method="post" name="orderSub" id="JS_OrderSub">
+                    <include file="Cart:goods_list1" />
+                    <include file="Cart:totalprice" />
+                    <input type="hidden" name="form_token" value="{$form_token}" />
+                    <input type="hidden" name="flow_type" value="{$flow_type}" />
+                </form>
+                <else/>
+                <div class="carI"><i class="myF icon-gouwucheweikong" ></i></div>
+                <div class="flow_empty">购物车为空哦，赶紧去抢购吧！</div>
+                <div class="comBack b-Buttom none">
+                    <div class="carK">
+                        <p ><i class="myF icon-tuijian"></i><em>购物车为你推荐的产品</em></p>
+                    </div>
+                    <section>
+                        <div class="comBack-all">
+                            <div class="comBack b-Buttom">
+
+
+                <div class="comCp">
+                    <volist name="goods_list" id="goods" offset="0" length='' empty="$goods_empty" mod="2" >
+                        <if condition="$info.act_type eq 'discount'">
+                            <include file="Active:discount" />
+                            <elseif condition="$info.act_type eq 'kp'"/>
+                            <include file="Active:kp" />
+                            <elseif condition="$info.act_type eq 'team'"/>
+                            <include file="Active:team" />
+                            <elseif condition="$info.act_type eq 'integral'"/>
+                            <include file="Active:integral" />
+                            <elseif condition="$info.act_type eq 'panic'"/>
+                            <include file="Active:panic" />
+                            <else/>
+                            <include file="Active:ordinary" />
+                        </if>
+                    </volist>
+                </div>
+
+
+            </div>
+            <!--<a class="buy-but" href="{$ll.url}">{$goods_btn}</a>-->
+            </li>
+
+            </volist>
+        </div>
+
+            </if>
+
+        </div>
+</div>
+</section>
+                </div>
+
+            </if>
+        </div>
+    </div>
+</div>
+<if condition = "$is_dealer==1">
+    <include file="Public:menu2" />
+<else />
+    <include file="Public:menu1" />
+</if>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+     /*   $(".JS_zhi").each(function(){
+            var jiage = ($(this).text().replace(/[^0-9]+/g, '')/1000000);
+            if(jiage >= 1){
+                $(this).text("¥" + jiage+"万");
+            }
+        });*/
+    });
+    var flow = {
+        init: function(){
+            var that = this;
+            that.maxnum = 100;
+            that.url = ['{$del_flow_pro_addr}','{$chage_goods_num}','{$checked_cart}'];
+            that.msg = ['请选择需要删除的商品，在商品前打钩！','确定要将选中产品移出购物车吗？','请选择需要结算的商品，在商品前打钩'];
+            that.style = ["input[id^='JS_sel_store_']",'input[type="checkbox"]','input.flow_checkbox','.num_input','#JS_suborder','#JS_delbtn','.operate'];
+            that.selector = {store_select:$(that.style[0]),checkbox:$(that.style[2]),numbtn:$(that.style[3]),order:$(that.style[4]),delbtn:$(that.style[5]),operatenum:$(that.style[6])};
+            that.selector.store_select.on('click', function(){
+                var input = $(this).parents('div.item').find('ul.list');
+                if ($(this).prop('checked')) {
+                    var id = $(this).attr('id');
+                    that.selector.store_select.each(function(index, item){
+                        var t = $(item);
+                        if (t.attr('id') != id && t.prop('checked')) t.click();
+                    });
+                    input.find(that.style[1]).prop('checked',true);
+                } else {
+                    input.find(that.style[1] + ':checked').prop('checked',false);
+                }
+                Jiniu.ajax(that.url[2] + '?rnd=' + new Date().getTime(),'goods=' + that.isCheck(), that.NumboxResponse,'POST', 'JSON');
+            });
+            that.selector.checkbox.on('click', function(){
+                var item = $(this).parents('div.item'),
+                        list = $(this).parents('ul.list'),
+                        id = item.find(that.style[0]).attr('id');
+                item.find(that.style[0]).prop('checked', list.find(that.style[1] + ':checked').length == list.find(that.style[1]).length);
+                that.selector.store_select.each(function(index, item){
+                    var t = $(item);
+                    if (t.attr('id') != id && t.prop('checked')) t.click();
+                });
+                Jiniu.ajax(that.url[2] + '?rnd=' + new Date().getTime(),'goods=' + that.isCheck(), that.NumboxResponse,'POST', 'JSON');
+            });
+            that.selector.numbtn.on({
+                'focus':function(){that.Num = $(this).val();},
+                'blur':function(){
+                    var num = $(this).val();
+                    var id = $(this).data('id');
+                    if (isNaN(num) || num >= that.maxnum || num < 1){
+                        $(this).val(1);
+                    } else {
+                        if (that.Num != num){
+                            var data = 'id=' + id + '&num=' + num;
+                            Jiniu.ajax(that.url[1],data, that.NumboxResponse,'POST', 'JSON');
+                        } else {
+                            $(this).val(Number(num));
+                        }
+                    }
+                }
+            });
+            that.selector.order.on('click', function(){
+                var ids = that.isCheck();
+                if (ids === false){
+                    alert(that.msg[2]);
+                } else {
+                    document.forms.orderSub.submit();
+                }
+            });
+            that.selector.delbtn.on('click',function(){/*删除*/
+                var ids = that.isCheck();
+                if (!ids){
+                    alert(that.msg[0]);
+                }else{
+                    if (confirm(that.msg[1])){
+                        Jiniu.ajax(that.url[0],'goods=' + ids, function(ex){
+                            if (ex.error > 0){
+                                alert(ex.message);
+                            } else {
+                                location.reload();
+                            }
+                        },'POST', 'JSON');
+                    }
+                }
+            });
+            that.selector.operatenum.on('click', function(){
+                var numObj = $(this).parent().find(that.style[3]);
+                var num = parseInt(numObj.val());
+                if (num > that.maxnum || num < 1) {
+                    num = 1;
+                } else {
+                    if ($(this).hasClass('add')) {
+                        num += 1;
+                    } else {
+                        num -= 1;
+                    }
+                }
+                numObj.val(num).blur();
+            });
+        },
+        isCheck : function(){/*是否选中*/
+            var ids = [],that = this;
+            that.selector.checkbox.each(function(index,item){
+                if (item.checked){
+                    ids.push( item.value );
+                }
+            });
+            if (ids === false || ids == ''){
+                return false;
+            } else {
+                return ids;
+            }
+        },
+        NumboxResponse : function(ex){
+            if (ex.error > 0){
+                alert(ex.message);
+            } else {
+                $(this).val(ex.content.goods_number);
+                $('#JS_total_num').text(ex.content.goods_number);
+
+                $('#JS_total_Amt').text(ex.content.goods_price_formated);
+
+
+
+            }
+        }
+
+    };
+    $(function(){flow.init();});
+
+
+    var FlowInit = {};
+    FlowInit.init = function(){
+        var ss = 0;
+        var ScrolltoTop = $("#JS_TotalPrice");
+        var selectAll = $('#JS_selectall');
+        var ListPro = $('#JS_ListPro');
+        var DelFlow = $('#JS_delbtn');
+        var checkbox = $('.flow_checkbox');
+        var Numbox = $('.num_input');
+        var Order = $('#JS_suborder');
+        var orderFrm = $('#JS_OrderSub');
+        var store_select = $("input[id^='JS_sel_store_']");
+        var Num = 0;
+        var msg = [
+            '请选择需要删除的商品，在商品前打钩！',
+            '确定要将选中产品移出购物车吗？',
+            '{$del_flow_pro_addr}',
+            'input.flow_checkbox',
+            'checked',
+            '{$chage_goods_num}',
+            '{$checked_cart}',
+            '请选择需要结算的商品，在商品前打钩'
+        ];
+        store_select.on('change', function(){
+            var input = $(this).parent().parent().find('ul.list');
+            if ($(this).prop('checked')) {
+                var id = $(this).attr('id');
+                store_select.each(function(index, item){
+                    var t = $(item);
+                    if (t.attr('id') != id && t.prop('checked')) t.click();
+                });
+                input.find('input[type="checkbox"]').prop('checked',true);
+            } else {
+                input.find('input[type="checkbox"]:checked').click();
+            }
+        });
+        selectAll.on('click',function(){/*全选*/
+            var checkbox = ListPro.find(msg[3]);
+            console.log('当前选择：' + $(this).prop(msg[4]));
+            checkbox.attr(msg[4], $(this).prop(msg[4]));
+            //checkbox.change();
+            var ids = FlowInit.isCheck();
+            Jiniu.ajax(msg[6],'goods=' + ids, FlowInit.GoodsChangeResponse,'POST', 'JSON');
+        });
+        DelFlow.on('click',function(){/*删除*/
+            var ids = FlowInit.isCheck();
+            if (!ids){
+                alert(msg[0]);
+            }else{
+                if (confirm(msg[1])){
+                    Jiniu.ajax(msg[2],'goods=' + ids, FlowInit.DropGoodsResponse,'POST', 'JSON');
+                }
+            }
+        });
+        checkbox.on('change', function(){/*全部选中自动全选打钩*/
+            var ids = FlowInit.isCheck();
+            //ids.length == checkbox.length ? selectAll.attr(msg[4],true) : selectAll.attr(msg[4],false);
+            selectAll.attr(msg[4],ids.length == checkbox.length);
+            /*if(ids.length == checkbox.length){
+             console.log('当前操作：单选－选中');
+             selectAll.attr(msg[4],true);
+             } else {
+             console.log('当前操作：单选－取消');
+             selectAll.attr(msg[4],false);
+             }*/
+            Jiniu.ajax(msg[6] + '&rnd=' + new Date().getTime(),'goods=' + ids, FlowInit.GoodsChangeResponse,'POST', 'JSON');
+        });
+        FlowInit.GoodsChangeResponse = function(ex){
+            if (ex.error > 0){
+                alert(ex.message);
+            } else {
+                $('#JS_total_num').text(ex.content.goods_number);
+                $('#JS_total_Amt').text(ex.content.goods_price_formated);
+            }
+        };
+        FlowInit.isCheck = function(){/*是否选中*/
+            var ids = [];
+            checkbox.each(function(ex,item){
+                if (item.checked){
+                    ids.push( item.value );
+                }
+            });
+            if (ids === false || ids == ''){
+                return false;
+            } else {
+                return ids;
+            }
+        };
+        FlowInit.DropGoodsResponse = function(ex){/*删除返回处理*/
+            if (ex.error > 0){
+                alert(ex.message);
+            } else {
+                location.reload();
+            }
+        };
+        Numbox.on({
+            'focus':function(){FlowInit.Num = $(this).val();},
+            'blur':function(){
+                var num = $(this).val();
+                var id = $(this).data('id');
+                if (isNaN(num) || num >= 500 || num < 1){
+                    $(this).val(1);
+                } else {
+                    if (FlowInit.Num != num){
+                        var data = 'id=' + id + '&num=' + num;
+                        Jiniu.ajax(msg[5],data, FlowInit.NumboxResponse,'POST', 'JSON');
+                    } else {
+                        $(this).val(Number(num));
+                    }
+                }
+            }
+        });
+        FlowInit.NumboxResponse = function(ex){
+            if (ex.error > 0){
+                alert(ex.message);
+            } else {
+                $(this).val(ex.content.goods_number);
+                $('#JS_total_num').text(ex.content.goods_number);
+                $('#JS_total_Amt').text(ex.content.goods_price_formated);
+            }
+        };
+        Order.on('click', function(){
+            var ids = FlowInit.isCheck();
+            if (ids === false){
+                alert(msg[7]);
+            } else {
+                orderFrm.submit();
+            }
+        });
+        $(window).scroll(function() {
+            ss =  0;//ScrolltoTop.get(0).offsetTop;
+            if ($(window).scrollTop() < ss) {
+                $(ScrolltoTop).addClass('totalprice_fixed');
+            } else {
+                $(ScrolltoTop).removeClass("totalprice_fixed");
+            }
+        });
+    }
+</script>
+</body>
+</html>

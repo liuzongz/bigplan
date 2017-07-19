@@ -1,0 +1,86 @@
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+</head>
+<body>
+
+<include file="Public:header1" />
+    <div class="userHeader">
+        <div class="userBk">
+            <div class="imgUh">
+                <img src="<if condition="!empty($memberInfo['user_avatar'])">{$memberInfo.user_avatar}<else/>__IMG__/logox2.png</if>" onerror="this.src = '__IMG__/logox2.png'" >
+            </div>
+            <div class="userHead_name"><span>{$memberInfo.user_name}</span></div>
+            <p>尊敬的&nbsp;<span>{$memberInfo.rank_name}</span>  <if condition="!$is_weixin"> 您由 <if condition="$memberInfo.parent_name neq ''">{$memberInfo.parent_name}&lt;!&ndash;(ID:{$memberInfo.parent_id})&ndash;&gt;<else/>{$_CFG.shop_name}</if> 推荐</if></p>
+        </div>
+        <ul class="userGold" style="display:none;">
+            <li><a href="javascript: void(0);">
+                <p id="point">{$memberInfo.pay_points}</p>
+                <p>{$_CFG.integral_name}</p>
+            </a></li>
+            <li> <a href="{:U('Wallet/index')}">
+                <p><if condition="!$is_weixin">￥{$memberInfo.agency}元</if></p>
+                <p><if condition="!$is_weixin">佣金</if></p>
+            </a> </li>
+            <li style="border-right: none;"><a href="{:U('Wallet/index')}">
+                <p id="predepoit">￥{$memberInfo.user_money}元</p>
+                <p>余额</p>
+            </a> </li>
+        </ul>
+        <ul class="shopFlw">
+            <li><a href="{:U('Order/index?t=pay')}"><i class="myF icon-daifahuo"></i><br /><em>待发货</em></a></li>
+            <li><a href="{:U('Order/index?t=confirm')}"><i class="myF icon-yifahuo"></i><br /><em>已发货</em></a></li>
+            <li><a href="{:U('Order/index?t=comment')}"><i class="myF icon-yishouhuo"></i><br /><em>待评价</em></a></li>
+            <li><a href="{:U('Order/index?t=refund')}"><i class="myF icon-yituikuan"></i><br /><em>已退款</em></a></li>
+        </ul>
+    </div>
+
+</header>
+<section>
+    <volist id="menu" name="menus" key="k">
+        <ul class="userOp">
+            <volist name="menu" id="ll" key="kk">
+                <li>
+                    <a href="{$ll.url}">
+                        <i class="myF icon-{$ll.icon}"></i>
+                        <em>{$ll.name}</em>
+                    </a>
+                    <if condition="!empty($ll['handle'])">
+                        <volist name="ll['handle']" id="l" mod="10">
+                        <a href="{$l.url}">
+                            <span>
+                                <em>{$l.name}&nbsp;</em>
+                                <eq name="mod" value="0"><i class="myF icon-right"></i></eq>
+                            </span>
+                        </a>
+                        </volist>
+                    </if>
+                </li>
+            </volist>
+        </ul>
+    </volist>
+</section>
+   <footer>
+       <include file="Public:menu1" />
+   </footer>
+</body>
+</html>-->
+
+
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+<volist id="menu" name="menus" key="k">
+    <volist name="menu" id="ll" key="kk">
+        <li><a href=""><i style="display:inline-block;width:1.5rem;height:1.5rem;background-color: red;"></i><p>{$ll.name}</p></a></li>
+        <if condition="!empty($ll['handle'])">
+            <volist name="ll['handle']" id="l" mod="10">
+                <li><a href=""><i style="display:inline-block;width:1.5rem;height:1.5rem;"></i><p>{$l.name}</p></a></li>
+            </volist>
+        </if>
+    </volist>
+</volist>

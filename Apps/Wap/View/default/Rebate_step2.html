@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .nucity select{font-size: .65rem;}
+    </style>
+</head>
+<body style="margin:0 auto;">
+
+<include file="Public:header1" />
+<div class="empty5 b-Buttom"></div>
+<div class="reg" style="min-height:450px;">
+    <form id="reg-form" action="{:U() . '?step=2'}" onsubmit="return false;">
+        <div class="border">
+            <span>劵类型：</span>
+            <span>{$active_data.kp_name}</span>
+            <span style="margin-left:10px;">当前第 <em class="inter">{$active_data.number}</em> 张 / 共 {$active_data.number} 张</span>
+        </div>
+        <div class="border">
+            <span>商家：</span>
+            <span>{$active_data.shop}</span>
+        </div>
+        <div class="border">
+            <span>劵号：</span>
+            <input type="text" name="cpnumber" placeholder="请输入劵号" class="cpnumber">
+        </div>
+        <div class="border">
+            <span>密码：</span>
+            <input type="password"  name="cppassword" placeholder="请输入密码" class="cppassword">
+        </div>
+        <div class="register"><button class="register-butt" type="submit">激活</button></div>
+    </form>
+</div>
+<script type="text/javascript">
+
+    var step_callback = function($e){
+        alert($e.msg);
+        if ($e.error == 0) {
+            $('.cppassword').val('');
+            if ($e.data.interval > 0) {
+                $('.inter').text($e.data.interval);
+                $('.cpnumber').focus();
+            } else {
+                location.href = $e.data.url;
+            }
+        }
+        $('.register-butt').bind('click',active_btn).css({'background':'#ff9600'});
+    },active_btn = function (){
+        $(this).unbind('click').css({'background':'#999'});
+        var $numb = $('.cpnumber').val();
+        var $pass = $('.cppassword').val();
+        if ($numb.length != 10) {
+            $('.register-butt').bind('click',active_btn).css({'background':'#ff9600'});
+            alert('请输入正确的KP卷号码！');
+        } else if ($pass == '') {
+            $('.register-butt').bind('click',active_btn).css({'background':'#ff9600'});
+            alert('请输入KP劵密码！');
+        } else {
+            Jiniu.ajax("{:U() . '?step=2'}",'numb=' + $numb + '&pass=' + $pass, step_callback,'POST', 'JSON');
+        }
+    };
+    $('.register-butt').bind('click',active_btn);
+</script>
+</body>
+</html>

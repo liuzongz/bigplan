@@ -1,0 +1,32 @@
+<extend name="Order:refund_tpl"/>
+<block name="main">
+    <div class="instructions">
+        <p class="text_warning">卖家已同意您的退货请求，请填写您退货商品的快递单号，卖家收到退货商品，返款会打入您的交易账户。</p>
+        <div>
+            <p><label>退货申请时间：</label>{$goods_info.apply_time|date="Y-m-d H:i",###}</p>
+            <p><label>卖家同意时间：</label>{$goods_info.check_time|date="Y-m-d H:i",###}</p>
+            <p><label>退货原因：</label>{$goods_info.cause_describe}</p>
+        </div>
+    </div>
+    <div class="container">
+        <form action="" method="post">
+            <div class="row">
+                <label for="refund_shipping_num">物流公司：</label>
+                <select name="shipping" id="">
+                    <option value="">申通快递</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="refund_shipping_num">退货订单编号：</label>
+                <input type="text" id="refund_shipping_num" name="refund_shipping_num" >
+            </div>
+            <div style="clear: both"></div>
+            <input type="hidden"    name="rec_id"      value="{$II['rec_id']}" >
+            <input type="hidden"    name="id"          value="{$II['id']}"     >
+            <input type="hidden"    name="form_token"  value="{$form_token}"   >
+            <div class="row">
+                <button type="submit" class="submit">提交申请</button>
+            </div>
+        </form>
+    </div>
+</block>

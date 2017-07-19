@@ -1,0 +1,260 @@
+<!doctype html>
+<html><head>
+    <meta charset="utf-8">
+    <title>商家入驻申请</title>
+    <include file="Public:head2"/>
+    <script type="text/javascript" src="__JS__/jquery.validate.js"></script>
+    <script src="{:get_server('IMG_SERVER','/Uploader/login',[C('VAR_SESSION_ID') => AesEnCrypt(session_id()),'module' => MODULE_NAME],1)}"></script>
+</head>
+<body>
+<style>
+    label.error{position: absolute;right: .5rem; bottom: -.25rem;color:#F23030;}
+    .reg1 li.flex{position: relative; min-height: 2rem;height: auto;padding: 0 .5rem; align-items: center;-webkit-align-items: center; border-bottom: 1px solid #e2e2e2;}
+    .reg1 li.flex span.wTh3{width: 4rem;}
+    .reg1 li.flex input{height: 1.5rem;flex: 1;-webkit-flex: 1; border: none;color: #a5a5a5;font-size: .6rem;}
+    .reg1 li.flex select{border: none;height: 1.5rem;font-size: .6rem;color: #a5a5a5;}
+    .reg1 .agreement1{margin: .5rem .2rem;text-align: center;}
+</style>
+<include file="Public:header1" />
+<form id="reg-form" action="{:U('Apply/apply_edit')}" method="post" enctype="multipart/form-data" >
+    <ul class="reg1">
+        <li class="flex">
+            <span class="wTh3">店面：</span>
+            <input type="text"  name="shopname" placeholder="请输入店面" value="{$store_info.store_name}">
+        </li>
+        <li class="flex">
+            <span class="wTh3">店铺类型</span>
+            <select name="grade_id"  style="width: 5rem;">
+                <option value="">请选择</option>
+                <foreach name="grade_list" item="grade_name" key="grade_id">
+                    <option value="{$grade_id}" <if condition="$grade_id eq $store_info['grade_id']">selected</if>>{$grade_name}</option>
+                </foreach>
+            </select>
+        </li>
+        <li class="flex">
+            <span class="wTh3">公司名称</span>
+            <input name="store_company_name" type="text" class="store_company_name" value="{$store_info.store_company_name}">
+        </li>
+        <li class="flex">
+            <span class="wTh3">营业执照编号</span>
+            <input name="business_num" type="text" class="business_num" value="{$store_info.business_num}" />
+        </li>
+        <li class="flex">
+            <span class="wTh3">营业执照</span>
+            <span class="show" style=text-align:left;display:{$store_info['business'] ? 'inline' : 'none'};"><em style="width:5rem;height:3rem;display:inline-block;"><img src="{:echo_img($store_info['business'])}" style="max-width:3rem;max-height:3rem;"/></em><a href="javascript:void(0);" class="edit_region">修改</a></span>
+            <span class="list" style="display:{$store_info['business'] ? 'none' : 'inline'};">
+                <input name="business" type="file" id="file" class="business" value="{$store_info.business}">
+                <div class="child_img" id="view"><img id="User_face" src="" /></div>
+            </span>
+        </li>
+        <li class="flex">
+            <span class="wTh3">姓名</span>
+            <input type="text"   name="name" placeholder="请输入姓名" value="{$store_info.contact}">
+        </li>
+        <li class="flex">
+            <span class="wTh3">手机号</span>
+            <input type="text"   name="phone" maxlength="11" placeholder="请输入手机号" value="{$store_info.mobile}">
+        </li>
+        <li class="flex">
+            <span class="wTh3">选择区域</span>
+            <div style="width: 10rem;display: inline-block;">
+                <span class="show"  style="display:inline;"><a>{$store_info.diqu}</a> <a href="javascript:void(0);" class="edit_region">修改</a></span>
+                <span class="list" style="display:none;">
+                    <select name="province" class="province"><option value="">请选择</option></select>
+                    <select name="city" class="city"><option value="">请选择</option></select>
+                    <select name="district" class="area"><option value="">请选择</option></select>
+                </span>
+            </div>
+
+        </li>
+        <li class="flex">
+            <span class="wTh3">经营范围</span>
+            <input type="text"   name="range" placeholder="请输入经营范围" value="{$store_info.store_zy}">
+        </li>
+        <li class="agreement1">
+            <input type="checkbox" name="terms" id="terms" class="checked checkbox_background"  checked="checked" >
+            <label class="readme" for="terms">{$_CFG.shop_name}服务协议</label>
+        </li>
+        <li class="register">
+            <input type="hidden" id="business_img" name="business_img" value="{$store_info.business}"/>
+            <button class="register-butt" type="submit">提交</button>
+        </li>
+    </ul>
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+             //响应文件添加成功事件
+        $("#file").change(function(){
+                   //创建FormData对象
+                   var data = new FormData();
+                   //为FormData对象添加数据
+            $.each($('#file')[0].files, function(i, file) {
+                            data.append('file', file, 'file.jpg');
+                        });
+            $('#User_face').attr('src', '__IMG__/loading111.gif');
+             $(".list").show();    //显示加载图片
+             //发送数据
+             $.ajax({
+                 url:'{$upload_url}',
+                 type:'POST',
+                 data:data,
+                 cache: false,
+                 processData : false,         // 告诉jQuery不要去处理发送的数据
+                 contentType : false,        // 告诉jQuery不要去设置Content-Type请求头
+                 xhrFields: {
+                     withCredentials: true
+                 },
+                 success:function(data){
+                     if(data.error > 0){
+                         alert(data.msg);
+                     }else {
+                         var src = data.data.savepath + data.data.reduce + data.data.savename;
+                         $("#business_img").attr('value', src);
+                         $(".show").show();
+                         $(".show img").attr('src', data.data.src);
+                         $(".list").hide();
+                     }
+                    $("#User_face").hide();    //加载成功移除加载图片
+                 },
+                 error:function(ex){
+                         alert(ex.msg);
+                        $("#User_face").hide();    //加载失败移除加载图片
+                 }
+             });
+            });
+         });
+ </script>
+<script>
+    var get_region = function ($id, $obj){
+        var region = function (ex) {
+            if (ex.error == 0) {
+                var data = ex.data,str = '<option value="">请选择</option>';
+                $.each(data,function(ex,item){
+                    str += '<option value="' + item.region_id + '">' + item.region_name + '</option>';
+                });
+                $obj.html(str);
+            } else {
+                alert(ex.msg);
+            }
+        };
+        Jiniu.ajax("{:U('Rebate/region') . '?id='}" + $id,'',region,'GET','JSON');
+    };
+    $(function(){
+        var s = $('.province'),c = $('.city'), a = $('.area'),str = '<option value="">请选择</option>';
+        get_region(0, s);
+        s.change(function(){
+            a.html(str);
+            c.html(str);
+            get_region($(this).val(), c);
+        });
+        c.change(function(){
+            a.html(str);
+            get_region($(this).val(), a);
+        });
+    });
+
+    $(function(){
+        // 手机号码验证
+        jQuery.validator.addMethod("isMobile", function(value, element) {
+            var length = value.length;
+            var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+            return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "请正确填写您的手机号码");
+        //中英文验证
+        jQuery.validator.addMethod("shop_name", function(value, element) {
+            var shopname = /^[\u4e00-\u9fa5|A-Za-z_]+$/;
+            return this.optional(element) || (shopname.test(value));
+        }, "公司名称或店铺名称只能是中英文组成");
+        $('.edit_region').on('click', function(){
+            var s = $(this).parent().parent();
+            s.find('.list').css('display','inline');
+            s.find('.show').hide();
+        });
+        $('#reg-form').validate({
+            errorClass:'error',
+            rules: {
+                shopname: {
+                    required: true,
+                    shop_name:true,
+                    rangelength: [2, 30],
+                },
+                store_company_name:{
+                    required: true,
+                    shop_name:true,
+                    rangelength: [4, 20],
+                },
+                grade_id: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                    rangelength: [6, 15],
+                },
+                name: {
+                    required: true,
+                    minlength: 2
+                },
+                phone: {
+                    required: true,
+                    minlength : 11,
+                    isMobile : true
+                },
+                range: {
+                    required: true,
+                    minlength : 3,
+                },
+                terms: {
+                    required:true
+                },
+                business:{
+                    required:true
+                },
+//                district:{
+//                    required:true
+//                },
+
+            },
+            messages: {
+                shopname: {
+                    required: "请输入店名称",
+                    shop_name: "店铺名称只能已下划线字母汉字组成",
+                    rangelength:"店铺名称长度应为{0}-{1}位之间"
+                },
+                store_company_name:{
+                    required: "请输入公司名称",
+                    shop_name: "公司名称只能已下划线字母汉字组成",
+                    rangelength:"店铺名称长度应为{0}-{1}位之间"
+                },
+                grade_id: {
+                    required:"请选择店铺类型",
+                },
+                password: {
+                    required: "请输入密码",
+                    rangelength: '密码不得小于{0}-{1}位',
+                },
+                name: {
+                    required: "请输入姓名",
+                    minlength: "请输入姓名"
+                },
+                phone: {
+                    required: "请输入手机号",
+                    minlength: "请输入11位手机号",
+                    isMobile: "请正确填写您的手机号码",
+                },
+                range: {
+                    required: "请输入经营范围",
+                    minlength: "请输入经营范围"
+                },
+                terms: {
+                    required: "请先阅读协议",
+                },
+                business:{
+                    required: "上传营业执照",
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

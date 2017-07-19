@@ -1,0 +1,42 @@
+<div class="max768" style="position: fixed;top:0;height:2rem;width: 100%;z-index: 999;background-color: white;">
+    <div class="shopSeachHeader flex-wrap">
+        <div class="back_auto"><a href="{:U('index')}"><i class="myF icon-left"></i></a></div>
+        <div class="seach_input flex-con"><input type="text" placeholder=""></div>
+        <div class="fenlei_icon"><a href=""><i class="myF icon-fenlei"></i><p style="letter-spacing: 1px;">分类</p></a></div>
+        <div class="fenxian_other"><a id="manu-cd" href="javascript:void(0)"><i class="myF icon-caidan1"></i></a></div>
+    </div>
+</div>
+<div class="hide-nav_h none" id="toggle">
+    <div class="menu_h">
+        <i class="myF icon-sanjiao-copy n1"></i>
+        <a href="{:U('index/index')}"><i class="myF icon-shouye"></i>
+            <em>首页</em>
+        </a>
+        <a href="{:U('Fenlei/index')}?{$dealer_suf}"><i class="myF icon-fenlei"></i>
+            <em>分类</em>
+        </a>
+        <a href="{:U('cart/index')}?{$dealer_suf}"><i class="myF icon-gouwuche"></i>
+            <em>购物车</em>
+        </a>
+        <a href="{:U('User/index')}" style="border:none;"><i class="myF icon-gerenzhongxin"></i>
+            <em>个人中心</em>
+        </a>
+    </div>
+</div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $('#manu-cd').click(function(){
+                $('#toggle').toggle();
+            });
+            $('#toggle,#manu-cd').on("touchstart",function(event){
+                event.stopPropagation();
+            });
+            $(document).on("touchstart",function(){
+                $('#toggle').hide();
+            });
+
+        });
+    </script>
+    <div style="height: 2rem;"></div>

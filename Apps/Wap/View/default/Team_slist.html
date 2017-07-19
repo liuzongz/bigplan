@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+<div class="team">
+    <ul class="mc-cnt1">
+        <volist name="myteam.list" id="team" empty="$myteam_emtpy">
+        <li>
+            <div class="img left">
+                <a href="#">
+                    <img src="{$team.user_avatar}" onerror="this.src='__IMG__/logox2.png'" data-user_id="{$team.user_id}" />
+                </a>
+            </div>
+            <div class="text">
+                <div class="name">
+                    <span class="left">{$team.user_name}({$team.rank_name}) </span>
+                    <span class="right">订单数：{$team.order_count}</span>
+                </div>
+                <if condition="!empty($team['parent_name'])"><div class="parent_name">由 {$team.parent_name} 推荐</div></if>
+                <div class="add_time">关注时间：{$team.reg_time}</div>
+            </div>
+        </li>
+        </volist>
+    </ul>
+    <div class="pager">{$myteam.page}</div>
+
+    <div class="fenxian"><a href="{:get_server('WAP_SERVER', '/Index/share', [C('store_token_name')=>$store_token,'rec'=>AesEnCrypt($user_info['user_id'])], 1)}" >分享二维码，赚取佣金</a></div>
+</div>
+</body>
+</html>

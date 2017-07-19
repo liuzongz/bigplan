@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>登录</title>
+    <meta name="keywords" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta name="description" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_nco37921hs87u8fr.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__STATIC__/js/Jiniu.min.js"></script>
+    <script src="{:get_server('IMG_SERVER','/Uploader/login',[C('VAR_SESSION_ID') => AesEnCrypt(session_id()),'module' => MODULE_NAME],1)}"></script>
+    <script type="text/javascript">
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth > 768)  clientWidth = 768;
+                    docEl.style.fontSize = clientWidth /10 + 'px';
+                    document.getElementsByTagName("body")[0].style.display = 'block';
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <script src="__JS__/jquery.cookie.js"></script>
+    <style type="text/css">
+        .warp{
+            width: 8rem;
+            margin: 0 auto;
+            padding-top: 3rem;
+        }
+        .inputPo{
+            position: relative;
+        }
+        .warp .input{
+            width: 100%;height: 1.2rem;
+            padding-left: .2rem;margin-top: .3rem;
+            font-size: 1em; color: #c6c6cd;
+            border-bottom: 1px solid #c6c6cd;
+            border-radius: .2rem;  overflow: hidden;
+        }
+        .getFw{
+            align-items:stretch;-webkit-align-items: stretch;
+            justify-content: space-between;-webkit-justify-content: space-between;
+        }
+        .getFw a{
+            color: #fa6d52;height: 1.2rem;line-height: 1.2rem;
+        }
+        input.submit.cur{
+            background: #bbbbbb;
+        }
+        .submit{
+            height: 1.13rem;width: 8rem;
+            border-radius: .5rem;color: white;
+            margin: .2rem 0;
+            -webkit-box-shadow: 0 2px 2px 0px #ffd8d1;
+            -moz-box-shadow: 0 2px 2px 0px #ffd8d1;
+            box-shadow: 0 2px 2px 0px #ffd8d1;
+            background: -webkit-linear-gradient(left, #fa3f36 , #fd7754); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(right, #fa3f36 , #fd7754); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(right, #fa3f36 , #fd7754); /* Firefox 3.6 - 15 */
+            background: linear-gradient(to right, #fa3f36 , #fd7754); /* 标准的语法（必须放在最后） */
+        }
+
+        a.sign-in{
+            height: 1.13rem;width: 8rem; border-radius: .5rem;
+            color: #fa6d52;   margin: .2rem 0;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+            -webkit-box-shadow: 0 2px 2px 0px #ffd8d1;
+            -moz-box-shadow: 0 2px 2px 0px #ffd8d1;
+            box-shadow: 0 2px 2px 0px #ffd8d1;
+        }
+    </style>
+</head>
+<body class="none">
+<div class="warp">
+    <form id="regform"  method="post" onsubmit="return false;">
+        <div class="inputPo">
+            <input class="input" id="phone" type="tel"  name="phone" placeholder="请输入手机号" required pattern="^\w.*$">
+            <input class="input" id="password" type="password" name="password" placeholder="请收入密码">
+        </div>
+        <div class="getFw flex">
+            <!--<a href="{:U('modify')}">忘记密码?</a><a href="">联系客服</a>-->
+        </div>
+        <input class="submit" type="submit" value="登录">
+        <input type="hidden" name="back_act" value="{$back_act}" />
+        <a class="sign-in flex" href="{:U('register') . '?back_act=' . $back_act}">注册</a>
+    </form>
+</div>
+<div class="loading none">登录中...</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        $('#regform').submit(function(){  //
+            var  $user_name = $('#phone').val(),
+                $password = $('#password').val(),
+                $number_btn = $('.submit');
+            //var data='phone='+$user_name+'&password='+$password+'&__hash__='+$hash;
+            var data = $('#regform').serialize();
+            if (!Jiniu.checkMobile($user_name)) {
+                alert('请输入正确的登录信息！');return false;
+            } else  if ($password.length < 6 || $password.length > 18){
+                alert('请输入正确的密码！必须大于6位小于18位');return false;
+            } else {
+                $('.submit').addClass('cur').attr("disabled",　true);
+                Jiniu1.loading("请等待...");
+                Jiniu.ajax("{:U()}",data,login,'POST','JSON',false);
+            }
+            return false;
+        });
+        var login = function (ex) {
+            Jiniu1.closeloading();
+           // $('.submit').removeClass('cur').attr("disabled",　false);
+            if (ex.error != 200) {
+                alert(ex.msg);
+                window.location.reload();
+            }else{
+                location.href = ex.data.url;
+            }
+        };
+    });
+
+</script>

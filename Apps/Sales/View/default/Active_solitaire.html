@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><if condition="$act_info[status] eq 1">【制作】</if><if condition="$preview eq 1">【示例】</if>{$act_info['item_name']}</title>
+    <include file="Public/header" />
+    <link rel="stylesheet" href="__CSS__/Solitaire1.css">
+    <script src="__JS__/datePicker.js"></script>
+    <script src="{:get_server('IMG_SERVER','/Uploader/login',[C('VAR_SESSION_ID') => AesEnCrypt(session_id()),'module' => MODULE_NAME],1)}"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+</head>
+<body class="none">
+<form id="activity_data" method="post" onsubmit="return false;">
+<div id="change" <if condition="$act_info[status] eq 1">class="tac"<else/>class="tab"</if>>
+    <div class="imgWarp"><img src="__IMG__/Solitaire.jpg" ></div>
+    <div class="setTime-warp">
+        <img src="__IMG__/setTime.jpg" />
+        <div class="time-out" >
+            <em id="day">00</em>天<em id="hous">00</em>时<em id="min">00</em>分<em id="ss">00</em>秒
+        </div>
+        <div class="time-run flex" >
+            活动开始时间:<div class="timeWrod time1">{:date("Y-m-d H:i",$act_info[act_starttime])}</div>  到:<div class="timeWrod time2">{:date("Y-m-d H:i",$act_info[act_endtime])}</div>
+        </div>
+        <div class="time-set flex" id="JS_time">
+            <div class="flex set">活动开始时间:<div id="demo1" class="timeWrod flex">{:date("Y-m-d H:i",$act_info[act_starttime])}</div></div>
+            <input type="hidden" name="act_starttime" class="time1" value='{:date("Y-m-d H:i",$act_info[act_starttime])}'>
+            <div class="flex set">活动结束时间:<div id="demo2" class="timeWrod flex">{:date("Y-m-d H:i",$act_info[act_endtime])}</div></div>
+            <input type="hidden" name="act_endtime" class="time2" value='{:date("Y-m-d H:i",$act_info[act_endtime])}'>
+        </div>
+    </div>
+    <ul class="main">
+        <li id="JS_title">
+            <div class="title sol"></div>
+            <div class="p-wrap-text">
+                <div class="help" style="margin-top:.7rem;">本标题将在分享朋友圈和发送给朋友显示</div>
+                 <span class="text-limit"></span>
+                <textarea id="act_name" autoHeight ="true" class="sItemName active_title a" name="item_name"  >{$act_info[item_name]}</textarea>
+                <div class="sItemName b"><if condition="$preview eq 1">【示例】</if>{$act_info[item_name]}</div>
+            </div>
+            <div class="setNum" >
+                <p class="phelp">(请输入活动名称)</p>
+                <p class="flex pint">产品原价格:
+                    <input  name="config[costPrice]"  value="{$act_info[config][costPrice]}" type="number" >元</p>
+                <p class="phelp">(当参与人数为解锁阶梯优惠，以原件结算)</p>
+                <p class="flex pint">接龙诚意金(定金):
+                    <input name="config[deposit]" id="price_dj" value="{$act_info[config][deposit]}"   type="number" >元</p>
+                <p class="phelp">(诚意金建议设置不高于100元，提现时会扣除5%手续费)</p>
+                <p class="flex pint">参与接龙人数上限:
+                    <input name="config[limit]" value="{$act_info[config][limit]}" type="number" >人</p>
+                <p class="phelp">(人数上限达到上限，则无法再进行报名，输入0表示不限制)</p>
+                <p class="flex pint">设置阶梯优惠</p>
+                <p class="phelp">(阶梯优惠设定后，如有用户报名即不可修改)</p>
+            </div>
+            <div class="speed" ><div class="fill"></div></div>
+            <div class="tieMsg flex" style="font-size: .3rem;" >
+                <i class="myF icon-down-copy"></i>
+                <if condition="$act_info[cur_man] lt 1">
+                    暂无人参加，赶快分享给小伙伴吧！
+                <else/>
+                    当前参与人数：<em style="color: #fde704">{$act_info[cur_man]}</em>，当前价格：<em style="color: #fde704">¥{$act_info[final_price]}</em>，原价为：<em style="color: #fde704">¥{$act_info[config][costPrice]}</em>
+                </if>
+            </div>
+            <ul class="dep">
+                <foreach name="act_info[config][step]" item="vo">
+                    <li class="{$act_info[config][status][$key]}"><!--run unlock -->
+                        <div class="show">满<input name="config[step][man][]" value="{$vo.man}" class="a" type="text"><div class="b">{$vo.man}</div>人,每人只需<input value="{$vo.money}" name="config[step][money][]" class="a" type="text"><div class="b">{$vo.money}</div>元/人
+                        </div>
+                        <input class="i-text flex a" name="config[step][desc][]" value="{$vo.desc}" type="text"><div class="i-text b">{$vo.desc}</div>
+                        <i onclick="web.siInput(this)" class="close myF icon-guanbi1" ></i>
+                    </li>
+                </foreach>
+            </ul>
+            <div id="u-dep"  class="j-sg flex" >
+                <i class="myF icon-tianjia"></i>增加新的阶梯(最设置5个)
+            </div>
+        </li>
+        <li id="JS_desc">
+            <div class="title ms"></div>
+            <div class="help" style="margin-top: .7rem;">第一段文本描述将截取开头30字作为微信分享详情，请注意填写关键信息，且第一张图片作为分享图片。</div>
+            <ul class="act_diy" id="mWarp">
+                <foreach name="act_info['config'][detail]" item="vo">
+                    <li>{$vo}</li>
+                </foreach>
+            </ul>
+            <div id="clone-m"  class="j-sg flex">
+                <i class="myF icon-tianjia"></i>请上传一张产品图片(最多上传10张)
+            </div>
+            <div id="clone-t" class="j-sg flex">
+                <i class="myF icon-tianjia"></i>请上编写产品描述(最多添加5个)
+            </div>
+        </li>
+        <li class="list-bm"  id="JS_pay">
+            <div class="title bm"></div>
+            <div class="earnest"> 在线支付<em>{$act_info[config][deposit]}</em>元</div>
+            <if condition="$act_info[is_joined]">
+                <div class="baoming flex">已经报名</div>
+            <else/>
+                <div class="baoming flex" id="active_join">我要报名</div>
+            </if>
+        </li>
+        <li id="JS_rule">
+            <div class="title gz"></div>
+            <div class="p-wrap-text1">
+                <span class="text-limit"></span>
+                <textarea id="act_rule"  autoHeight="true" class="a text-show" name="config[act_rule]">{$act_info['config'][act_rule]}</textarea>
+                <div class="text-show b">{:str_replace(["\\n"],"<br/>",$act_info['config'][act_rule])}</div>
+            </div>
+        </li>
+        <li id="JS_receive">
+            <div class="title ljxx"></div>
+            <div class="p-wrap-text1">
+                <span class="text-limit"></span>
+                <textarea id="act_king" autoHeight="true" name="config[prizeinfo]" class="text-show a">{$act_info['config'][prizeinfo]}</textarea>
+                <div class="text-show b">{:str_replace(["\\n"],"<br/>",$act_info['config'][prizeinfo])}</div>
+            </div>
+        </li>
+        <li id="JS_introduce">
+            <div class="flex icon-act">
+                <div class="title jgjs"></div>
+            </div>
+            <ul style="margin-top: .8rem;" class="act_diy" id="mWarp1">
+                <foreach name="act_info[act_desc]" item="vo">
+                    <li>{$vo}</li>
+                </foreach>
+            </ul>
+            <div id="clone-m1" class="j-sg flex">
+                <i class="myF icon-tianjia"></i>请上传一张产品图片(最多上传10张)
+            </div>
+            <div id="clone-t1" class="j-sg flex">
+                <i class="myF icon-tianjia"></i>请上编写产品描述(最多添加5个)
+            </div>
+        </li>
+        <li class="list-jlb" id="JS_list">
+            <div class="title jlb"></div>
+            <div class="flex com_title" style="line-height:1rem;">
+                <div>排名</div><div>姓名</div><div>手机号</div>
+            </div>
+            <ul class="act_des_rk JNWidget" data-type="scroll" data-cfg="{url:'{:U('ajax_join_list') . '?act_id=' . $act_id .'&is_pay=paid'.'&p='}',obj:$('#JS_list'),show_box:$('.act_des_rk'),show_status:$('.list_botton'),page_name:'p',load_type:'click',star_load:1}">
+            </ul>
+            <div class="list_botton" style="text-align:center;line-height:1rem;">点击加载更多</div>
+        </li>
+        <li class="list-tel" id="JS_contact">
+            <div class="title teltel"></div>
+            <input id="setTel"  name="config[tel]" value="{$act_info[config][tel]}" class="tel"  type="tel">
+            <p class="help">客户可通过此电话号码咨询活动事宜，建议留下手机号保持手机通畅</p>
+        </li>
+        <li class="list-msg" id="JS_msg">
+            <div class="title msg"></div>
+            <div class="getMsg">
+                <p class="telMsg help">自定义项为空则不显示，最多可填写6个字节，如有用户报名，此内容不再做任何修改</p>
+                <ul class="flex">
+                    <li class="flex">
+                        <input class="input1" type="text" value="姓名" disabled>
+                        <label class="label flex" for="a">
+                            <input checked disabled id="a" type="radio" >必选项</label>
+                    </li>
+                    <li class="flex">
+                        <input class="input1" type="text" value="手机号码" disabled>
+                        <label class="label flex" for="b">
+                            <input checked disabled id="b" type="radio" >必选项</label>
+                    </li>
+                    <li class="flex">
+                        <input name="config[project][name_1][name]" class="input2" type="text" placeholder="信息项目名称" value="性别">
+                        <label class="label flex" for="c"><input id="c" name="config[project][name_1][check]" type="checkbox" >可选项</label>
+                    </li>
+                    <li class="flex">
+                        <input name="config[project][name_2][name]" class="input2"  type="text" placeholder="信息项目名称" value="年龄">
+                        <label class="label flex" for="d"><input id="d" name="config[project][name_2][check]" type="checkbox" >可选项</label>
+                    </li>
+                    <li class="flex">
+                        <input name="config[project][name_3][name]" class="input2" type="text" placeholder="信息项目名称" value="区域">
+                        <label class="label flex" for="e"><input id="e" name="config[project][name_3][check]" type="checkbox" >可选项</label>
+                    </li>
+                    <li class="flex">
+                        <input name="config[project][name_4][name]" class="input2" type="text" placeholder="信息项目名称">
+                        <label class="label flex" for="e"><input id="f" name="config[project][name_4][check]" type="checkbox" >可选项</label>
+                    </li>
+                    <input type="hidden" name="aid" value="{$aid}" />
+                    <input type="hidden" name="act_id" value="{$act_id}" />
+                </ul>
+            </div>
+        </li>
+    </ul>
+<!---->
+   <!-- <div class="music"></div>-->
+   <!-- <div class="qrcode" onclick="$('.qrcode_box').addClass('qrcodekey')"></div>-->
+    <div class="qrcode_box ">
+        <div class="img"><img src="__STATIC__/images/qrcode_for_gh_c3ea06a7a528_258.jpg" /></div>
+        <div class="txt">长按二维码关注即牛</div>
+        <div class="close" onclick="$('.qrcode_box').removeClass('qrcodekey')">x</div>
+    </div>
+
+    <a href="{:get_server('PASSPORT_SERVER', '/user/index', ['store_token'=>$store_token])}" class="user flex">个人<br />中心</a>
+    <div class="footer">
+        <if condition="$act_info[status] eq 1">
+            <div class="bjBtn flex">
+                <div class="flex edit">预览</div>
+                <div class="flex prt" id="clipArea">保存活动</div>
+            </div>
+        <elseif condition="$act_info[test]" />
+            <div class="testBtn">
+                <div class="btn">
+                    <button class="bt1"><a href="tel:02785729678">电话咨询</a></button>
+                    <button class="bt1" id="JS_active_join">我要报名</button>
+                </div>
+
+                <div class="go"><a href=" {:get_server('SALES_SERVER', '/active/detail', ['aid'=>$aid,'status'=>1,'store_token'=>$store_token], 1)}">马上参与</a></div>
+            </div>
+        <else/>
+            <div class="telcall flex" >
+                咨询热线&nbsp;&nbsp;<em>{$act_info[config][tel]}</em>
+                <a href="tel:{$act_info[config][tel]}" class="callbtn flex"><p>一键拨号</p></a>
+            </div>
+        </if>
+    </div>
+    <div class="flex company" style="margin-bottom: 1.5rem" >
+        <a href="javascript:void(0);" onclick="$('.qrcode_box').addClass('qrcodekey')">即牛技术</a>
+        <span>支持</span>
+        <i class="myF icon-guanbi1"></i>
+    </div>
+</div>
+</form>
+<div id="alertWarp" class="flex none">
+    <div class="main flex">
+        <div class="btn closeBtn">x</div>
+        <h3>我要报名</h3>
+        <p class="tell">所填写信息不会公开，仅用于活动兑奖</p>
+        <form id="active_form" method="post" >
+            <div class="setMsg flex">
+                <input type="text" name="user_name" placeholder="请输入姓名(必填项)">
+                <input type="tel" name="phone_number" placeholder="请输入手机号(必填项)">
+                <foreach name="act_info[config][project]" item="vo">
+                    <if condition="$vo.check eq 'on'">
+                        <input type="text" name="msg[{$key}]" placeholder="请输入{$vo.name}(必填项)">
+                    <elseif condition="$vo"/>
+                        <input type="text" name="msg[{$key}]" placeholder="请输入{$vo.name}">
+                    </if>
+                </foreach>
+                <input type="hidden" name="aid" value="{$aid}">
+                <input type="hidden" name="pay_money" value="{:AesEnCrypt(unserialize($act_info['config'])['deposit'])}">
+                <input type="hidden" name="act_id" value="{$act_id}">
+                <input type="hidden" name="back_act" value="{$back_act}">
+            </div>
+            <div class="setMsg flex" ></div>
+            <div class="wxPay none">
+                <p>温馨提示：报名成功，请前往支付页面</p>
+                <div class="toPay flex" >前往支付</div>
+            </div>
+            <div class="submit flex" id="join_form">提交</div>
+        </form>
+    </div>
+</div>
+<!--<audio class="none" id="audio1" loop="loop" controls="controls" preload>
+    <source src="__CSS__/music.mp3" type="audio/ogg">
+    <source src="__CSS__/music.mp3" type="audio/mpeg">
+</audio>-->
+</body>
+<script type="text/javascript">
+    var web = {
+        dep: '<li><div class="show">'+"满"+'<input name="config[step][man][]" class="a" type="text"><div class="b"></div>'+ "人,每人只需"+'<input name="config[step][money][]" class="a" type="text"><div class="b"></div>'+"元/人"+'</div><input name="config[step][desc][]" class="i-text flex a" type="text"><div class="i-text b"></div><i  class="close myF icon-guanbi1" ></i></li>',
+        text: '<li class="text-c"><div class="p-wrap-text1"><span class="text-limit"></span><textarea autoHeight="true" name="config[detail][][txt]" class="a txt"></textarea><div class="b"></div></div><i class="close myF icon-guanbi1" ></i></li>',
+        input: '<li class="img-c"><input type="hidden" name="config[detail][][img]" class="act_desc"><p class="flex"><i class="myF icon-tianjia"></i>'+ '(请上传一张产品图片，不上传则不显示)' +'</p><input class="upImg" type="file" data-img=".upimage" data-input=".act_desc" accept="image/*" /><img  src="" class="upimage" data-input="act_desc" /><i  class="close myF icon-guanbi1" ></i><i onclick="web.siInput(this)" class="shangchuan myF icon-guanbi1 none" >'+'换图'+'</i></li>',
+        text1 : '<li class="text-c"><div class="p-wrap-text1"><span class="text-limit"></span><textarea autoHeight="true" name="act_desc[][txt]" class="a txt"></textarea><div class="b"></div></div><i class="close myF icon-guanbi1" ></i></li>',
+        input1: '<li class="img-c"><input type="hidden" name="act_desc[][img]" class="act_desc"><p class="flex"><i class="myF icon-tianjia"></i>'+ '(请上传一张产品图片，不上传则不显示)' +'</p><input class="upImg" type="file" data-img=".upimage" data-input=".act_desc" accept="image/*" /><img  src="" class="upimage" data-input="act_desc" /><i  class="close myF icon-guanbi1" ></i><i onclick="web.siInput(this)" class="shangchuan myF icon-guanbi1 none" >'+'换图'+'</i></li>',
+        siInput:function(te){
+            $(te).prevAll('input.upImg').click();
+        }
+    };
+    Jiniu.loading = function(obj){
+        var height = 0;
+        if (obj == window) {
+            height = document.documentElement.clientHeight || document.body.clientHeight;
+        } else {
+            height = $(obj).height();
+        }
+        var box_str = '<div class="msgbox_box" style="width:100px;height:100px;border-radius: 5px;margin:0 auto;position: absolute;z-index:998;background:rgba(0,0,0,.6);left:10%;top:10%;bottom:10%;right:10%;"><img src="__STATIC__/images/loading1.gif" style="max-width:60%;margin:20% auto;"/></div>';
+        var bg_str = '<div class="msgbox_bg22222" style="width:100%;height:' + height + 'px;position:absolute;z-index:10000;background:rgba(0,0,0,.5);left:0;top:0;text-align:center;">' + box_str +'</div>';
+        if (!obj) obj = $('body');
+        obj.append(bg_str);
+        this.close = function(){
+            $('.msgbox_bg22222').remove();
+        };
+        return this;
+    };
+    $(function(){
+        var upimage = function(){
+            if (!$(this).val()) return false;
+            var loading = Jiniu.loading($(this).parent());
+            var url = "{$img_url}";
+            var self = this;
+            Jiniu.upimage(self, url, function(ex){
+                if (ex.error == 0) {
+                    var file = ex.data.savepath + ex.data.savename;
+                    var obj = $(self).parent();
+                    obj.find($(self).data('input')).val(file);
+                    obj.find($(self).data('img')).attr('src',ex.data.src);
+                    obj.find('.flex').addClass('none');
+                    obj.find('.shangchuan').removeClass('none');
+                } else if(ex.error == 302){
+                    alert(ex.msg);
+                    location.reload();
+                } else {
+                    alert(ex.msg);
+                }
+                loading.close();
+            },true);
+        };
+        Jiniu1.clone('#u-dep','.dep',web.dep,'li',5,function(){
+            Jiniu1.textChange('.a','.b');
+        });
+        Jiniu1.clone('#clone-t','#mWarp',web.text,'li.text-c',5,function(){
+            Jiniu1.textChange('.a','.b');
+            Jiniu1.autoHeight($('.text-c textarea'),600);
+        });
+        Jiniu1.clone('#clone-m','#mWarp',web.input,'li.img-c',10,function(){
+            $('input.upImg').bind({'change': upimage});
+        });
+        Jiniu1.clone('#clone-t1','#mWarp1',web.text1,'li.text-c',5,function(){
+            Jiniu1.textChange('.a','.b');
+            Jiniu1.autoHeight($('.text-c textarea'),600);
+        });
+        Jiniu1.clone('#clone-m1','#mWarp1',web.input1,'li.img-c',10,function(){
+            $('input.upImg').bind({'change': upimage});
+        });
+        Jiniu1.tabClass('.edit','#change','tab','tac',function(){
+            $('#clipArea').removeClass('prs').bind('click', add_active);
+        },function(){
+            $('#clipArea').addClass('prs').unbind('click');
+        });
+        Jiniu1.textChange('.a','.b');
+        Jiniu1.autoHeight($('#act_name'),90);
+        Jiniu1.autoHeight($('#act_rule'),600);
+        Jiniu1.autoHeight($('#act_king'),180);
+        $('input.upImg').bind({'change': upimage});
+        $('#price_dj').bind('change',function(){
+            var text =  $(this).val();
+            $('.earnest em').html(text);
+        });
+        $('.company i').click(function(){
+            $('.company').css('visibility','hidden');
+        });
+
+        //进度条
+        var curPo = {:intval($act_info[cur_man])};
+        var maxPo = {:intval($act_info[final_man])};
+        $('.fill').css('width',(curPo/maxPo)*9 + 'rem');
+        //音乐播放按钮  Jiniu1.music('.music');
+        //倒计时
+        setInterval("Jiniu1.outTime('{$act_info[act_endtime]}',$('#day'),$('#hous'),$('#min'),$('#ss'))",1000);
+        //设置活动开始结束时间
+        Jiniu1.setTime("{:date('Y-m-d')}",'{:date("Y")+2}-12-31','#demo1','.time1');
+        Jiniu1.setTime("{:date('Y-m-d')}",'{:date("Y")+2}-12-31','#demo2','.time2');
+
+        var add_active = function(){
+            Jiniu1.loading("上传中...");
+            $(this).addClass('prs').unbind('click');
+            var img = checkform();
+            if (img.error != 200) {
+                $(document).scrollTop($('#' + img.data.href).position().top);
+                Jiniu1.closeloading();
+                alert(img.msg);
+            } else {
+                var data = $('#activity_data').serialize();
+                Jiniu.ajax("{:get_server('SALES_SERVER', '/active/edit', ['store_token'=>$store_token],1)}", data, addreturn,'post','json');
+            }
+            $(this).removeClass('prs').bind('click', add_active);
+        },addreturn = function (ex) {   // 用户添加活动-回调
+            Jiniu1.closeloading();
+            if (ex.error == 301) {
+                window.location.href = ex.data.url;
+            } else if (ex.error != 200) {
+                alert(ex.msg);
+            } else{
+                window.location.href= ex.data.redirect_url;
+            }
+        },checkform = function(){
+            var result = {error:200,msg:'',data:[]};
+            var txt = $('textarea','#JS_desc'),txt1 =$('textarea','#JS_introduce');
+            var img = $('.act_desc','#JS_desc'),img1 = $('.act_desc','#JS_introduce');
+            var varEach = function(obj){
+                for(var i = 0;i < obj.length;i++){
+                    if(obj.eq(i).val()=="") return true;
+                };
+            };
+            if (!$('.active_title').val()) {
+                result = result_ajax(300,'标题必须要填写！',{href:'JS_title'});
+            }else if (img.length <= 0 || txt.length <= 0 || varEach(img) ||  varEach(txt)) {
+                result = result_ajax(303,'产品描述最少需要上传一张图片和描述，或者不为空！',{href:'JS_desc'});
+            }else if (img1.length <= 0 || varEach(img1)) {
+                result = result_ajax(303,'机构介绍中最少需要上传一张图片或者图片不能为空！',{href:'JS_introduce'});
+            }
+            return result;
+        }, result_ajax = function(error,msg,data) {
+            var result = {};
+            result.error = error;
+            result.msg = msg;
+            result.data = data;
+            return result;
+        };
+        $('#clipArea').on('click', add_active);
+        var active_join = function(){
+            $(this).unbind('click');
+            $('#alertWarp').find('.closeBtn').bind('click', function(){
+                $(this).unbind('click');
+                $(this).parents('#alertWarp').addClass('none');
+                $('#active_join').bind('click', active_join);
+                $('#join_form').removeClass('none');
+                $('.wxPay').addClass('none');
+                $('#pay_script').remove();
+            });
+            var join_check = function(ex){
+                //$(this).bind('click', active_join);
+                if(ex.error == 200){
+                    $('#alertWarp').removeClass('none');
+                    $('#join_form').bind('click',join);
+                }else if (ex.error == 301){
+                    window.location.href = ex.data.url;
+                }else{
+                    alert(ex.msg);
+                }
+            };
+            //判断活动是否存在  用户是否登录
+            var act_id = $("input[name='act_id']").val();
+            var aid = $("input[name='aid']").val();
+            var data = "act_id=" + act_id + "&aid=" + aid + "&{:C('VAR_AJAX_SUBMIT')}=1" + "&store_token={$store_token}";
+            Jiniu.ajax("{:U('chechJoin')}",data,join_check,'POST','JSON',false);
+        },toPay = function(join){
+            var amount = "{$act_info[config][deposit]}";
+            var data = '';
+            data += 'order_amount=' + amount;
+            data += '&attend_id=' + join;
+            data += '&act_id=' + "{$act_id}";
+            data += '&pay_form_token=' + "{$pay_form_token}";
+            data += '&store_token={$store_token}';
+            Jiniu.ajax("{:U('payment/pay')}", data, function (ex) {
+                if(ex.error == 200){
+                    $("body").append(ex.data);
+                }else{
+                    alert(ex.msg);
+                }
+            }, 'POST', 'JSON', false);
+        },join = function(){
+            $(this).unbind('click');
+            var data = $('#active_form').serialize();
+
+            Jiniu.ajax("{:get_server('SALES_SERVER', '/active/join', ['store_token'=>$store_token], 1)}",data,join_active,'POST','JSON',false);
+        },join_active = function (ex) {  // 用户参与活动回调
+            //$(this).bind('click', join);
+            if (ex.error == 200) {
+                toPay(ex.data);
+                wxApaly();
+                $('.toPay').click();
+            } else if (ex.error == 301){
+                window.location.href = ex.data.url;
+            } else{
+                $('#join_form').bind('click',join);
+                alert(ex.msg);
+            }
+        };
+        //前往支付页面
+        var wxApaly = function(){
+            $('#join_form').addClass('none');
+            $('.wxPay').removeClass('none');
+        };
+        // 用户参与活动提交表单
+        $('#active_join').bind('click', active_join);
+        $('#JS_active_join').bind('click', active_join);
+       // get_list();
+    });
+
+</script>
+<if condition="$is_weixin">
+<script type="text/javascript">
+
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: "{$signPackage['appId']}", // 必填，公众号的唯一标识
+        timestamp: "{$signPackage['timestamp']}", // 必填，生成签名的时间戳
+        nonceStr: "{$signPackage['nonceStr']}", // 必填，生成签名的随机串
+        signature: "{$signPackage['signature']}",// 必填，签名，见附录1
+        jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'hideMenuItems'
+        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+
+
+    wx.ready(function () {
+        wx.onMenuShareTimeline({
+            title: "{$act_info['item_name']}", // 分享标题
+            desc: "{$act_info['config']['share_desc']|msubstr=0, 30}", // 分享描述
+            link: "{$signPackage['url']}", // 分享链接
+            imgUrl: "{$act_info['config']['share_img']|img_url}", // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        wx.onMenuShareAppMessage({
+            title: "{$act_info['item_name']}", // 分享标题
+            desc: "{$act_info['config']['share_desc']|msubstr=0, 30}", // 分享描述
+            link: "{$signPackage['url']}", // 分享链接
+            imgUrl: "{$act_info['config']['share_img']|img_url}", // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+</if>
+</html>

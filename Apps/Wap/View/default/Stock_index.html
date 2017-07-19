@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$_CFG.shop_name}特约经销商商城</title>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .del{text-decoration: line-through;color:#666;}
+        header .banner{height: 8rem; overflow: hidden;}
+        header .banner img{width:100%;}
+        header .search{height:1.8rem;position: absolute;top:0;left:0;overflow:hidden;z-index:2;width:100%;max-width:640px;text-align:center;}
+        header .search .search_text{border:1px solid #efefef;border-radius: .3rem;height:1rem;margin:.36rem;width:12rem;padding:0 1.2rem 0 .3rem;opacity: .8;-webkit-opacity:.8;}
+        header .search .search_btn{position: absolute;z-index:30;top:.55rem;right:1.5rem;border:0;background:url('__IMG__/stock_02.png') no-repeat ;background-size:.7rem;display:block;width:.7rem;height:.7rem;}
+        section{background:#efefef;}
+        .fenleiU{height:auto;overflow:hidden;background:#fff;padding:0 .5rem;}
+        .fenleiU ul{height:auto;overflow:hidden;zoom:1;padding:.5rem 0;}
+        .fenleiU li{float:left;width:25%;text-align:center;}
+        .fenleiU li .icon{width:2.5rem;height:2.5rem;margin: 0 auto;overflow:hidden;}
+        .fenleiU li .icon a{display:table-cell;width:2.3rem;height:2.3rem;overflow:hidden;border-radius: 2.3rem;vertical-align:middle;border:1px solid #e2e2e2;}
+        .fenleiU li img{max-width:2.3rem;max-height:2.3rem;}
+        .fenleiU li .text{height:1rem;line-height:1rem;margin-top:.3rem;}
+        .noticeU{height:1.2rem;margin-top:.1rem;background:#fff;line-height:1.2rem;padding:0 .5rem;}
+        .table1{height:auto;overflow:hidden;margin-top:.1rem;}
+        .table1 .thead1{height:1.5rem;overflow:hidden;zoom:1;line-height:1.58rem;padding:0 .5rem;background:#fff;}
+        .table1 .thead1 .icon{display:block;width:.2rem;background:red;height:.8rem;margin:.34rem .4rem .34rem 0;}
+        .table1 .thead1 .text{font-weight: bold;}
+        .table1 .thead1 .more a{color:#d4d4d4;}
+        .table1 .thead1 .more-icon{background:url('__IMG__/icon.png') no-repeat -1.5rem -5rem;background-size:2rem;display:block;width:.5rem;height:1rem;margin-top: .3rem;}
+        .table1 .tbody1 ul{margin:.25rem;height:auto;overflow:hidden;zoom:1;font-weight:0;}
+        .table1 .tbody1 li {background:#fff;text-align:center;margin:.12rem;float:left;position: relative;overflow:hidden;}
+        .table1 .tbody1 img{width:100%;}
+        .table1 .tbody1 .img a{display:block;padding:.3rem;}
+        .table1 .tbody1 .txt{padding:.3rem .5rem;opacity: .5;-webkit-opacity:.5;position: absolute;bottom:0;background:#000;left:0;}
+        .table1 .tbody1 .txt a{color:#fff;}
+        .table1 .two1 li{width:7.5rem;}
+        .table1 .two1 li .txt{width:6.5rem;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+        .table1 .three1 li{width:4.925rem;}
+        .table1 .three1 li .txt{width:3.925rem;}
+        .table1 .three1 li .txt a{opacity: 1;-webkit-opacity:1;}
+        .fenlei_ad1{height:7rem;overflow:hidden;}
+        .cate1 .list .txt{position: static;opacity: 1;-webkit-opacity:1;background:#fff;}
+        .cate1 .list .txt a{color:#999;}
+        .cate1 .list .price{color:red;text-align:left;padding:.1rem 0;height:auto;overflow:hidden;zoom:1;}
+        .cate1 .list .price .rmb{}
+        .cate1 .list .price .del{position:relative;}
+        .cate1 .list .goods_empty{height:4rem;line-height:4rem;text-align:center;float:none;width:auto;}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="banner">
+            <img src="__IMG__/Stock_01.jpg" />
+        </div>
+        <div class="search">
+            <form action="{:U('Fenlei/index')}" method="get">
+                <span><input type="text" class="search_text"  name="keywords" placeholder="查询产品关键词" /></span>
+                <input type="hidden" name="id" value="0">
+                <span><button class="search_btn"></button></span>
+            </form>
+        </div>
+    </header>
+    <section>
+        <div class="fenleiU">
+            <ul class="list">
+                <volist name="category_list" id="cate">
+                <li class="item">
+                    <!--<php>print_r($cate['cat_info'])</php>-->
+                    <div class="icon"><a href="{$cate.cat_info.url}"><img src="{$cate.cat_info.cat_logo}" onerror="this.src='__IMG__/logox2.png'" /></a></div>
+                    <div class="text">{$cate.cat_info.stock_name}</div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="noticeU">公告：</div>
+        <if condition="!empty($new_goods)">
+        <div class="new1 table1">
+            <div class="thead1">
+                <span class="icon left"></span>
+                <span class="text left">最新产品</span>
+                <span class="more-icon right"></span>
+                <span class="more right">显示全部</span>
+            </div>
+            <div class="tbody1 two1">
+                <ul class="list">
+                    <volist name="new_goods" id="goods">
+                    <li class="item">
+                        <div class="img"><a href="{$goods.url}"><img src="{$goods.goods_thumb}" /></a></div>
+                        <div class="txt"><a href="{$goods.url}">{$goods.goods_name}</a></div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        </if>
+        <if condition="!empty($hot_goods)">
+        <div class="new1 table1">
+            <div class="thead1">
+                <span class="icon left"></span>
+                <span class="text left">热销产品</span>
+                <span class="more-icon right"></span>
+                <span class="more right">显示全部</span>
+            </div>
+            <div class="tbody1 three1">
+                <ul class="list">
+                    <volist name="hot_goods" id="goods">
+                        <li class="item">
+                            <div class="img"><a href="{$goods.url}"><img src="{$goods.goods_thumb}" onerror="this.src='__IMG__/logox2.png'" /></a></div>
+                            <div class="txt"><a href="{$goods.url}">{$goods.goods_name}</a></div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        </if>
+        <volist name="category_list" id="cate">
+        <div class="cate1 table1">
+            <if condition="!empty($cate['goods_list'])">
+            <div class="thead1">
+                <span class="icon left"></span>
+                <span class="text left">{$cate.cat_info.stock_name}</span>
+                <span class="more-icon right"></span>
+                <span class="more right"><a href="{$cate.cat_info.url}">显示全部</a></span>
+            </div>
+                <div class="tbody1 two1">
+                <if condition="!empty($cate['cat_info']['stock_banner'])">
+                <div class="fenlei_ad1"><img src="{$cate.stock_banner}" onerror="this.src='__IMG__/Stock_11.jpg'" /></div></if>
+                <ul class="list">
+                    <volist name="cate.goods_list" id="goods" offset="0" length='4' empty="$goods_empty">
+                    <li class="item">
+                        <div class="img"><a href="{$goods.url}"><img  src="/{$goods.goods_thumb}"   onerror="this.src='__IMG__/logox2.png'"  /></a></div>
+                        <div class="txt"><a href="{$goods.url}">{$goods.goods_name|msubstr=0,10}</a></div>
+                        <div class="price">
+                            <if condition="intval($goods['shop_price']) neq 0">
+                                <span class="del left JS_zhi">￥{$goods.shop_price}</span><del style="color: #666;">元</del>
+                            </if>
+                            <span class="right"><em class="rmb JS_zhi">￥{$goods.stock_price}</em><em>元</em></span>
+                        </div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+            </if>
+        </div>
+        </volist>
+     </section>
+      <footer>
+          <include file="Public:menu2" />
+      </footer>
+
+</body>
+<script  type="text/javascript">
+    $(document).ready(function(){
+        $(".JS_zhi").each(function(){
+            var jiage = ($(this).text().replace(/[^0-9]+/g, '')/1000000);
+        if(jiage >= 1){
+            $(this).text("¥" + jiage+"万");
+        }
+        });
+    });
+</script>
+</html>

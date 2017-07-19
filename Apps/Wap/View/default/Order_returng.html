@@ -1,0 +1,44 @@
+<extend name="Order:refund_tpl" />
+<block name="main">
+    <div class="container">
+        <form action="{:U('returng_act')}" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <label>退货原因</label>
+                <select name="cause_type" id="">
+                    <option value="1">个人原因退货</option>
+                    <option value="2">质量原因退货</option>
+                    <option value="3">七天无理由</option>
+
+                </select>
+            </div>
+            <div class="row">
+                <label for="">上传凭据</label>
+                <div class="fileContainer">
+                    <button type="button">请选择文件</button>
+                    <input type="file" id="refund_file" name="refund_img">
+                </div>
+            </div>
+            <div class="row">
+                <label for="">退款金额</label>
+                <div>
+                    <input type="text" name="refund_price">
+                    <p style="color:#999">最大退款金额：{$goods_info.max_refund|number_format=2}元</p>
+                </div>
+            </div>
+            <div class="row">
+                <label for="cause_describe">退货原因描述</label>
+                <div>
+                <textarea name="cause_describe" id="cause_describe" cols="30" rows="10">
+                </textarea>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <input type="hidden" name="rec_id" value="{$II['rec_id']}">
+            <input type="hidden" name="id" value="{$II['id']}">
+            <input type="hidden" name="form_token" value="{$form_token}">
+            <div class="row">
+                <button type="submit" class="submit">提交申请</button>
+            </div>
+        </form>
+    </div>
+</block>

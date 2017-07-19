@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>余额充值</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/money.css" /> 
+ </head> 
+ <body> 
+  <header id="header"> </header> 
+  <input type="hidden" id="memberid" value="{$memberid}"/>
+  <div class="money-wp"> 
+   <div class="money-wp-fff"> 
+    <form method="post" class="registerform" action="{:U('Weixin/jsApiCall',array('token'=>$II['token']))}">
+     <div class="input-group"> 
+      <div class="input-group-addon"> 
+       <i class="fa fa-user"> 
+        <svg width="23" height="20" viewbox="8 0 25 27"> 
+         <g class="transform-group"> 
+          <g transform="translate(0, 25.375) scale(1, -1) scale(0.03125, 0.03125)"> 
+           <path d="M635.897269 199.874605c-5.534267 1.799996-40.474442 17.553795-18.641309 83.930551l-0.305981 0c56.906343 58.601676 100.400685 152.955624 100.400685 245.815545 0 142.803403-94.968753 217.634716-205.318428 217.634716-110.417216 0-204.842571-74.830289-204.842571-217.634716 0-93.233428 43.256925-187.960883 100.50302-246.426459 22.307966-58.534138-17.588284-80.264045-25.940852-83.319637C266.173871 158.078687 130.596618 81.89047 130.596618 6.685651c0-20.303418 0-8.012488 0-28.179806 0-102.468766 198.663595-125.760239 382.522413-125.760239 184.132052 0 380.282304 23.291472 380.282304 125.760239 0 20.167319 0 7.876388 0 28.179806C893.402359 84.16528 757.146626 159.743606 635.897269 199.874605z" fill="#737383"></path> 
+          </g> 
+         </g> 
+        </svg> </i> 
+      </div> 
+      <div class="ui-input-text">
+       <input type="text" class="form-control" placeholder="用户名" value="{$mycash.member_name}" readonly="" />
+      </div> 
+     </div> 
+     <div class="form-group" style="position:relative;"> 
+      <div class="input-group"> 
+       <div class="input-group-addon"> 
+        <i class="fa fa-money"> 
+         <svg width="23" height="20" viewbox="5 0 25 27"> 
+          <g class="transform-group"> 
+           <g transform="translate(0, 25.375) scale(1, -1) scale(0.03125, 0.03125)"> 
+            <path d="M379.343189 368.149123c0 0.161682 0 0.161682 0 0.321318 0 73.15002 59.535955 132.692115 132.698255 132.692115 73.137741 0 132.686998-59.542094 132.686998-132.692115 0-0.160659 0-0.160659 0-0.321318l210.619952 0 33.686217 0-38.645159 217.754442-17.74106 100.19805c-0.857531 4.462638-3.350304 8.287757-6.968715 10.780531-3.671623 2.498914-8.134261 3.471055-12.434194 2.666736l-97.231485-18.277272-0.641613 0c-0.162706 0-0.484024-0.161682-0.671289-0.161682L127.572002 571.164886c-8.976442-1.641383-14.766308-10.136871-13.43908-19.080567l30.027897-183.934173 33.660634 0L379.343189 368.150146zM739.090577 651.919095c5.962805-16.065907 16.588817-29.828352 30.993898-39.610136 13.453407-9.139148 28.876678-14.290471 44.488237-14.612813l5.801123-33.010835c-1.499144-0.160659-2.827395-0.160659-4.313236-0.160659-23.075555 0-45.453215 6.960529-64.856124 20.406772-21.574365 14.935154-37.318954 36.153408-44.970214 60.869323L739.090577 651.919095zM160.402735 475.080527c31.450293 12.508895 52.528354 43.636846 53.090149 78.328973l32.977066 6.285147c2.171456-53.190433-31.007201-101.778034-80.760348-117.952412l0 0.040932L160.402735 475.080527zM512.041444 467.999249c-54.912657 0-99.519598-44.615127-99.519598-99.528807 0-0.160659 0-0.160659 0-0.321318l199.027939 0c0 0.161682 0 0.161682 0 0.321318C611.549785 423.384122 566.915215 467.999249 512.041444 467.999249zM512.041444 235.458031c-54.885028 0-99.519598-44.642756-99.519598-99.515504 0-54.878888 44.63457-99.520621 99.519598-99.520621 54.873772 0 99.508341 44.641733 99.508341 99.520621C611.549785 190.815275 566.915215 235.458031 512.041444 235.458031zM909.779074 250.71962l-14.941294 84.251869-51.081399 0-70.01461 0c6.968715-34.170241 35.001165-60.868299 70.01461-65.531506l0-33.332153c-53.264111 5.152347-96.049566 46.288233-103.500259 98.863658L278.508643 334.971489c-7.127328-50.759057-47.461965-91.057879-98.194416-98.187253l0 33.506115c32.481785 6.632047 58.048067 32.159444 64.695464 64.681138l-64.695464 0-33.177634 0 0-82.924641 0-232.214782 0-99.506295c0-9.139148 7.450692-16.588817 16.588817-16.588817l99.521644 0 497.577522 0 99.508341 0c9.111518 0 16.587793 7.449669 16.587793 16.588817l0 99.506295L876.920712 224.83816l21.895683 7.28287C906.601708 234.780603 911.266961 242.747042 909.779074 250.71962zM244.983085-63.086435c-6.620791 32.42755-32.241308 58.049091-64.668859 64.667835l0 33.513278c50.731428-7.303336 90.864474-47.449685 98.194416-98.181113L244.983085-63.086435zM512.041444 3.257575c-73.189929 0-132.698255 59.508325-132.698255 132.684952 0 73.151044 59.508325 132.693138 132.698255 132.693138 73.137741 0 132.686998-59.542094 132.686998-132.693138C644.728442 62.765901 585.179185 3.257575 512.041444 3.257575zM843.756381 1.582423c-32.468482-6.619768-58.06137-32.240285-64.666812-64.667835l-33.513278 0c7.274684 50.731428 47.447639 90.8788 98.18009 98.181113L843.756381 1.582423z" fill="#737383"></path> 
+           </g> 
+          </g> 
+         </svg> </i> 
+       </div> 
+       <span> <label>
+         <div class="ui-input-text1">
+          <input type="text" placeholder="请输入充值金额" id="money" class="true_name" name="money" datatype="n" nullmsg="请输入金额" errormsg="请输入正确金额" />
+         </div></label> <i class="i-tex"> 
+         <svg width="23" height="20" viewbox="5 0 25 27"> 
+          <g class="transform-group"> 
+           <g transform="translate(0, 25.375) scale(1, -1) scale(0.03125, 0.03125)"> 
+            <path d="M67.333548 513.045187 511.751337 63.78716 957.60994 513.642798Z" fill="#737383"></path> 
+           </g> 
+          </g> 
+         </svg> </i> </span> 
+       <div class="ui-select">
+        <div id="moneySe-button" class="ui-shadow">
+         <span class="form-control1">请选择</span>
+         <select name="moneySe" id="moneySe" class="form-control1"> <option value="0">请选择</option> <option value="30">30元</option> <option value="50">50元</option> <option value="100">100元</option> <option value="200">200元</option> <option value="300">300元</option> </select>
+        </div>
+       </div> 
+        
+      </div> 
+      <input type="hidden" name="token" value="{$II['token']}" />
+      <input type="hidden" name="wecha_id" value="{$mycash.openid}" /> 
+      <input type="hidden" name="paytype" value="recharge" /> 
+      <div class="ui-corner-all"> 
+<!--       //<a href="" class="goto-settlement">去结算</a> -->
+        <input class="goto-settlement"  type="submit" name="submit"  value="立即充值"/>
+      </div> 
+      
+      <div class="text"> 
+          <a href="{:U('Member/recharge',array('token'=>$II['token']))}" class="ui-link">充值记录</a>
+      </div> 
+     </div> 
+    </form> 
+   </div> 
+  </div> 
+  <script type="text/html" id="voucher-list-tmpl">
+
+</script> 
+  <div id="footer">
+</div> 
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script> 
+  <script>
+	  
+  $('#moneySe').change(function(){
+			var money = $('#moneySe').val();
+			if(parseFloat(money) > 0){
+				$('#money').val($('#moneySe').val());
+			} else {
+				$('#money').val('');
+			}
+			
+		});
+
+
+</script>  
+ </body>
+</html>

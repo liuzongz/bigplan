@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+  <title></title> 
+  <meta name="format-detection" content="telephone=no, address=no" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <!-- apple devices fullscreen --> 
+  <meta name="apple-touch-fullscreen" content="yes" /> 
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> 
+  <meta name="keywords" content="微擎,微信,微信公众平台,we7.cc" /> 
+  <meta name="description" content="" /> 
+  <link rel="stylesheet" href="__CSS__/comm.css" /> 
+  <link rel="stylesheet" href="__CSS__/jquery.mobile-1.4.2.min.css" /> 
+  <script src="__JS__/jquery-1.8.3.min.js"></script> 
+  <script src="__JS__/index-x.js"></script> 
+  <script src="__JS__/jquery.mobile-1.4.2.min.js"></script> 
+  <script src="__JS__/jquery-touch.js"></script> 
+  <script src="__JS__/jQuery.autoIMG.js"></script> 
+  <style>html .ui-bar-a{background-color: #f78721;color: #ffffff;}</style> 
+ </head> 
+ <body style="background-color:#f2f2f2;"> 
+  <link rel="stylesheet" href="__CSS__/index-1.css" /> 
+	  
+  <div data-role="page"> 
+
+
+   
+   <div class="list"> 
+    
+    <a href="{:U('Product/detail?goods_id='.$goods_id.'&token='.$II['token'].'&memberid='.$II['memberid'])}" data-ajax="false">{$goods_body}</a>
+    
+    
+    
+           
+
+    
+  </div> 
+  <!-- /content --> 
+  <!-- /footer --> 
+  <div class="mask_menu" style="display:none;"></div> 
+  <div class="menu" id="menufloat">
+   <i class="icon-menu"> 
+    <svg width="50" height="21" viewbox="-1 2 48 30"> 
+     <g class="transform-group"> 
+      <g transform="translate(0, 25.375) scale(1, -1) scale(0.03125, 0.03125)"> 
+       <path d="M905.53344-189.96352 643.26656-189.96352c-53.68832 0-97.2288 43.9296-97.2288 98.10944L546.03776 172.69632c0 54.17984 43.54048 98.08896 97.2288 98.08896l262.25664 0c53.66784 0 97.2288-43.90912 97.2288-98.08896l0-264.5504C1002.76224-146.03392 959.20128-189.96352 905.53344-189.96352zM905.53344 327.8016 643.26656 327.8016c-53.68832 0-97.2288 43.90912-97.2288 98.0992L546.03776 690.4512c0 54.17984 43.54048 98.0992 97.2288 98.0992l262.25664 0c53.66784 0 97.2288-43.91936 97.2288-98.0992l0-264.5504C1002.76224 371.70048 959.20128 327.8016 905.53344 327.8016zM386.93888-189.96352 124.70272-189.96352c-53.69856 0-97.2288 43.9296-97.2288 98.10944L27.47392 172.69632c0 54.17984 43.52 98.08896 97.2288 98.08896l262.23616 0c53.68832 0 97.23904-43.90912 97.23904-98.08896l0-264.5504C484.17792-146.03392 440.6272-189.96352 386.93888-189.96352zM386.93888 327.8016 124.70272 327.8016c-53.69856 0-97.2288 43.90912-97.2288 98.0992L27.47392 690.4512c0 54.17984 43.52 98.0992 97.2288 98.0992l262.23616 0c53.68832 0 97.23904-43.91936 97.23904-98.0992l0-264.5504C484.17792 371.70048 440.6272 327.8016 386.93888 327.8016z" fill="#ff4305"></path> 
+      </g> 
+     </g> 
+    </svg> </i>
+  </div> 
+  <div class="menu-c  notel" id="menufloat-c" style="display:none;"> 
+   <div class="menu-c-out"> 
+    <div class="menu-c-inner"> 
+     <a class="a-home" data-ajax="false" href="{:U('Index/index?token='.$II['token'].'&memberid='.$II['memberid'])}" title="首页"></a> 
+     <a class="a-member" data-ajax="false" href="{:U('Order/orderlist?token='.$II['token'])}" title="我的订单"></a> 
+     <a class="a-search" data-ajax="false" href="{:U('Member/cashcharge?token='.$II['token'])}" title="充值中心"></a> 
+     <a class="a-cart" data-ajax="false" href="{:U('Cart/cartlist?token='.$II['token'])}" title="购物车"></a> 
+     <a class="a-collect" data-ajax="false" href="{:U('Member/member?act=member&token='.$II['token'].'&memberid='.$II['memberid'])}" title="个人中心"></a> 
+    </div> 
+   </div> 
+  </div> 
+  <!-- /footer --> 
+  <script>
+  	$(function(){ 
+    	$(".list").autoIMG(); 
+	});
+  </script>
+  <script src="__JS__/index-demo.js"></script>  
+ </body>
+</html>

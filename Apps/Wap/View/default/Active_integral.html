@@ -1,0 +1,24 @@
+ <li class="comImg integral">
+    <div class="bgHot none"><img src="__IMG__/hot.png" alt=""></div>
+                    <a href="{$goods.url}">
+        <img src="{:echo_img($goods['goods_thumb'])}" />
+                    </a>
+                    <p class="">
+                        <a class="sN_change" href="{$goods.url}">
+                            {$goods.goods_name}
+                        </a>
+                    </p>
+                    <div class="buy">
+        <!--<div class="moreTime">-->
+            <!--&lt;!&ndash;<div class="left"><em>已兑换33件</em></div>&ndash;&gt;-->
+                            <!--</div>-->
+                        <div class="buyRMB">
+                            <div class="left" style="line-height: 1.2rem;">
+                                <em style="color:#e60012;font-size: .7rem;">{$goods['show_price']}</em><em style="color: #acacac;font-size: .5rem;"> {$_CFG['integral_name']}</em>
+                            </div>
+                            <div class="right weibi">
+                                <a href="javascript:void(0)">微</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>

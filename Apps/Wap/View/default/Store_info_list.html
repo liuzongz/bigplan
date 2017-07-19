@@ -1,0 +1,26 @@
+    <div class="comBack-all">
+        <if condition="empty($cate) and !empty($store_goods)">
+            <div class="comBack">
+            <ul class="comCp">
+                <volist name="store_goods" id="goods" offset="0" length='6' empty="$goods_empty" mod="2">
+                    <include file="Public:goods_list2" />
+                </volist>
+            </ul>
+            </div>
+            <else/>
+        <volist name="cate_list" id="cate">
+            <if condition="$cate.goods_list">
+        <div class="comBack">
+            <div class="wareM">
+                <span class="head" data-id="{$cate.id}">{$cate.name}</span>
+            </div>
+            <ul class="comCp">
+                <volist name="cate.goods_list" id="goods" offset="0" length='4' empty="$goods_empty" mod="2">
+                    <include file="Public:goods_list2" />
+                </volist>
+            </ul>
+        </div>
+            </if>
+        </volist>
+        </if>
+    </div>

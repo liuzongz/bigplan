@@ -1,0 +1,60 @@
+<div class="pddc-gray-warp">
+    <form name="addtocart" id="_JS_addtocart" action="" method="post">
+    <ul class="pddc-stock ppdc-white-wrap" style="padding:0 10px;">
+        <volist name="attr.spe" id="spec">
+            <li class="pddc-stock-spec bd-tdashed-dd">
+                <span class="key-no" data-spec_id="{$spec.id}">
+                    {$spec.name}：
+                </span>
+                <div class="value-no mt10" data-attr_type="{$spec.attr_type}">
+                    <volist name="spec.values" id="s">
+                        <span>
+                            <input type="<if condition="$spec.attr_type eq 1">radio<else/>checkbox</if>" name="spec_{$spec.id}" class="spec_val" id="spec_{$spec.id}_{$s.id}" value="{$s.id}" <if condition="$s.selected eq 1">checked</if> data-price="{$s.price}" />
+                            <label for="spec_{$spec.id}_{$s.id}" class="spec_list spec_<if condition="$spec.attr_type eq 1">radio<else/>check</if> <if condition="$s.selected eq 1">current</if>" specs_value_id="{$s.id}" data-price="{$s.price}">{$s.label}</label>
+                        </span>
+                    </volist>
+                </div>
+            </li>
+        </volist>
+        <li style="padding:3px 0 13px;">
+                <span class="key-no">
+                    数量：
+                </span>
+            <div class="value-no mt10 clearfix" style="width:81%;display: inline-flex;">
+                    <span class="minus-wp fleft">
+                        <span class="i-minus"></span>
+                    </span>
+                <input type="text" class="buy-num fleft" id="buynum" value="1"/>
+                    <span class="add-wp fleft">
+                        <span class="i-add"></span>
+                    </span>
+                <span class="key lin36" style="font-size: 12px;">库存:</span>
+                <div class="price value lin36" style="font-size: 12px;">
+                    <span class="stock-num">{$goods_info.goods_number}</span>
+                    件
+                </div>
+            </div>
+        </li>
+        <li class="bd-tdashed-dd" style="display:none;">
+            <empty name="has_buy">
+                <div class="opera-product-wp">
+                    <if condition="$goods_info.is_virtual eq '1'">
+                        <div class="opera-pd-item buy-now">立即购买</div>
+                        <elseif condition="$goods_info.is_presell == '1'"/>
+                        <div class="opera-pd-item buy-now">预售购买</div>
+                        <elseif condition="$goods_info.is_fcode == '1'"/>
+                        <div class="opera-pd-item buy-now">F码购买</div>
+                        <else/>
+                        <div class="opera-pd-item buy-now">立即购买</div>
+                        <if condition="$goods_info.promotion_type neq 'groupbuy'">
+                            <div class="opera-pd-item add-to-cart">加入购物车</div>
+                        </if>
+                    </if>
+                </div>
+                <else />
+                <font color="red">您已参与购买体验</font>
+            </empty>
+        </li>
+    </ul>
+    </form>
+</div>

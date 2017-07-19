@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>提现记录</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/binding.css" /> 
+ </head> 
+ <body> 
+  <header id="header"> </header> 
+  <input type="hidden" id="memberid" value="{$memberid}"/>
+  <ul class="voucher-tab">
+      <li class="<if condition='($info.pdc_payment_state eq 0) AND ($info.state eq 0) '>active</if>"> <a href="{:U('Member/cashlists',array('state'=>0,'paystate'=>0,'token'=>$II['token']))}">申请中</a> </li>
+  <li class="<if condition='($info.pdc_payment_state eq 1) AND ($info.state eq 1) '>active</if>"> <a href="{:U('Member/cashlists',array('state'=>1,'paystate'=>1,'token'=>$II['token']))}">提现成功</a> </li>
+  <li class="<if condition='($info.pdc_payment_state eq 0) AND ($info.state eq 2) '>active</if>"> <a href="{:U('Member/cashlists',array('state'=>2,'paystate'=>0,'token'=>$II['token']))}">提现失败</a> </li>
+</ul>
+
+<div class="table" style="min-height: 500px;">
+ <table width="100%" border="0">
+  <tr>
+    <td class="w24" style="text-align:center;">申请时间</td>
+    <td class="w24" style="text-align:center;">金额</td>
+    <td class="w24" style="text-align:center;">状态</td>
+  </tr>
+  <notempty name="res">
+<volist name="res" id="v">
+  <tr>
+    <td class="w24" style="text-align:center;">{$v.pdc_add_time|date=('Y-m-d'),###}</td>
+    <td class="w24" style="text-align:center;">{$v.pdc_amount}</td>
+    <td class="w24" style="text-align:center;"><if condition="($info.pdc_payment_state eq 0) AND ($info.state eq 0)">申请中<elseif condition="($info.pdc_payment_state eq 1) AND ($info.state eq 1)"/>提现成功<else />提现失败</if></td>
+  </tr>
+  </volist>
+    <else />
+<tr><td colspan="3" style="text-align:center;">暂无记录</td></tr>
+</notempty>
+</table>
+</div>
+  <script type="text/html" id="voucher-list-tmpl">
+
+</script> 
+  <div id="footer">
+</div> 
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script> 
+  
+ </body>
+</html>

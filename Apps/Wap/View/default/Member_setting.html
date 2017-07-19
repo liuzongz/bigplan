@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>我要提现</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/binding.css" /> 
+    <style>
+    .xuzi a {
+        color: #000000;
+    }
+    a {
+        text-decoration: none;
+    }
+  </style>
+ </head> 
+ <body>
+    <header id="header"></header>
+    <input type="hidden" id="memberid" value="{$memberid}"/>
+  <div class="money-wp"> 
+   <div class="money-wp-fff"> 
+    <div class="alert-warning">
+     提现密码在修改资料里面设置，请妥善保管！
+    </div> 
+    <form method="post" class="registerform" action=""> 
+     <div class="ui-body-inherit tixian"> 
+      <ul> 
+       <li><label for="cardname" class="lab">真实姓名：</label> <input type="text" name="pdc_bank_user" value="" placeholder="你的真实姓名.." class="form-cont" id="pdc_bank_user"/></li> 
+       <li><label for="cardname" class="lab">支付宝：</label> <input type="text" name="pdc_bank_name" value="" placeholder="你的支付宝.." class="form-cont" id="pdc_bank_name"/></li> 
+<!--       <li><label for="cardname" class="lab">手机号码：</label> <input type="text" name="mobile"  placeholder="你的手机号码.." class="form-cont" /></li> -->
+       <li><label for="cardname" class="lab">提现密码：</label> <input type="password" name="password"  placeholder="请输入密码"  class="form-cont" id="password"/><span><a href="{:U('Member/pwd', array('token' => $II['token']))}">未设置,点我前去设置</a></span></li>
+      </ul> 
+      
+      <div class="yuer">
+      	<input type="text" name="pdc_amount" id="pdc_amount" class="quee" placeholder="请输入提现金额.." />
+      	<span class="jinqian" >可提现：<i id="available_predeposit"></i></span>
+      </div>
+         <div class="error-tips"></div>
+      <input class="ui-corner-all" type="button" name="subutton" value="提交" id="subutton"/> 
+     </div> 
+    </form> 
+    <ul class="xuzi">
+        <a href="{:U('Member/cashlists',array('state'=>0,'token'=>$II['token']))}"><li>提现记录</li></a>
+        <a href="{:U('Member/tips',array('token'=>$II['token']))}"><li>提现须知</li></a>
+   	</ul>
+    
+   </div> 
+  </div> 
+  
+ 
+  <script type="text/html" id="voucher-list-tmpl">
+
+</script> 
+  <div id="footer"> </div>
+  <input type="hidden" name="referurl">
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script>
+  <script type="text/javascript" src="__JS__/tmpl/member_setting.js"></script>
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script>  
+ </body>
+</html>

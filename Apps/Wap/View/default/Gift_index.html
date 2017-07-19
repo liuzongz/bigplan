@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/swipe.js"></script>
+    <script type="text/javascript" src="/Public/Wap/js/SZ-rem.js"></script>
+</head>
+<body style="background-color: #f1f1f1;">
+<header>
+    <div class="head-seach max640">
+        <form method="" action="{:U('Gift/fenlei')}">
+            <input class="seach-int b-All" name="keywords" type="search" value="" placeholder="沙诗雅" />
+            <input type="hidden" name="id" value="0">
+            <input type="hidden" name="is_dealer" value="2">
+        </form>
+    </div>
+    {@weibi_slide}
+</header>
+<section>
+    <div class="fenlei">
+        <ul class="icon">
+            <volist name="category_list" id="cate">
+                <li class="item">
+                    <div class="icon"><a href="{$cate.cat_info.url}"><img src="{$cate.cat_info.stock_icon}" onerror="this.src='__IMG__/logox2.png'" /></a></div>
+                    <div class="text">{$cate.cat_info.stock_name}</div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <if condition="!empty($new_goods)">
+        <div class="new table">
+            <div class="thead">
+                <span class="icon left"></span>
+                <span class="text left">最新产品</span>
+                <span class="more-icon right"></span>
+                <span class="more right">显示全部</span>
+            </div>
+            <div class="tbody two">
+                <ul class="list">
+                    <volist name="new_goods" id="goods">
+                        <li class="item">
+                            <div class="img"><a href="{$goods.url}"><img src="{$goods.goods_thumb}" /></a></div>
+                            <div class="txt"><a href="{$goods.url}">{$goods.goods_name}</a></div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </if>
+    <if condition="!empty($hot_goods)">
+        <div class="new table">
+            <div class="thead">
+                <span class="icon left"></span>
+                <span class="text left">热销产品</span>
+                <span class="more-icon right"></span>
+                <span class="more right">显示全部</span>
+            </div>
+            <div class="tbody three">
+                <ul class="list">
+                    <volist name="hot_goods" id="goods">
+                        <li class="item">
+                            <div class="img"><a href="{$goods.url}"><img src="{$goods.goods_thumb}" onerror="this.src='__IMG__/logox2.png'" /></a></div>
+                            <div class="txt"><a href="{$goods.url}">{$goods.goods_name}</a></div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </if>
+    <volist name="category_list" id="cate">
+        <if condition="!empty($cate['goods_list'])">
+        <div class="cate table">
+            <div class="thead">
+                <span class="icon left"></span>
+                <span class="text left">{$cate.cat_info.stock_name}</span>
+                <span class="more-icon right"></span>
+                <span class="more right"><a href="{$cate.cat_info.url}">显示全部</a></span>
+            </div>
+            <div class="tbody two">
+                <if condition="!empty($cate['cat_info']['stock_banner'])">
+                    <div class="fenlei_ad"><img src="{$cate.cat_info.stock_banner}" onerror="this.src='__IMG__/Stock_11.jpg'" /></div>
+                </if>
+                <ul class="list">
+                    <volist name="cate.goods_list" id="goods" offset="0" length='4' empty="$goods_empty" mod="2" >
+                        <li class="item <eq name="mod" value="1">noright</eq>">
+                            <php>$img_src='/'.$goods['goods_thumb']?:'__IMG__/logox2.png';</php>
+                            <div class="img"><span><a href="{$goods.url}"><img src="{$img_src}" onerror="this.src='__IMG__/logox2.png'"/></a></span></div>
+                            <div class="txt"><a href="{$goods.url}">{$goods.goods_name|msubstr=0,10}</a></div>
+                            <div class="price">
+                                <span class="del left none" style="display:none;">{$goods.shop_price}{$_CFG.integral_name}</span>
+                                <span class="right"><em class="rmb">{$goods.integral}</em>{$_CFG.integral_name}</span>
+                            </div>
+                            <div class="btn"><a href="{$goods.url}"><button>{$_CFG.integral_name}兑物</button></a></div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        </if>
+    </volist>
+</section>
+<footer>
+    <include file="Public:menu1" />
+</footer>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $(window).scroll(function() {
+            var scroH = $(this).scrollTop();
+            var b = scroH / 600;
+            $('.head-seach').css('background', 'rgba(255,0,0,' + b + ')');
+        });
+    });
+</script>
+</html>

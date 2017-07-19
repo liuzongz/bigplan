@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public/head2" />
+    <style>
+        label{padding:3px 0}
+        .order_goods_info{background-color: #F8F8F8}
+        .container{padding:0em 1em;background-color: #F8F8F8}
+        .row{padding:.5em 0;}
+        .img-box{width:8em;}
+        .img-box img{width: 100%}
+        .attr-box{width: 14em}
+        .order_sn{background-color: #fff;width:120%;padding:0.5em 0.5em}
+        .instructions{color:#666;background-color: floralwhite;}
+        .text_warning{color:#DCC330;padding:0.5em }
+        .refund_info{padding:0.5em}
+        textarea {
+            display: block;
+            width: 80%;
+            height: 5em;
+            padding: 6px 12px;
+            font-size: 1em;
+            line-height: 1.1em;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        .fileContainer button,button.submit>a{color:#FFF}
+        .fileContainer button,button.submit
+        {
+            display: inline-block;
+            /*width:6em;*/
+            zoom: 1;
+            line-height: normal;
+            white-space: nowrap;
+            vertical-align: baseline;
+            text-align: center;
+            cursor: pointer;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: #0769AD;
+            border-radius: 4px;
+            border:0px;
+            color:#fff;
+            padding:0.5em 0.5em;
+        }
+        .fileContainer{
+            position: relative;
+            width:6.5em
+        }
+
+        .fileContainer input[type="file"]{
+            width:6.5em;
+            height:2em;
+            position: absolute;
+            left:0;top:0;
+            filter:alpha(opacity=0); /*IE滤镜*/
+            -moz-opacity:0; /*Firefox*/
+            opacity:0;/*其他*/
+        }
+        table td{text-align: left}
+        table td.t{text-align: right}
+    </style>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="order_sn">
+    <h4>订单编号：{$II['id']}</h4>
+</div>
+<if condition="$goods_info.is_return gt 1">
+    <!--商家信息-->
+    <div>
+        <table>
+            <tr>
+                <td class="t"></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <!--end商家信息-->
+</if>
+<div class="container">
+    <div class="order_goods_info">
+        <div class="left img-box">
+            <img src="{$goods_info.goods_img}" alt="">
+        </div>
+        <div class="right attr-box">
+            <p>{$goods_info.goods_name}.</p>
+            <p class="goods_attr">{$goods_info.goods_attr}</p>
+            <p>价格：￥{$goods_info.goods_price}</p>
+            <p>数量：{$goods_info.goods_number}</p>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<!--提示信息-->
+<div class="instructions">
+    <p class="text_warning">{$refund.notice}</p>
+</div>
+<!--end提示信息-->
+<!--退货信息-->
+<div class="refund_info">
+    <table>
+        <if condition="$refund.step gt 0">
+            <tr>
+                <td class="t">申请时间：</td>
+                <td>{$goods_info.apply_time|date="Y-m-d H:i",###}</td>
+            </tr>
+            <tr>
+                <td  class="t">返款金额：</td>
+                <td>{$goods_info.refund_price|number_format=2}元</td>
+            </tr>
+            <tr>
+                <td class="t">退货原因：</td>
+                <td>{$goods_info.cause_describe}</td>
+            </tr>
+        </if>
+        <if condition="$refund.step gt 1">
+            <tr>
+                <td class="t">审核时间：</td>
+                <td>{$goods_info.check_time|date="Y-m-d H:i",###}</td>
+            </tr>
+        </if>
+        <if condition="$refund.step eq 5">
+            <tr  class="t">
+                <td>返款时间：</td>
+                <td>{$goods_info.refund_time|date="Y-m-d H:i",###}</td>
+            </tr>
+        </if>
+        <if condition="$refund.step gt 1">
+            <tr>
+                <td class="t">卖家备注：</td>
+                <td>{$goods_info.seller_adress}</td>
+            </tr>
+        </if>
+        <if condition="$refund.step gt 2  and $refund.only_pay eq 0">
+            <tr>
+                <td class="t">退货地址：</td>
+                <td>{$goods_info.seller_adress}</td>
+            </tr>
+        </if>
+
+    </table>
+</div>
+<!--end退货信息-->
+<!--内容-->
+<block name="main"></block>
+<!--end内容-->
+
+<script>
+    (function(){
+        var text =  $('.goods_attr').text();
+        var arr = text.split(",");
+        var html = '';
+        for(var i=0;i<arr.length;i++){
+            html += "<p>"+arr[i]+"</p>"
+        }
+        $('.goods_attr').html(html);
+        console.log($('#refund_file'));
+    })();
+
+</script>
+</body>
+</html>

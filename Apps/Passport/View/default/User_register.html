@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>注册</title>
+    <meta name="keywords" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta name="description" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/css/base.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/jquery.cookie.js"></script>
+    <script src="__STATIC__/js/Jiniu.min.js"></script>
+    <script type="text/javascript">
+        (function (doc, win) {    //
+            var docEl = doc.documentElement,
+                    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                    recalc = function () {
+                        var clientWidth = docEl.clientWidth;
+                        if (!clientWidth) return;
+                        if(clientWidth > 768)  clientWidth = 768;
+                        docEl.style.fontSize = clientWidth /10 + 'px';
+                        document.getElementsByTagName("body")[0].style.display = 'block';
+                    };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style type="text/css">
+        input[type=radio]:checked,input[type=checkbox]:checked{vertical-align: middle;
+            background:url('__IMG__/radioStyle01.png') no-repeat center center rgba(0,0,0,0);
+            background-size: .43rem .43rem;width: .43rem; height:.43rem;border:none;overflow: hidden;
+            -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-appearance: none;border-radius: 1rem;
+        }
+        input[type=radio],input[type=checkbox]{ background-color: #ccc;
+            -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-appearance: none;
+            width: .43rem; height:.43rem;border-radius: 1rem;overflow: hidden; }
+        .warp{
+            width: 8rem;
+            margin: 0 auto;
+            padding-top: .5rem;
+        }
+        .inputPo{
+            position: relative;
+        }
+        .warp .input{
+            font-size: 1em;
+            width: 100%;height: 1.2rem;
+            color: #c6c6cd;margin-top: .3rem;
+            border-bottom: 1px solid #c6c6cd;
+        }
+        .inputPo .select-jg{
+            height: 1.2rem;
+            margin-top: .2rem;border-bottom: 1px solid #c6c6cd;
+            align-items: center;-webkit-align-items: center;font-size: 1em;
+        }
+        .inputPo .select-jg select{
+            border:none;flex: 1;height: 1.2rem;
+            padding-left:.5rem;  align-items: center;-webkit-align-items: center;
+            -webkit-flex: 1;flex:1;
+            font-size: 1em;
+        }
+        .inputPo .select-jg select option{
+            height: 1rem;
+        }
+        .warp .yan{
+            height: 1.4rem;
+            position: relative;
+        }
+        .warp .yan .yanword{
+            width: 2.5rem; height: .9rem;text-align: center;line-height: .9rem;
+            border-radius: .2rem;color: #fa6d52;
+            position: absolute;right: 0;top:.45rem;
+        }
+        .warp .yan .yanword.cur{
+            border:1px solid #c6c6cd;color: #c6c6cd;
+        }
+        .submit{
+            height: 1.13rem;width: 8rem;
+            border-radius: .5rem;color: white;
+            margin-top: .3rem;
+            -webkit-box-shadow: 0 2px 2px 0px #ffd8d1;
+            -moz-box-shadow: 0 2px 2px 0px #ffd8d1;
+            box-shadow: 0 2px 2px 0px #ffd8d1;font-size: 1em;
+            background: -webkit-linear-gradient(left, #fa3f36 , #fd7754); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(right, #fa3f36 , #fd7754); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(right, #fa3f36 , #fd7754); /* Firefox 3.6 - 15 */
+            background: linear-gradient(to right, #fa3f36 , #fd7754); /* 标准的语法（必须放在最后） */
+        }
+        a.sign-in{
+            height: 1.13rem;width: 8rem; border-radius: .5rem;
+            color: #fa6d52;   margin: .2rem 0;font-size: 1em;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+            -webkit-box-shadow: 0 2px 2px 0px #ffd8d1;
+            -moz-box-shadow: 0 2px 2px 0px #ffd8d1;
+            box-shadow: 0 2px 2px 0px #ffd8d1;
+        }
+        .jiniu{
+            align-items: stretch;-webkit-align-items:stretch;
+            justify-content: center;-webkit-justify-content: center;
+            height: 1.4rem;width: 8rem;
+        }
+        .jiniu .radio{
+            align-items: center;-webkit-align-items: center;
+        }
+        .jiniu .jn-xy{
+            align-items: center;-webkit-align-items: center;
+        }
+        .jiniu input[type=checkbox]{
+            margin-right:.2rem ;
+        }
+
+    </style>
+</head>
+<body class="none">
+<div class="warp">
+    <form action="{:U()}"  id="regform"  method="post" >
+        <div class="inputPo">
+            <input class="input" type="text" name="nickname" id='nickname' placeholder="请输入机构名称">
+            <div class="flex select-jg">请选择所属行业
+                <select name="user_areainfo" id="user_areainfo" class="flex">
+                    <foreach name="organization" item="_">
+                        <option value="<{$_}>">{$_}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div style="margin-top: .2rem;">请选择所在省份 </div>
+            <div class="flex select-jg" name="province">
+                    <select name="province" class="province"><option value="">请选择</option></select>
+                    <select name="city" class="city"><option value="">请选择</option></select>
+                    <select name="district" class="area"><option value="">请选择</option></select>
+                    <!-- <span type="text" class="fr">&lt;教育培训&gt;</span>-->
+            </div>
+            <input class="input" type="tel" id="phone" name="phone" placeholder="请输入手机号" required pattern="^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}">
+            <!--<div class="yan flex">
+                <input class="input" type="number" id="verify" name="number" placeholder="请输入验证码" />
+                <input type="button" class="yanword"  id = 'getting' value="获取验证码" />
+            </div>-->
+            <input class="input" type="password" id="password" name="password" placeholder="请设置密码(6-20位字母和数字组成)">
+        </div>
+        <div class="jiniu flex">
+            <!--<div class="flex radio">
+                <input type="radio" disabled>
+            </div>
+            <div id="reading" class="flex jn-xy">请点击阅读并接受
+                <a style="color: red;" href="javascript:void(0)">《即牛用户协议》</a>
+            </div>-->
+        </div>
+        <input type="hidden" id="sms_token" name="sms_token" value="" />
+        <input type="hidden" name="back_act" value="{$back_act}" />
+        <input class="submit" type="submit" value="提交注册">
+        <a class="sign-in flex" href="{:U('login') . '?back_act=' . $back_act}">返回登录</a>
+    </form>
+</div>
+
+<div class="read  none" id="alertRead">
+    <div class="warp">
+        <div class="word"></div>
+        <div class="btnchange flex">
+            <input id="input1" type="button" value="不同意">
+            <input id="input2" type="button" value="同意">
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    $(function(){
+        /*仿刷新：检测是否存在cookie*/
+        if($.cookie("captcha")){   //
+            var count = $.cookie("captcha");
+            var btn = $('#getting');
+            btn.val('重新获取' +count).attr('disabled',true).addClass('cur');
+            var resend = setInterval(function(){
+                count--;
+                if (count > 0){
+                    btn.val('重新获取' +count).attr('disabled',true).addClass('cur');
+                    $.cookie("captcha", count, {path: '/', expires: (1/86400)*count});
+                }else {
+                    clearInterval(resend);
+                    btn.val("获取验证码").removeClass('cur').removeAttr('disabled style');
+                }
+            }, 1000);
+        }
+        var get_region = function ($id, $obj){
+            $.ajaxSettings.async = false;
+            var region = function (ex) {
+                if (ex.error == 0) {
+                    var data = ex.data,str = '<option value="">请选择</option>';
+                    $.each(data,function(ex,item){
+                        str += '<option value="' + item.region_id + '">' + item.region_name + '</option>';
+                    });
+                    $obj.html(str);
+                } else {
+                    alert(ex.msg);
+                }
+            };
+            Jiniu.ajax("{:U('region')}?id=" + $id,'',region,'GET','JSON',false);
+        };
+        var s = $('.province'),c = $('.city'), a = $('.area'),str = '<option value="">请选择</option>';
+        //显示用户当前地区
+        var cs = parseInt("0"||0);
+        var cc = parseInt("0"||0);
+        var ca = parseInt("0"||0);
+        get_region(0, s);s.children('option[value="'+cs+'"]').attr("selected","selected");
+        /*get_region(cs,c);c.children('option[value="'+cc+'"]').attr("selected","selected");
+         get_region(cc,a);a.children('option[value="'+ca+'"]').attr("selected","selected");*/
+
+        s.change(function(){
+            a.html(str);
+            c.html(str);
+            get_region($(this).val(), c);
+        });
+        c.change(function(){
+            a.html(str);
+            get_region($(this).val(), a);
+        });
+        /*点击改变按钮状态，已经简略掉ajax发送短信验证的代码*/
+        $('#getting').click(function(){
+            var number = $('#phone').val();
+            if (!Jiniu.checkMobile(number)) {
+                alert('请输入正确格式的手机号码！'); return false;
+            }
+            var $hash = $("input[name=__hash__]").val();
+            var btn = $(this);
+            var count = 60;
+            var resend = setInterval(function(){
+                count--;
+                if (count > 0){
+                    btn.val('重新获取' +count);
+                    $.cookie("captcha", count, {path: '/', expires: (1/86400)*count});
+                }else {
+                    clearInterval(resend);
+                    btn.val("获取验证码").removeAttr('disabled').removeClass('cur');
+                }
+            }, 1000);
+            $.ajax({
+                url:"{:U('sendmsg')}",
+                data:'user='+number+'&__hash__='+$hash,
+                type:'post',
+                success:function(ex){
+                    if (ex.error != 0) {
+                        alert(ex.msg);
+                    }else {
+                        $("#sms_token").val(ex.data.token);
+                    }
+                }
+            });
+            btn.attr('disabled',true).addClass('cur')
+        });
+
+        $('#reading a').click(function(){
+            $('#alertRead').fadeIn(1000);
+        })
+        var register = function (ex) {
+            Jiniu1.closeloading();
+            if (ex.error != 200) {
+                alert(ex.msg);
+            }else{
+                alert(ex.msg);
+                window.location.href=ex.data.url;
+            }
+        };
+        $('#regform').submit(function(){
+            var     $nickname = $('#nickname').val(),//机构
+                    $phone    = $('#phone').val(),//手机号
+                    $verify   = $('#verify').val(),//验证码
+                    $password = $('#password').val(),//密码
+                    $province = $("select[name=province]").val(),//省
+                    $city     = $("select[name=city]").val(),//密码
+                    $district = $("select[name=district]").val(),//密码
+                    $user_areainfo = $('#user_areainfo').val();
+            /*var data='nickname='+$nickname+'&user_areainfo='+$user_areainfo+'&phone='+$phone+'&password='+$password+'&number='+$verify
+                    +'&province='+$province+'&city='+$city+'&district='+$district;*/
+            var data = $('#regform').serialize();
+            if($nickname.length < 6 || $password.length > 18){
+                alert('请输入机构名称！必须大于6位小于18位'); return false;
+            } else
+            if (!Jiniu.checkMobile($phone)) {
+                alert('只能输入手机号码！'); return false;
+            } else
+            /*if($verify.length != 6 ){
+                alert('请输入正确的验证码！'); return false;
+            } else */if ($password.length < 6 || $password.length > 18){
+                alert('请输入正确的密码！必须大于6位小于18位'); return false;
+            } else {
+                Jiniu1.loading('请等待...');
+                Jiniu.ajax("{:U('register')}",data,register,'POST','JSON',false);
+            }
+            return false;
+        });
+        $('.register-butt').click(function(){});
+        //同意和不同意协议按钮
+        $('#input1').click(function(){
+            $('#alertRead').fadeOut(500);
+            $('.radio input').attr("checked", false);
+        });
+        $('#input2').click(function(){
+            $('#alertRead').fadeOut(500);
+            $('.radio input').attr("checked", true);
+
+        });
+    });
+
+</script>
+</html>

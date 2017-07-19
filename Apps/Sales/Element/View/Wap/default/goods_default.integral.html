@@ -1,0 +1,22 @@
+<div class="salesAther1">
+    {$_activity->goods->data['goods_name']}
+    <php>if($_activity->goods->data['goods_short_name'] != ''):</php>
+    <em>[{$_activity->goods->data['goods_short_name']}]</em>
+    <php>endif;</php>
+</div> <!--商品名称   正常现金商品样式-->
+<div class="rmbPic">
+    <div class="priceCome">
+        <em style="font-size: 1rem;color: #fe7902;">{$_activity->price()->WB}</em><em style="font-size: .8rem;color: #fe7902;">{$_CFG['integral_name']}</em>
+    </div>
+    <div class="priceOut">
+        <php> if(intval($_activity->goods->data['market_price']) != 0): </php>
+            <del style="font-size: .4rem;margin-right: .2rem;">原价：¥{$_activity->goods->data['market_price']|price_format}</del>
+        <php> endif;</php>
+    </div>
+    <div class="sellerNum"><em>销量{$_activity->goods->data['sale_count']}笔</em></div>
+</div>   <!--商品价格   正常现金商品样式-->
+<ul>
+    <li class="sty8 ">
+        <div class="warpHv"><i class="icon03 myF icon-yes"></i><em>官方认证</em><i class="icon03 myF icon-yes"></i><em>担保交易</em><i class="icon03 myF icon-yes"></i><em>线下体验店</em></div>
+    </li>
+</ul>

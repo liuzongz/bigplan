@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <include file="Public:head" />
+    <style type="text/css">
+        .pddetail-cnt{}
+        .pddetail-cnt .pddc-topwp{}
+        .pddc-topwp{height:12rem;width:100%;overflow:hidden;position:relative;}
+        .pddc-topwp .swiper-container{height:12rem;overflow:hidden;zoom:1;}
+        .pddc-topwp .swipe-wrap{height:12rem;overflow:hidden;zoom:1;}
+        .pddc-topwp .swipe-item{float:left;}
+        .pddc-topwp .swipe-item a{display:table-cell;height:12rem;width:20rem;text-align:center;vertical-align: middle;}
+        .pddc-topwp .swipe-item a img{max-width:20rem;max-height:12rem;}
+        label.spec_list{border:1px solid #e2e2e2;padding:6px 10px;}
+        label.spec_list.current{border-color:red;background:url('__IMG__/d_ture.gif') no-repeat right bottom;}
+        .pddctnw-name{color:#fff;}
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header" />
+<div class="main" style="font-size: 16px;">
+    <div class="pddetail-cnt">
+        <include file="goods:gallery" />
+        <include file="goods:property" />
+        <include file="goods:gift" />
+        <include file="goods:spec" />
+        <include file="goods:desc" />
+        <include file="goods:buy" />
+    </div>
+    <include file="Public:share" />
+</div>
+<include file="Public:footer" />
+<script type="text/javascript" src="__JS__/zepto.min.js"></script>
+<script type="text/javascript" src="__JS__/swipe.js"></script>
+<script type="text/javascript">
+    $(function() { goods.init();});
+    var goods = {
+        init : function(){
+            this.picSwipe();
+            this.changeNum();
+            this.addtocart();
+            this.selected_spec();
+        },
+        check_price : function(){
+            var attr_price = function(ex){
+                if (ex.error > 0) {
+                    alert(ex.message);
+                } else {
+                    $('#JS_Price').text(ex.data.price);
+                }
+            };
+            var spec = goods.get_spec();
+            var data = {goods_id:"{$goods_info.goods_id}",spec:spec};console.log(data);
+            Jiniu.ajax('{$url.get_attr_url}',data, attr_price, 'POST','JSON');
+        },
+        selected_spec : function(){
+            $('.pddc-stock-spec').find('label.spec_list').on('click', function(ex){
+                var that = $(this);
+                var $type = that.parent().parent().data('attr_type');
+                if ($type == 2) {
+                    that.toggleClass('current');
+                } else {
+                    that.parent().parent().find('label.spec_list.current').removeClass('current');
+                    that.addClass('current');
+                }
+                setTimeout(goods.check_price,500);
+            });
+        },
+        addtocart : function(){
+            var buynow = 0;
+            var addresult = function(result){
+                if (result.error > 0) {
+                    alert(result.message);
+                    if (result.error == 2) {
+                        location.href = "{$url.return_url}";
+                    }
+                } else {
+                    if (buynow) {
+                        location.href = result.contents.buynow_url;
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            };
+            $(".add-to-cart").click(function (){
+                if ($(this).attr('id') == 'JS_buynow') buynow = 1;
+                var spec = goods.get_spec();
+                var data = {goods_id:"{$goods_info.goods_id}",spec:spec,number:$('#buynum').val(),quick:1,back_act:'{$url.curr_url}',buynow:buynow};
+                Jiniu.ajax('{$url.addtocart_url}',data,addresult,'POST','JSON');
+                return false;
+            });
+        },
+        get_spec : function (){
+            var spec = '';// = $('.pddc-stock').find('input[name*="spec_"]:checked').val();
+            $('.pddc-stock').find('input[name*="spec_"]:checked').each(function(ex,item){
+                if (spec) spec += ',';
+                spec += item.value;
+            });
+            /*$('.spec_check').each(function(ex,item){
+                if ($(this).parent().find('input').prop('checked')) {
+                    if (spec) spec += ',';
+                    spec += $(this).parent().find('input:checked').val();
+                }
+            });*/
+            return spec;
+        },
+        changeNum : function(){
+            var numobj = $(".buy-num");
+            $('.minus-wp').on('click', function(){
+                var buynum = parseInt(numobj.val());
+                if(buynum > 1){
+                    numobj.val(parseInt(buynum - 1));
+                }
+            });
+            $('.add-wp').on('click', function(){
+                var goods_number = $('.stock-num').text();
+                var buynum = parseInt(numobj.val());
+                if(buynum < goods_number){
+                    numobj.val(parseInt(buynum + 1));
+                } else {
+                    alert('库存只有 ' + goods_number + ' 件' );
+                }
+            })
+        },
+        picSwipe : function (){
+            var elem = $("#mySwipe")[0];
+            window.mySwipe = Swipe(elem, {
+                continuous: true,
+                // disableScroll: true,
+                stopPropagation: true,
+                callback: function(index, element) {
+                    $(".pds-cursize").html(index+1);
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

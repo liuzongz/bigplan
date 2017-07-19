@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>我的钱包</title>
+    <include file="Public:head"/>
+    <style type="text/css">
+        html,body,ul,li,p{ margin: 0; padding: 0;}
+        body{max-width: 640px;margin: 0 auto;background: #f1f1f1;}
+        ul,li{ list-style: none;}
+        a{ color:#000;}
+        img{background: inherit;}
+        .header{background: #ffffff;border-bottom: 1px solid #ff9600;color: #373737;text-align: center;line-height: 35px;}
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="__CSS__/huiyuan.css" />
+</head>
+<body>
+<include file="Public:header" />
+<div class="nav-tab-top">
+    <ul class="hei">
+        <li class="cur" ><a href="javascript:;"><span><i class="im-commission"></i></span><span>我的佣金</span></a><b class="members_list"></b></li>
+        <li><a href="{:U('Member/setting',array('token'=>$II['token']))}"><span><i class="im-withdrawals"></i></span><span>我要提现</span></a><b class="members_list"></b></li>
+        <li><a href="{:U('Member/cashcharge',array('token'=>$II['token']))}"><span><i class="im-balance"></i></span><span>余额充值</span></a></li>
+        <li><a href="{:U('Member/mywallet',array('token'=>$II['token']))}"><span><i class="im-hongbao"></i></span><span>钱包</span></a><b class="members_list"></b></li>
+    </ul>
+</div>
+<div class="yj-center">
+    <p class="tip-txt"><i class="icon-money">
+        <svg width="45" height="25" viewBox="-1 0 35 38">
+            <g class="transform-group">
+                <g transform="translate(0, 25.375) scale(1, -1) scale(0.03125, 0.03125)">
+                    <path d="M580.34176-209.502464c-58.528768-4.818944-127.265792 0-127.265792 0s-350.40768 8.02816-350.40768 287.214592 337.506304 459.13088 337.506304 459.13088l154.349568 0c0 0 320.625664-215.497728 320.625664-464.290816C915.150848-176.281856 580.34176-211.910912 580.34176-209.502464L580.34176-209.502464zM440.174592 555.040512l0 54.629376 154.693632 0 0-54.629376L440.174592 555.040512 440.174592 555.040512zM592.459776 627.867392 442.58304 627.867392 362.816512 807.659264c0 0 47.156224-36.395008 76.172288-36.395008 28.997632 0 78.541824 37.579776 78.541824 37.579776s45.914112-37.579776 74.929152-37.579776c28.977152 0 78.56128 38.687744 78.56128 38.687744L592.459776 627.867392 592.459776 627.867392zM470.910976-50.855168l69.863424 0 0 67.818496 93.39392 0 0 54.89664-93.39392 0 0 29.858816 93.39392 0 0 54.89664-65.830912 0 78.294016 156.813312-76.573696 0-50.653184-105.892864c-5.810176-12.388352-10.284032-24.046592-13.418496-35.018752-2.675712 10.129408-7.14752 21.751808-13.456384 35.018752l-49.678336 105.892864-76.516352 0 77.280256-156.813312-64.874496 0 0-54.89664 92.17024 0 0-29.858816-92.17024 0 0-54.89664 92.17024 0L470.910976-50.855168 470.910976-50.855168z" fill="#bce1a7"></path>
+                </g>
+            </g>
+        </svg>
+    </i>可提现佣金余额</p>
+    <span class="number-big">￥{$money.available_predeposit}</span>
+    <p class="field-2">提现已发放：<big>￥{}</big></p>
+</div>
+
+<ul class="mc-cnt">
+    <!--<li> <a class="lin" href="{:U('Member/brokeragerank',array('token'=>$II['token']))}">我的佣金排名<span class="grayrightarr"></span> </a> </li>-->
+    <li> <a class="lin" href="{:U('Member/brokeragedetail',array('token'=>$II['token'], 'level'=>1))}"><i class="im-mv1"></i>会员佣金 <span class="grayrightt">{}</span><span class="grayrightarr"></span></a> </li>
+    <li> <a class="lin" href="{:U('Member/brokeragedetail',array('token'=>$II['token'], 'level'=>2))}"><i class="im-mv2"></i>会员佣金 <span class="grayrightt">{}</span> <span class="grayrightarr"></span></a> </li>
+    <li> <a class="lin" href="{:U('Member/brokeragedetail',array('token'=>$II['token'], 'level'=>3))}"><i class="im-mv3"></i>会员佣金<span class="grayrightt">{}</span> <span class="grayrightarr"></span></a> </li>
+
+
+    <li> <a class="lin" href="{:U('Member/deletecash',array('token'=>$II['token']))}">已删除佣金 <span class="grayrightt">{}</span><span class="grayrightarr"></span> </a> </li>
+</ul>
+<include file="Public:footer" />
+</body>
+</html>

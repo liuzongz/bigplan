@@ -1,0 +1,90 @@
+<?php
+    if(C('LAYOUT_ON')) {
+        echo '{__NOLAYOUT__}';
+    }
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        *{ padding: 0; margin: 0; }
+        body{ background: #fff; font-family: '微软雅黑'; color: #333; font-size: .5rem; }
+        .system-message{  text-align:center; height: auto;}
+        .system-message h1{ font-weight: normal; padding: 1rem 0; }
+        .system-message h1 i{ font-size: 2rem;color:#00BA97;}
+        .system-message h1 i.colorO{ color: red;}
+        .system-message .jump{ padding-top: 10px;  font-size: .6rem;}
+        .system-message .jump a{ color: #333;}
+        .system-message .success,.system-message .error{ line-height: 1.8em; font-size:.7rem }
+        .system-message .detail{ font-size:.5rem; line-height: 1rem; margin-top: .5rem; display:none}
+        div.tuijian{text-align: center;width: 100%;}
+        div.tuijian  p{display: inline-flex;line-height: 1rem;}
+        div.tuijian  p i{color: red;}
+    </style>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="system-message max768" style="padding:2rem 0;">
+    <?php if(isset($message)) {?>
+    <h1><i class="myF icon-yes"></i></h1>
+    <p class="success"><?php echo($message); ?></p>
+    <?php }else{?>
+    <h1><i class="myF icon-cuowutishi colorO"></i></h1>
+    <p class="error"><?php echo($error); ?></p>
+    <?php }?>
+    <p class="detail"></p>
+    <p class="jump">
+        页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 等待时间： <b id="wait"><?php echo($waitSecond); ?></b>
+    </p>
+</div>
+<div class="comBack b-Buttom " >
+    <div class="tuijian"><p><i class="myF icon-tuijian"></i><em>这里有更多的商品哦！</em></p></div>
+    <section>
+        <div class="comBack-all">
+            <div class="comBack b-Buttom">
+
+                <ul class="comCp">
+                    <volist name="goods_list" id="ll"  mod="2" offset="0" length='' empty="$godos_empty">
+                        <li class="comImg">
+                            <div class="bgHot none"><img src="__IMG__/hot.png" alt=""></div>
+                            <a href="{$ll.url}">
+                                <img src="{:echo_img($ll['goods_thumb'])}" />
+                            </a>
+                            <p class="">
+                                <a class="sN_change" href="{$ll.url}">
+                                    {$ll.goods_name}
+                                </a>
+                            </p>
+                            <div class="buy">
+                                <!--<div class="moreTime">-->
+                                <!--&lt;!&ndash;<div class="left"><del class="delSt">¥&lt;!&ndash;{$ll.stock_price}&ndash;&gt;129</del></div>&ndash;&gt;-->
+                                <!--</div>-->
+                                <div class="buyRMB">
+                                    <div class="left"><em class="danW">¥</em><em class="price">{$ll['deposit_price']?$ll['deposit_price']:$ll['shop_price']}</em></div>
+                                    <!--<div class="right">已售33件</div>-->
+                                </div>
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+    (function(){
+        var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            if(time <= 0) {
+                location.href = href;
+                clearInterval(interval);
+            };
+        }, 1000);
+    })();
+</script>
+</body>
+</html>

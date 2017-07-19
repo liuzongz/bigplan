@@ -1,0 +1,31 @@
+<if condition="$goods_info.act_type eq 'discount'">
+    <div class="priceCome">
+        <em>>¥</em><em>{$goods_info.stock_price}</em>
+    </div>
+    <div class="priceOut">
+        <if condition="intval($goods_info['shop_price']) neq 0">
+            <del>¥{$goods_info.shop_price}</del>
+        </if>
+    </div>
+    <elseif condition="$goods_info.act_type eq 'kp'"/>
+    <div class="priceCome">
+        <em>{$goods_info.integral}</em><em>{$_CFG.integral_name}</em>
+    </div>
+    <elseif condition="$goods_info.act_type eq 'team'"/>
+    <div class="priceCome">
+       <em>{$goods_info.integral}</em> {$_CFG.integral_name}
+    </div>
+    <else/>
+    <div class="priceCome">
+        <if condition="$goods_info.deposit_price neq 0">
+            <em>定金：</em><em style="font-size: .7rem;color: #fe7902;">¥</em><em style="font-size: .9rem;color: #fe7902;">{$goods_info.deposit_price}</em>
+            <else />
+            <em style="font-size: .8rem;color: #fe7902;">¥</em><em style="font-size: 1rem;color: #fe7902;">{$goods_info.shop_price}</em>
+        </if>
+    </div>
+    <div class="priceOut">
+        <if condition="intval($goods_info['market_price']) neq 0">
+            <del style="color: #c4c4c4;font-size: .5rem;">原价：¥{$goods_info.market_price}</del>
+        </if>
+    </div>
+</if>

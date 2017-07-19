@@ -1,0 +1,21 @@
+<if condition=" $wxinfo['guanzhusetting'] neq '' ">
+    <div class="widget_wg">
+        <ul class="tbox">
+            <li style="width:100%;">
+                <p>来自好友<span>{$wxinfo.wxname}</span>分享，分享创造财富!</p>
+            </li>
+            <li>
+                <div class="tit_wrap">
+                    <a class="open" href="{$wxinfo.guanzhusetting}">立即关注</a>
+                    <a class="close" href="javascript:;" class="close">X</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        //关闭
+        $(".close").click(function(){
+            $(".widget_wg").remove();
+        })
+    </script>
+</if>

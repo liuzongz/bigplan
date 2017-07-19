@@ -1,0 +1,9 @@
+<script type="text/javascript">
+    Jiniu.ajax('{$pay_info.pay_url}',"{$pay_info.data}",function(ex){
+        if (ex.error == 0) {
+            location.href = ex.data.url;
+        } else {
+            location.href = '{$pay_info.pay_error}';
+        }
+    },'POST','JSON');
+</script>

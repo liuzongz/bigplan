@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>报名表</title>
+    <include file="Public/header" />
+    <style type="text/css">
+        .search{
+            position: fixed;top:0;width: 10rem;top:0;height: 1.1rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+            background-color: #f0eff5;
+        }
+        .search input[type='search']{
+            width: 8.38rem;height: .75rem;padding-left:.5rem;
+            background-color: #fff;border:1px solid #eaeaeb;border-right: none;
+            border-radius:.2rem 0 0 .2rem;box-sizing: border-box;
+        }
+        .search .s-button{
+            width: 1rem;height: .75rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+            color:#ababab;background-color: #fff;border:1px solid #eaeaeb;border-left:none;
+            border-radius:0 .2rem .2rem 0;box-sizing: border-box;
+        }
+        .menu{
+            width: 9.5rem; height: 2rem;
+            align-items: center;-webkit-align-items: center;
+            margin-top: 1.1rem;padding-left: .5rem; line-height: 1.8;
+            color:#757575;
+        }
+        ul.entryForm li{
+            align-items: center;-webkit-align-items: center;text-align: center;
+            justify-content: center;-webkit-justify-content: center; line-height: .8rem;color: #757575;
+        }
+        ul.entryForm li:nth-child(1){line-height: .9rem;color: #6b6969; border-bottom: 1px solid #cfcfcf;font-size: 1.1em;font-weight: bold;}
+        ul.entryForm li em:nth-child(1){width: 1.2rem;}
+        ul.entryForm li em:nth-child(2){width: 2.1rem;}
+        ul.entryForm li em:nth-child(3){width: 3.2rem;}
+        ul.entryForm li em:nth-child(4){width: 2.3rem;}
+        ul.entryForm li em:nth-child(5){width: 1.2rem;color: #6b6969;}
+        .popUpWindows{
+            position: fixed;top:0; width: 10rem;height: 100%;
+            background: rgba(0,0,0,.4);
+        }
+        .public-wrap{
+            position: absolute;top:40%;left: 1.95rem;
+            width: 6.1rem;margin: 0 auto;
+            background-color: #fff;border-radius: .2rem;
+        }
+        .public-wrap i{
+            position: absolute;right: .1rem;top:.1rem;
+        }
+        .public-wrap .icon-light{
+            position: absolute;top:-.7rem;left: 2.05rem;
+            width: 2rem;height: 1.4rem;
+            border-radius: 1rem 1rem 0 0;background:url("__IMG__/icon-linght.png") no-repeat center .1rem #FFF;
+            background-size:1.4rem 1.4rem ;
+        }
+        .sure p.tell{
+            line-height: 1rem;color: #121212;margin-top: .2rem; padding-left: .2rem;
+        }
+        .sure .btn-del{
+            width: 100%; height: 1.3rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: space-around;-webkit-justify-content: space-around;
+        }
+        .sure .btn-del span{
+            width: 2.6rem;height: .78rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+            border-radius: .2rem;box-sizing: border-box;
+        }
+        .sure .btn-del span.abandon{
+            border: 1px solid #d2d2d2;color: #909090;
+        }
+        .sure .btn-del span.delete{
+            background-color: #f4ce73;
+        }
+        .option p.tell{
+            text-align: center;margin-top: .7rem;line-height: 1.5rem;
+            font-size: 1.1em;color: #000000;
+        }
+        .option .btn-del{
+            width: 100%;flex-flow: column wrap;-webkit-flex-flow:column wrap;
+        }
+        .option .btn-del span{
+            width: 100%;height: 1.14rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+            box-sizing: border-box;
+        }
+        .option .btn-del span.abandon{
+            border-top:1px solid #e1e1e1;color: #909090;
+        }
+        .option .btn-del span.delete{
+            background-color: #f4ce73;border-radius: 0 0 .2rem .2rem;
+        }
+        .renRename .int-set{
+            margin-top: .8rem;
+            flex-flow: column wrap;-webkit-flex-flow: column wrap;
+
+        }
+        .renRename p.tell{
+            padding-left: .65rem;line-height: .7rem;
+        }
+        .renRename .int-set input{
+            width: 4.7rem;height: .9rem;margin: 0 auto;
+            border: none;border-bottom: 1px solid #e1e1e1;
+        }
+        .renRename .submit{
+            width: 100%;  height: 1rem; margin-top: .3rem;
+            align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center;
+            background-color: #f4ce73;border-radius: 0 0 .2rem .2rem;
+        }
+        ul.entryForm li.listCur em{color:#d4d4d4;}
+    </style>
+</head>
+<body class="none">
+    <header>
+        <form action="" id="chart_form">
+            <input type="hidden" name="act_id" value="{$act_id}">
+            <input type="hidden" name="is_pay" value="paid">
+            <div class="search flex">
+                <input type="search" placeholder="搜索">
+                <div class="s-button flex">
+                    <i class="myF icon-sou"></i>
+                </div>
+            </div>
+        </form>
+    </header>
+    <section>
+        <div class="menu flex">
+           <!-- ● 点击"姓名"可跳转到该报名者的主页<br />-->
+            ● 点击【•••】可对用户进行删除以及改名等操作
+        </div>
+        <ul class="entryForm">
+            <li  class="flex"><em >序号</em><em class=" overtext">姓名</em><em>手机号</em><em>金额</em><em >操作</em></li>
+           </li>
+        </ul>
+    </section>
+    <footer>
+        <div class="popUpWindows none">
+            <div class="sure public-wrap none">
+                <p class="tell">你是否确定删除?</p>
+                <div class="flex btn-del">
+                    <span class="abandon close flex">下次再说</span>
+                    <span id="sure-delete" class="delete flex">残忍删除</span>
+                </div>
+            </div>
+           <div class="option public-wrap">
+                <div class="icon-light"></div>
+                <p class="tell">更多操作</p>
+                <i class="myF icon-guanbi1 close"></i>
+                <div class="flex btn-del">
+                    <span id="abandon" class="abandon flex">重命名</span>
+                    <span id="delete" class="delete flex">删除</span>
+                </div>
+            </div>
+            <div class="renRename public-wrap none">
+                <div class="icon-light"></div>
+                <i class="myF icon-guanbi1 close"></i>
+                <div class="flex int-set">
+                    <p class="tell">请修改用户原来的信息:</p>
+                    <input id="set-name" type="text" >
+                    <input id="set-tel" type="tel" >
+                </div>
+                <div id="submit" class="submit flex">确定</div>
+            </div>
+        </div>
+        <img id="img" class="none" style="width: 100%;" src="__IMG__/noajax.jpg" >
+    </footer>
+    <!--<div class="sl-loading flex"><i></i>加载中....</div>-->
+</body>
+<script type="text/javascript">
+    var $id = $("input[name='act_id']").val();
+    var $p = $("input[name='act_id']").val();
+    var $is_pay = $("input[name='is_pay']").val();
+    //var data = 'act_id=' + $id;
+    var p=1,maxP = "",data = $('#chart_form').serialize(),getList = function(ex){
+        if(p == 1){
+            Jiniu1.closeloading();
+            $('body').append('<div class="sl-loading flex"></div>');
+            $('.sl-loading').html("上拉加载");
+        }else $('.sl-loading').html("上拉加载");
+        if(ex.error == 200){
+            var object = ex.data.asume;
+            if(object == "" &&p == 1){
+                $('.sl-loading').remove();
+                $('#img').removeClass('none');
+            }else{
+                for(var i =0;i<object.length;i++){
+                    var keyNubmer = (p-1)*30+i+1;
+                    var calss = object[i].order_sn==""&&object[i].user_id=="0"?"listCur":"";
+                    var str =  '<li data-id="'+object[i].id+'" class="flex '+calss+'"><em class="key">'+keyNubmer+'</em><em class="name overtext">'+object[i].user_name+'</em><em class="tel">'+object[i].phone_number+'</em><em>'+object[i].money+'</em><em onclick="set(this);" class="set">'+"•••"+'</em></li>';
+
+                    $('.entryForm').append(str);
+                };
+                p++;maxP = ex.data.pagecount;
+                if(maxP ==1)  $('.sl-loading').html("后面没有了");  //防止第一页数据太少无法检测数据到底部
+            };
+        };
+    };
+    Jiniu1.loading('数据加载中...');
+    Jiniu.ajax("{:U('active/get_join_list')}"+'?&p='+p, data, getList,'GET','JSON',false);
+    $(window).HscrollButtom(function(){
+        if(p > maxP){
+            $('.sl-loading').html("后面没有了");
+            return false;
+        }else{
+            $('.sl-loading').html('<i></i>'+'加载中...');
+            Jiniu.ajax("{:U('active/get_join_list')}"+'?&p='+p, data, getList,'GET','JSON',false);
+        }
+    });
+
+    var index ='',
+    close = function(){
+        $('.public-wrap').hide();
+        $('.popUpWindows').hide();
+        $('.option').show();
+    },deleted = function(){
+        $('.public-wrap').hide();
+        $('.sure').show();
+        $('#sure-delete').click(function(){
+            //提交数据
+        });
+    },abandon = function(){
+        $('.public-wrap').hide();
+        $('.renRename').show();
+    },changeInformation = function() {
+       var newName = $('#set-name').val(),
+           newTel = $('#set-tel').val();
+        if(newName == ''&&newTel ==''){
+            alert('请填写用户姓名或者电话'); return false;
+        }else{
+            //提交数据
+        };
+    },set = function(tab){
+        index = $(tab).parent('li').data('id');
+        $('.popUpWindows').show();
+        var name = $(tab).prevAll('.name'),
+            tel = $(tab).prevAll('.tel');
+        $('#set-name').attr('placeholder',name.text());
+        $('#set-tel').attr('placeholder',tel.text());
+    };
+    $('#abandon').bind('click',abandon);
+    $('.close').bind('click',close);
+    $('#delete').bind('click',deleted);
+    $('#submit').bind('click',changeInformation);
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:head2"/>
+    <script type="text/javascript" src="/Public/Wap/js/common.js"></script>
+    <script type="text/javascript" src="/Public/Wap/js/web_app.js"></script>
+    <style type="text/css">
+        .back_index,.back_index_QQ,.back_index1{position: fixed;bottom:1rem;right: 1rem;z-index: 999; width: 2rem;height: 2rem;border-radius: 2rem; background: rgba(255,255,255,.5); align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center; font-size: .6rem;line-height: 1.3;}
+        .diy_jzc_01,.diy_jzc_02,.diy_jzc_03,.diy_jzc_04,.diy_jzc_05{width: 16rem;position: relative;}
+        .diy_jzc_01>img,.diy_jzc_02>img,.diy_jzc_03>img,.diy_jzc_04>img,.diy_jzc_05>img{width: 16rem;height: auto;}
+        .diy_jzc_01{height: 17.725rem;}
+        .diy_jzc_02{height:21.675rem;}
+        .diy_jzc_03{height: 18.775rem;}
+        .diy_jzc_04{height: 20.65rem;}
+        .diy_jzc_05{height: 4.625rem;}
+        .diy_jzc_02 .jzc_warp{width: 7.2rem;height: 7.2rem; align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center;}
+        .diy_jzc_02 .jzc_warp1{width: 15.3rem;height: 5.25rem; align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center;}
+        .diy_jzc_02 .pos_01{position: absolute;left:.5rem;top:.25rem;}
+        .diy_jzc_02 .pos_02{position: absolute;left:8.3rem;top:.25rem;}
+        .diy_jzc_02 .pos_03{position: absolute;left:.5rem;top:8.4rem;}
+        .diy_jzc_02 .pos_04{position: absolute;left:8.3rem;top:8.4rem;}
+        .diy_jzc_02 .pos_05{position: absolute;left:.35rem;top:16.35rem;}
+        .diy_jzc_02 .pos_01 img,.diy_jzc_02 .pos_02 img,.diy_jzc_02 .pos_03 img,.diy_jzc_02 .pos_04 img{width: 7.2rem;}
+        .diy_jzc_02 .pos_05 img{width:15.3rem;height: 5.25rem; }
+        .diy_jzc_03 .jzc_warp{width: 6rem;height: 6rem; background: url("__IMG__/diy_jzc/diy_jzc_06.png") no-repeat center center;background-size: 6rem 6rem;align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center;}
+        .diy_jzc_03 .pos_01{position: absolute;left:1.3rem;top:4.7rem;}
+        .diy_jzc_03 .pos_02{position: absolute;left:8.8rem;top:4.7rem;}
+        .diy_jzc_03 .pos_03{position: absolute;left:1.3rem;top:12.25rem;}
+        .diy_jzc_03 .pos_04{position: absolute;left:8.8rem;top:12.25rem;}
+        .diy_jzc_03 .pos_01 img,.diy_jzc_03 .pos_02 img,.diy_jzc_03 .pos_03 img,.diy_jzc_03 .pos_04 img{width: 5.8rem;}
+
+        .diy_jzc_04 .jzc_warp{width: 7rem;height: 7rem; align-items: center;-webkit-align-items: center;justify-content: center;-webkit-justify-content: center;}
+        .diy_jzc_04 .pos_01{position: absolute;left:.6rem;top:4.95rem;}
+        .diy_jzc_04 .pos_02{position: absolute;left:8.4rem;top:4.95rem;}
+        .diy_jzc_04 .pos_03{position: absolute;left:.6rem;top:13.1rem;}
+        .diy_jzc_04 .pos_04{position: absolute;left:8.4rem;top:13.1rem;}
+        .diy_jzc_04 .pos_01 img,.diy_jzc_04 .pos_02 img,.diy_jzc_04 .pos_03 img,.diy_jzc_04 .pos_04 img{width: 7rem;height: 7rem;}
+    </style>
+</head>
+<body>
+<a href="{:get_server('PASSPORT_SERVER', '/user/index', ['store_token'=>$store_token])}" class="back_index1 flex" style="bottom: 3.5rem;">个人<br />中心</a>
+<a class="back_index_QQ flex"  target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$store_info.store_qq}&site=qq&menu=yes">&nbsp;QQ<br />咨询</a>
+<div class="diy_jzc_01">
+    <img class="advertisement" src="__IMG__/diy_jzc/diy_jzc_01.jpg" />
+</div>
+<div class="diy_jzc_02">
+    <img src="__IMG__/diy_jzc/diy_jzc_02.jpg">
+    <a href="{:U('goods/index').'?id=830&aid=HuLJAk\/FTaFWAne6FtbKGQ==&store_token='.$store_token}" class="jzc_warp pos_01 flex"><img src="__IMG__/diy_jzc/diy_jzc_se01.jpg"></a>
+    <a href="{:U('goods/index').'?id=831&aid=TA8Gvjf29TirqEwkgxTcbA==&store_token='.$store_token}" class="jzc_warp pos_02 flex"><img src="__IMG__/diy_jzc/diy_jzc_se02.jpg"></a>
+    <a href="{:U('goods/index').'?id=832&aid=nWBain6itMYviviCvH9m3g==&store_token='.$store_token}" class="jzc_warp pos_03 flex"><img src="__IMG__/diy_jzc/diy_jzc_se03.jpg"></a>
+    <a href="{:U('goods/index').'?id=833&aid=KQ2NNTTV0PedjSx7pi\/6bw==&store_token='.$store_token}" class="jzc_warp pos_04 flex"><img src="__IMG__/diy_jzc/diy_jzc_se04.jpg"></a>
+    <a href="{:U('goods/index').'?id=838&aid=lEVRRY4Wlm2K\/Kcoco1P4Q==&store_token='.$store_token}" class="jzc_warp1 pos_05 flex"><img src="__IMG__/diy_jzc/diy_jzc_zb01.jpg"></a>
+</div>
+<div class="diy_jzc_03">
+    <img src="__IMG__/diy_jzc/diy_jzc_03.jpg">
+    <a href="{:U('goods/index').'?id=826&aid=WCm894EgZA3~XklhPXwPhA==&store_token='.$store_token}" class="jzc_warp pos_01 flex"><img src="__IMG__/diy_jzc/jzc_acc01.jpg"></a>
+    <a href="{:U('goods/index').'?id=827&aid=f2s3UJyQwGlXlREW6woglQ==&store_token='.$store_token}" class="jzc_warp pos_02 flex"><img src="__IMG__/diy_jzc/jzc_acc02.jpg"></a>
+    <a href="{:U('goods/index').'?id=828&aid=UrFKuPoyA~9TWjwLm~5uQQ==&store_token='.$store_token}" class="jzc_warp pos_03 flex"><img src="__IMG__/diy_jzc/jzc_acc03.jpg"></a>
+    <a href="{:U('goods/index').'?id=829&aid=hqMT4TarhC1qQqTwGTSiMA==&store_token='.$store_token}" class="jzc_warp pos_04 flex"><img src="__IMG__/diy_jzc/jzc_acc04.jpg"></a>
+</div>
+<div class="diy_jzc_04">
+    <img src="__IMG__/diy_jzc/diy_jzc_04.jpg">
+    <a href="{:U('goods/index').'?id=834&aid=E9KQyhS\/Vhe2XgK8zZgkKA==&store_token='.$store_token}" class="jzc_warp pos_01 flex"><img src="__IMG__/diy_jzc/jiniu_01.jpg"></a>
+    <a href="{:U('goods/index').'?id=835&aid=9YgeBWyePEwxDRhMLojxeA==&store_token='.$store_token}" class="jzc_warp pos_02 flex"><img src="__IMG__/diy_jzc/jiniu_02.jpg"></a>
+    <a href="{:U('goods/index').'?id=837&aid=j86XqgFxYzrb3rNx7e~Phg==&store_token='.$store_token}" class="jzc_warp pos_03 flex"><img src="__IMG__/diy_jzc/jiniu_03.jpg"></a>
+    <a href="{:U('goods/index').'?id=836&aid=ycVPHucMQBqrIkNXVlKWug==&store_token='.$store_token}" class="jzc_warp pos_04 flex"><img src="__IMG__/diy_jzc/jiniu_04.jpg"></a>
+</div>
+<div class="diy_jzc_05"><img src="__IMG__/diy_jzc/diy_jzc_05.jpg"></div>
+<div style="height: 1.5rem;background-color: #f4e0d0;"></div>
+<div style="width: 16rem;height: 8rem;">
+    <iframe height=100% width=100% src='http://player.youku.com/embed/XMjg1MjQzNDAwMA==' frameborder=0 'allowfullscreen'></iframe>
+</div>
+</body>
+</html>
+

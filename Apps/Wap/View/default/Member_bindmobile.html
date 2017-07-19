@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>账号绑定</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/binding.css" /> 
+ </head> 
+ <body> 
+   <header id="header"></header>  
+  <input type="hidden" id="memberid" value="{$memberid}"/>
+  <div class="money-wp"> 
+   <div class="money-wp-fff"> 
+   	<div class="alert-warning">为了保证您的账号安全，请完善以下资料，提现时要输入此密码，请妥善保管！</div>
+        <form method="post" class="rform" action=""> 
+        <input type='hidden' value="{$II['token']}" name="token"/>
+        <ul class="nav-tabs">
+            <li><span>账号绑定</span><a href="{:U('Member/pwd',array('token'=>$II['token'],'wecha_id'=>I('wecha_id'),'memberid'=>I('memberid')))}"><span class="tab">设置提现密码</span></a></li>
+        </ul>
+     <div class="ui-body-inherit"> 
+    <div class="tab-t tab-db"> 
+      <input type="text" name="mobile" value="{$result.member_mobile}" placeholder="请输入手机号" class="form-control" id="mobile">
+      <input type="text" name="email" value="{$result.member_email}" placeholder="请输入邮箱" class="form-control" id="email">
+      <input type="password" name="oldpassword" style="display:none;" placeholder="原登录密码" class="form-control" id="oldpassword">
+      <input type="hidden"  id="haspasswd" value="">
+      <input type="hidden" name="type" value="{$type}"/>
+      <input type="password" name="userpassword" placeholder="新登录密码" class="form-control" id="userpassword">
+      <input type="password" name="userpassword2" placeholder="请确认新登录密码" class="form-control" id="userpassword2">
+      <div class="error-tips"></div>
+      </div>
+       <input class="ui-corner-all" type="button" name="button" value="立即绑定" id="button">
+    </form> 
+   </div> 
+  </div>
+  
+  <script type="text/html" id="voucher-list-tmpl">
+
+</script> 
+  <div id="footer"></div> 
+  <input type="hidden" name="referurl">
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/member_bindmobile.js"></script>
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script> 
+<!--  <script>
+	$(function(){
+		$(".nav-tabs span").each(function(index){
+			$(this).click(function(){
+				$(".tab").removeClass("tab");
+                $(this).addClass("tab");
+		 $(".ui-body-inherit .tab-t").eq(index).show().siblings().hide();
+			});
+		});
+	});
+
+</script>-->
+ </body>
+</html>

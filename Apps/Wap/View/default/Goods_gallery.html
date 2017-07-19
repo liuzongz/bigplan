@@ -1,0 +1,22 @@
+<div class="pddc-topwp">
+    <div id='mySwipe' class='swiper-container'>
+        <div class='swipe-wrap'>
+            <volist name="gallery" id="img">
+            <div class="swipe-item"><a href="javascript:void(0);" class="pddct-imgwp"><img src="{$img.thumb_url}" alt="{$img.img_desc}"/></a></div>
+            </volist>
+        </div>
+    </div>
+    <div class="pddct-shadow"></div>
+    <div class="pddct-name-wp">
+        <div class="pddctnw-name">
+            {$goods_info.goods_name}
+        </div>
+    </div>
+    <span class="pd-collect" style="display:none;">收藏</span>
+    <span class="pdpic-size-bg"></span>
+    <div class="pdpic-size">
+        <span class="pds-cursize">1</span>
+        /
+        <span class="pds-tsize">{:count($gallery)}</span>
+    </div>
+</div>

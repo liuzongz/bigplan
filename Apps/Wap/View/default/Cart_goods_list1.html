@@ -1,0 +1,55 @@
+<div class="flow">
+    <volist name="total['store_list']" id="store">
+    <div class="item">
+        <div class="store_info">
+            <input type="checkbox" class="input_checkbox checkbox_background" id="JS_sel_store_{$store.store_id}" <if condition="$store['is_selected'] eq count($store['list'])">checked</if> />
+            <label for="JS_sel_store_{$store.store_id}" ><i class="myF icon-cf-c14"></i>{$store.store_name|msubstr=0,10}</label>
+            <a href="{:U('store/info') . '?id=' . $store['store_id'] . '&store_token=' . $store['store_id']}"><i class="myF icon-right"></i></a>
+        </div>
+        <ul class="list" id="JS_ListPro">
+            <volist name="store.list" id="list">
+                <li class="flow_li">
+                    <div class="row_input left">
+                            <input type="checkbox" value="{$list.rec_id}" data-id="{$list.rec_id}" class="input_checkbox flow_checkbox checkbox_background" <if condition="$list['is_selected'] or $list.is_order_detail eq 1">checked</if> name="id[]" <if condition="$list.is_order_detail eq 1">disabled</if> />
+                    </div>
+                    <div class="row_image left">
+                        <a href="{$list.url}" target="_blank">
+                            <img src="{$list.goods_thumb}" onerror="this.src='__IMG__/logox2.png'" />
+                        </a>
+                    </div>
+                    <div class="row_text_box right" id="JS_liebiao">
+                        <div class="row_title ">
+                            <a href="{$list.url}" target="_blank">{$list.goods_name}
+                               <if condition="$list['act_name']">
+                                   <em class="red">[{$list.act_name}]</em>
+                               </if>
+                            </a>
+                        </div>
+                        <div class="row_spec">
+                            <foreach name="list.attr_list" item="ll" key="key">
+                                <span class="attr_name">{$key}:</span>
+                                <span class="attr_value">
+                                    <foreach name="ll" item="vv" key="kk">
+                                        <if condition="$kk gt 0">,
+                                        </if>{$vv.attr_value}
+                                    </foreach>
+                                </span>
+                            </foreach>
+                        </div>
+                        <div class="row_num ">
+                            <div class="price Left">
+                                <em class="rmb red">{$list.goods_price_format}</em>
+                            </div>
+                            <div class="num right">
+                                    <span class="operate sec">-</span>
+                                    <input type="tel" class="num_input" name="num[]" value="{$list.goods_number}" data-id="{$list.rec_id}" />
+                                     <span class="operate add">+</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    </volist>
+</div>

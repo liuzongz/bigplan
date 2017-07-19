@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>设置提现密码</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/binding.css" /> 
+ </head> 
+ <body> 
+   <header id="header"></header>  
+  
+  <div class="money-wp"> 
+   <div class="money-wp-fff"> 
+   	<div class="alert-warning">为了保证您的账号安全，请完善以下资料，提现时要输入此密码，请妥善保管！</div>
+        <form method="post" class="tform"> 
+        <input type='hidden' value="{$II['token']}" name="token"/>
+		<input type="hidden" id="memberid" value="{$memberid}"/>
+        <ul class="nav-tabs">
+            <li><a href="{:U('Member/bindmobile',array('token'=>$II['token'],'wecha_id'=>I('wecha_id'),'memberid'=>I('memberid')))}"><span  class="tab">账号绑定</span></a>
+                <span>设置提现密码</span></li>
+        </ul>
+     <div class="ui-body-inherit"> 
+    <div class="tab-t tab-db"> 
+      <input type="password" name="oldpwd" placeholder="原提现密码" style="display:none;" class="form-control" id="oldpwd">
+      <input type="hidden"  id="haspaypwd" value="">
+      <input type="password" name="userpwd" placeholder="新提现密码" class="form-control" id="userpwd">
+      <input type="password" name="userpwd2" placeholder="请确认新提现密码" class="form-control" id="userpwd2">
+      <div class="error-tips"></div>
+      </div>
+      </div>
+       <input class="ui-corner-all" type="button" name="pbutton" value="立即绑定" id="pbutton">
+    </form> 
+   </div> 
+  </div>
+  
+  <script type="text/html" id="voucher-list-tmpl">
+
+</script> 
+  <div id="footer"></div> 
+  <input type="hidden" name="referurl">
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/member_pwd.js"></script>
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script> 
+ </body>
+</html>

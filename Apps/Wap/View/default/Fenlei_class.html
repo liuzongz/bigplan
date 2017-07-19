@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <include file="Public:head2" />
+    </head>
+    <body>
+    <header>
+        <include file="Public:header1" />
+    </header>
+    <section>
+        <div class="swipeAll">
+            <div class="swipeOne">
+                <volist name="cat_list" id="list">
+                <div class="classWarp">
+                    <div class="navClass">
+                        <i class="Co myF icon-fenlei{$list.cat_id}" style=""></i>
+                        <em>{$list.cat_name}</em>
+                        <a href="{$list.url}">
+                            <em class="goMor">查看全部</em>
+                            <i class="myF icon-right icon-goR"></i>
+                        </a>
+                    </div>
+                    <div class="subC_warp">
+                        <volist name="list.children_list" id="ll">
+                        <div class="subClass b-Right">
+                            <a href="{$ll.url}">
+                            <div class="lt">
+                                <p>{$ll.cat_name|msubstr=0,5,'utf-8',false}</p>
+                                <em class="semll">{$ll.cat_desc} </em>
+                            </div>
+                            <div class="rt">
+                                <img src="<if condition="!empty($ll['cat_logo'])">{$ll.cat_logo}</if>" onerror="this.src='__IMG__/logox2.png'" />
+                            </div>
+                            </a>
+                        </div>
+                        </volist>
+                    </div>
+                </div>
+                </volist>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <if condition = "$is_dealer eq 1">
+            <include file="Public:menu2" />
+            <else />
+            <include file="Public:menu1" />
+        </if>
+    </footer>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<div class="table_box confirmPage integral_box ">
+    <div class="box_title">
+        <span class="left">用户{$_CFG.integral_name}</span>
+        <span class="right">
+            <input type="radio" name="integral" class="integral o-t-cb" id="JS_integral_Enable" value="1" <if condition="$is_gift eq 1">checked disabled</if> /> <label for="JS_integral_Enable">使用</label>
+            <input type="radio" name="integral" class="integral o-t-cb" id="JS_integral_Disable" <if condition="$is_gift neq 1">checked <else/>disabled</if> value="0" /> <label for="JS_integral_Disable">不使用</label>
+        </span>
+    </div>
+    <div class="box_content <if condition="$is_gift neq 1">none</if>">
+        <ul class="list">
+            <li class="item" style="font-size: .45rem;">
+                您当前的可用{$_CFG.integral_name}为: <span class="red">{$integral.your_integral}</span> {$_CFG.integral_name}，本订单<if condition="$is_gift eq 1">需要<else/>最多可以</if>使用 <span class="red"><if condition="$is_gift eq 1">{$total.integral}<else/>{$integral.order_max_integral}</if></span> {$_CFG.integral_name}.
+            </li>
+            <li class="item">
+                <div class="t left">使用{$_CFG.integral_name}</div>
+                <div class="c left"><input type="text" class="input_text integral_number" value="{$total.integral}" name="integral_number" /></div>
+            </li>
+            <if condition="$integral['your_integral'] lt $total['integral']">
+                <li class="item" style="color:#ca0000;font-size:.4rem;">
+                    您的{$_CFG.integral_name}不足以支付本次订单！
+                </li>
+            </if>
+         </ul>
+    </div>
+</div>

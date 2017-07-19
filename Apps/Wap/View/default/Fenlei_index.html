@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>{$tkd.title} - {$_CFG.shop_name}</title>
+    <link type="text/css" rel="stylesheet" href="__CSS__/x-n.css">
+    <style type="text/css">
+        html,body,ul,li,p{ margin: 0; padding: 0;}
+        ul,li{ list-style: none;}
+        a{ color:#000;}
+        img{background: inherit;}
+        body{ font-size: 21px; line-height: 1; color: #000; font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "\9ED1\4F53", Arial, sans-serif;text-align:center;}
+        .allbrands{ width: 100px; border-right: 1px solid #ddd; position: fixed; /*left: 0;*/ top: 0; bottom: 0; overflow: auto;}
+        .main{margin: 0 auto;max-width: 640px;}
+        .allbrands li{text-align: center;}
+        .allbrands li.on{ background-color: #000; color: #fff;}
+        .allbrands li a{color:#000;text-decoration: none;display: block;width: 100%;padding: 34px 0;}
+		.allbrands li.icon1 a{padding-bottom:10px}
+		.allbrands li.icon2 a{padding-bottom:10px}
+		.icon1{ background:url('__IMG__/iconfont-huiyuan.png') no-repeat center 9px;background-size: 32%;padding: 12px 0;}
+        .icon2{ background:url('__IMG__/iconfont-serve.png') no-repeat center 14px;background-size: 32%;padding: 12px 0;}
+        .allbrands li.on a{color:#fff;}
+        .brandlist{ margin-left: 101px; background-color: #eee;max-width:539px}
+        .brandlist li{ border-bottom: 1px solid #ddd; border-top: 1px solid #ddd; background-color: #fff; margin-bottom: 14px;}
+        .brandlist a{ display:block; padding: 30px 0;}
+        .brandinfo{ width: 30%; float: left; text-align: center;overflow:hidden;}
+        .brandinfo img{ width:100%;max-height:124px;;}
+        .brandinfo .name-tit{ padding: 30px 5px 20px; font-size: 20px;margin-top: 21px;}
+        .brandinfo .name-ico{padding: 3rem; font-size: 20px;margin-top: 21px;background:url('__IMG__/logo_bg.jpg') no-repeat center;background-size:7rem;}
+        .brandinfo .name-logo{margin:0 auto;display:inline;}
+        .brandinfo .name-logo span{display:table-cell;height:100px;width:100px;margin:0 auto;border-radius: 100px;text-align:center;vertical-align: middle;overflow:hidden;border:1px solid #e2e2e2;position: relative;  left: 30px;}
+        .brandinfo .price{color:#f42043;margin:65px 0 15px;font-size:1.2em;}
+        .brandinfo .shop{color:#FFFFFF;background-color:#ff0000;padding:5px 20px;border-radius: 11px;}
+        .brandinfo .nshop{margin-top:21px;}
+        .brandinfo .pronum{ font-size: 16px; color: #888;}
+        .brandimg{ background:url('__IMG__/logox2.png')  no-repeat center; width:70%; height:324px; overflow:hidden;}
+        .shadow{ box-shadow: 0 0 10px #ccc; position: absolute; left: 0; top: -10px; width: 100%; height: 10px;}
+    </style>
+    <script type="text/javascript">
+        /*!function(a){function b(){var b=g.getBoundingClientRect().width;b/c>640&&(b=640*c),a.rem=b/16,g.style.fontSize=a.rem+"px"}var c,d,e,f=a.document,g=f.documentElement,h=f.querySelector('meta[name="viewport"]'),i=f.querySelector('meta[name="flexible"]');if(h){*//*console.warn("将根据已有的meta标签来设置缩放比例");*//*var j=h.getAttribute("content").match(/initial-scale=(["']?)([d.]+)1?/);j&&(d=parseFloat(j[2]),c=parseInt(1/d))}else if(i){var j=i.getAttribute("content").match(/initial-dpr=(["']?)([d.]+)1?/);j&&(c=parseFloat(j[2]),d=parseFloat((1/c).toFixed(2)))}if(!c&&!d){var k=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),c=a.devicePixelRatio;c=k?c>=3?3:c>=2?2:1:1,d=1/c}if(g.setAttribute("data-dpr",c),!h)if(h=f.createElement("meta"),h.setAttribute("name","viewport"),h.setAttribute("content","initial-scale="+d+", maximum-scale="+d+", minimum-scale="+d+", user-scalable=no"),g.firstElementChild)g.firstElementChild.appendChild(h);else{var l=f.createElement("div");l.appendChild(h),f.write(l.innerHTML)}a.dpr=c,a.addEventListener("resize",function(){clearTimeout(e),e=setTimeout(b,30)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(e),e=setTimeout(b,30))},!1),"complete"===f.readyState?f.body.style.fontSize=12*c+"px":f.addEventListener("DOMContentLoaded",function(){f.body.style.fontSize=12*c+"px"},!1),b()}(window);*/
+    </script>
+</head>
+<script type="text/javascript" src="__JS__/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__JS__/jquery.lazyload.min.js"></script>
+<body style="margin:0 auto;">
+<div class="main" >
+    <ul class="brandlist">
+        <if condition="$is_fenlei">
+            <include file="Fenlei:category" />
+        <else/>
+            <include file="Fenlei:goods" />
+        </if>
+    </ul>
+    <include file="Index:Menu" />
+</div>
+<script>
+    $(function(){
+        $('img').lazyload({
+            effect:'fadeIn'
+        });
+        /*a.init();*/
+    });
+
+    var total = '{$goods_page_total}'; //分页总数
+</script>
+</body>
+</html>

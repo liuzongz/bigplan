@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .main li.flex{padding: 0 .5rem; align-items: center;-webkit-align-items: center; height: 2rem;border-bottom: 1px solid #e2e2e2; }
+        .main li.flex input{flex: 1;-webkit-flex: 1;border: none;height: 1.5rem;color: #a5a5a5;font-size: .6rem;}
+        .main li.flex select{font-size: .6rem;border: none;height: 1.5rem; color: #a5a5a5;}
+        .main li .select{min-height: 2rem;height: auto;flex:1;-webkit-flex:1;align-items: center;-webkit-align-items: center; flex-flow: row wrap;-webkit-flex-flow: row wrap;justify-content: space-around;-webkit-justify-content: space-around; }
+        .main li.flex textarea{flex: 1;-webkit-flex: 1;border: none;height: 1.5rem;color: #a5a5a5;font-size: .6rem;}
+        .main li.flex span.wTh3{width: 3rem;margin-right: .5rem;}
+    </style>
+</head>
+<body >
+<include file="Public:header1" />
+
+<form method="post" action="{:U().'?store_token='.$store_token}">
+    <ul class="main zedizi">
+        <li class="flex"><span class="wTh3">姓名</span>
+            <input type="text" name="consignee" placeholder="请输入收货人姓名" value="{$address_info.consignee}" /></li>
+        <li class="flex"><span class="wTh3">手机号码</span>
+            <input type="text" name="mobile" placeholder="请输入收货人手机号码" value="{$address_info.mobile}" /></li>
+        <li class="flex"><span class="wTh3">邮箱</span><input type="email" name="email" placeholder="请收入邮箱,方便找回用户信息" value="{$address_info.email}"></li>
+        <li class="flex" style="height: auto;min-height: 2rem;"> <span class="wTh3">省、市、区</span>
+            <div class="flex select">
+                <select  name="province" class="province"><option value="">请选择</option></select>
+                <select name="city" class="city"><option value="">请选择</option></select>
+                <select name="area" class="area"><option value="">请选择</option></select></li>
+            </div>
+
+        <li class="flex"><span class="wTh3">地址</span><textarea name="address" class="textar" placeholder="请输入收件人详细地址">{$address_info.address}</textarea></li>
+        <li class="flex"><span class="wTh3">邮政编码</span><input type="text" name="zipcode" placeholder="请输入邮政编码" value="{$address_info.zipcode}"></li>
+        <li class="flex"> <span class="wTh3">收货时间</span>
+            <select name="best_time">
+                <option value="">请选择</option>
+                <volist name="best_time" id="best">
+                    <option value="{$best.id}" <if condition="$best['id'] eq $address_info['best_time']">selected</if>>{$best.text}</option></volist>
+            </select>
+            <input type="hidden" name="id" value="{$address_info.address_id}" />
+        </li>
+    </ul>
+    <div class="register"><button class="register-butt" type="submit">保存</button></div>
+</form>
+<script type="text/javascript">
+    var get_region = function ($id, $obj){
+        var region = function (ex) {
+            if (ex.error == 0) {
+                var data = ex.data,str = '<option value="">请选择</option>';
+                $.each(data,function(ex,item){
+                    str += '<option value="' + item.region_id + '">' + item.region_name + '</option>';
+                });
+                $obj.html(str);
+            } else {
+                alert(ex.msg);
+            }
+        };
+        Jiniu.ajax("{:U('Static/region') . '?id='}" + $id,'',region,'GET','JSON');
+    };
+    $(function(){
+        var s = $('.province'),c = $('.city'), a = $('.area'),str = '<option value="">请选择</option>';
+        get_region(0, s);
+        s.change(function(){
+            a.html(str);
+            c.html(str);
+            get_region($(this).val(), c);
+        });
+        c.change(function(){
+            a.html(str);
+            get_region($(this).val(), a);
+        });
+    });
+    $('.register-butt').click(function(){});
+</script>
+</body>
+</html>

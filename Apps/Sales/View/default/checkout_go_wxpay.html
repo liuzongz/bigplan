@@ -1,0 +1,40 @@
+<script id="pay_script" type="text/javascript">
+        <if condition="$is_weixin">
+        //调用微信JS api 支付
+        function jsApiCall() {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {$jsApiParameters},
+                function(res){
+                    var url = '';
+                    //Jiniu.ajax('{:U("User/record_wxpay")}',"data=" + res.err_msg,function(){},'POST','JSON');
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        $('#alertWarp').addClass('none');
+                        $('#join_form').removeClass('none');
+                        $('.wxPay').addClass('none');
+                        //url = "{$url.pay_ok}";
+                    } else {
+                        alert("支付失败,请刷新后重新操作!");
+                        //url = "{$url.pay_no}";
+                    }
+                    window.location.reload();
+                }
+            );
+        }
+        function callpay() {
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                }
+            }else{
+                jsApiCall();
+            }
+        }
+    $(function(){callpay()});
+    <else/>
+        location.href = "{$pay_url}";
+    </if>
+</script>

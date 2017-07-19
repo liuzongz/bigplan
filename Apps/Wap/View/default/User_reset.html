@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>密码找回</title>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .reg .border{padding: .5rem 0 .5rem .5rem;position: relative;}
+        .reg .border .yanzhen{width:3rem;height: 1.5rem;position: absolute;right: 0px;top: .7rem;border-left: 1px solid #ff9600;}
+        .reg .register{text-align: center;margin-top: .5rem;}
+        .reg label.error{width: 100%;display: block;color: #ff9600;margin-top: -1rem;}
+
+    </style>
+    <script type="text/javascript" src="__JS__/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.validate.js"></script>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="reg">
+    <form id="reg-form" action="{:U('User/reset_pass') . '?step=2'}" method="post">
+        <div class="border">
+            <span>账户:</span>
+            <input type="text" class="email"  name="email" placeholder="请输入邮箱/手机号码">
+        </div>
+        <div class="border">
+            <span>验证码:</span>
+            <input type="text" class="verify"  name="number" placeholder="请输入验证码">
+            <img class="yanzhen" id="verifyimg" src="{:U('User/verify')}">
+        </div>
+        <div class="register"><button class="register-butt" type="submit">提交</button></div>
+    </form>
+</div>
+<script>
+    $(function(){
+        $('#reg-form').submit(function(){
+            var $email = $('.email').val();
+            if (!Jiniu.checkEmail($email) && !Jiniu.checkMobile($email)) {
+                alert('邮箱或手机号码输入不正确！');
+            } else if ($('.verify').val() == '') {
+                alert('验证码输入不正确！');
+            } else {
+                return true;
+            }
+            return false;
+        });
+        var verifyimg = $("#verifyimg").attr("src");
+        $("#verifyimg").click(function(){
+            if( verifyimg.indexOf('?')>0){
+                $("#verifyimg").attr("src", verifyimg+'&random='+Math.random());
+            }else{
+                $("#verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+            }
+        });
+    });
+</script>
+</body>
+</html>

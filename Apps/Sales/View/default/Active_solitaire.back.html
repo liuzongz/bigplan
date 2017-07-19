@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>即牛·万人接龙</title>
+    <meta name="keywords" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta name="description" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__CSS__/base.css">
+    <link rel="stylesheet" href="__CSS__/Solitaire.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/vue.min.js"></script>
+    <script src="__JS__/datePicker.js"></script>
+    <script src="__JS__/Jiniu.min.js"></script>
+    <script src="/Public/Wap/js/js_upload1/jquery.photoClip.min.js"></script>
+    <script type="text/javascript">
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth > 768)  clientWidth = 768;
+                    docEl.style.fontSize = clientWidth /10 + 'px';
+                    document.getElementsByTagName("body")[0].style.display = 'block';
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+
+    </script>
+</head>
+<body class="none">
+
+<div id="app">
+    <div class="imgWarp"><img src="__IMG__/Solitaire.jpg" ></div>
+    <div  v-show="tab.show">
+        <div id="outTime" class="flex saireTime none">
+            <div class="title">活动倒计时</div>
+            <div class="showTime flex">
+                <em id="day">00</em>天
+                <em id="hous">00</em>时
+                <em id="min">00</em>分<em id="ss">00</em>秒</div>
+        </div>
+        <div id="showTime" class="setTime">
+            <div class="flex input-t">
+                活动开始时间:<div class="showTime" id="act_starttime">{{toTime(data.act_starttime)}}</div>
+            </div>
+            <div class="flex input-t">
+                活动结束时间:<div class="showTime" id="act_endtime">{{toTime(data.act_endtime)}}</div>
+            </div>
+        </div>
+        <ul class="main">
+            <li>
+                <div class="title sol"></div>
+                <div class="sItemName">{{data.item_name}}</div>
+                <div>
+                    <div class="speed"><div class="fill"></div></div>
+                    <div class="tieMsg">
+                        <span v-if="data.cur_man !=0">
+                             当前参与人数 <span style="color: yellow;">{{data.cur_man}}</span>
+                            <span v-if="data.final_price != ''">
+                                 人，当前价格<span style="color: yellow;">¥{{data.final_price}}</span>
+                            </span>
+                        </span>
+                        <span v-else>
+                            暂无人参加，快去分享邀请好友参与活动吧
+                        </span>
+                    </div>
+                </div>
+                <ul class="dep" id="step" v-html="data.config_step" >
+
+                    <!--  <li data-id61925581="1" class="">
+                          <div class="show">接龙人数满<em class="input1"></em>人每人只需<em class="input2"></em>元/人
+                          </div>
+                          <div class="input3 text flex"></div>
+                      </li>-->
+                </ul>
+            </li>
+            <li>
+                <div class="flex icon-act">
+                    <div class="title ms"></div>
+                </div>
+                <div id="dWarp" >
+                    <div style="color: white"  v-html="toBr(data.config.detail)"></div>
+                    <img  v-bind:src="data.config.detail_img"  style="width: 100%;">
+                </div>
+            </li>
+            <li>
+                <div class="title bm"></div>
+                <!-- <ul class="list_b">
+                     <!--<li class="flex">他们怎么在参与活动 <div class="more">查看更多</div></li>
+                     <li ></li>
+                 </ul>-->
+                <div class="earnest"> 在线支付<em>{{data.config.deposit}}</em>元</div>
+                <div class="baoming flex" id="active_join">我要报名</div>
+            </li>
+            <li >
+                <div class="title gz"></div>
+                <div style="color: white;" v-html="toBr(data.config.act_rule)"></div>
+            </li>
+            <li>
+                <div class="flex icon-act">
+                    <div class="title jgjs"></div>
+                </div>
+                <div id="mWarp" v-html="data.act_desc">
+                    <!--<p style="color: white">详情信息</p>
+                    <img src="" alt="" style="width: 100%;">-->
+                </div>
+            </li>
+            <li>
+                <div class="title ljxx"></div>
+                <div style="color: white;" v-html="toBr(data.prizeinfo)"></div>
+            </li>
+            <li>
+                <div class="title jlb"></div>
+                <div class="flex com_title">
+                    <div>排名</div><div>姓名</div><div>手机号</div>
+                </div>
+                <ul class="act_des_rk">
+                    <li class="flex" v-for="(item,index) in list.str">
+                        <div>{{index+1}}</div>
+                        <div>{{item.user_name}}</div>
+                        <div>{{item.phone_number}}</div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="telcall flex" >
+            咨询热线&nbsp;&nbsp;{{data.config.tel}}<a v-bind:href="'tel:'+ data.config.tel" class="callbtn flex"><p>一键拨号</p></a>
+        </div>
+    </div>
+    <div v-show="tab.hide">
+        <form action="{:U('active/edit')}" method="post" id="Activrform">
+
+            <!-- <div class="flex saireTime">
+                 <div class="title">活动倒计时</div>
+                 <div class="showTime flex"><em>02</em>天<em>11</em>时<em>41</em>分<em>41</em>秒</div>
+             </div>-->
+            <div class="setTime">
+                <div class="flex input-t">
+                    活动开始时间:<div class="wi">
+                        <input class="in1 opacity" name="act_starttime" v-model="data.act_starttime"  type="datetime-local"  >
+                        <div class="show flex">{{toTime(data.act_starttime)}}</div>
+                    </div>
+                </div>
+                <div class="flex input-t">
+                    活动结束时间:<div class="wi">
+                        <input class="in1 opacity" name="act_endtime" type="datetime-local" v-model="data.act_endtime" >
+                        <div class="show flex">{{toTime(data.act_endtime)}}</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="main">
+                <li>
+                    <div class="title sol"></div>
+                    <textarea class="itemName" v-model="data.item_name" name="item_name"></textarea>
+                    <div class="setNum">
+                        <p class="flex pint">接龙诚意金(定金):
+                            <input name="config[deposit]" type="number" v-model="data.config.deposit" >元</p>
+                        <p class="phelp">(诚意金建议设置不高于100元，提现时会扣除2.5%手续费)</p>
+                        <p class="flex pint">参与接龙人数上限:
+                            <input name="config[limit]" type="number" v-model="data.config.limit" >人</p>
+                        <p class="phelp">(人数上限达到上限，则无法再进行报名，输入0表示不限制)</p>
+                        <p class="flex pint">设置阶梯优惠</p>
+                        <p class="phelp">(阶梯优惠设定后，如有用户报名即不可修改)</p>
+                    </div>
+                    <ul class="set_dep">
+                        <li data-id="1" >
+                            <div class="show flex">  接龙满
+                                <input class="input1" type="number" name="config[step][0][man]" onchange="dom.showInput(this)" v-model="data.config.step[0].man" >
+                                人,每人只需<input class="input2" name="config[step][0][money]" type="number"   onchange="dom.showInput(this)" v-model="data.config.step[0].money" >元/人</div>
+                            <div class="text flex">
+                                <input class="input3" type="text" name="config[step][0][desc]" onchange="dom.showInput(this)" placeholder="有就显示没有就不显示" v-model="data.config.step[0].desc" >
+                            </div>
+                            <div content="input3" onclick="dom.closeImg(this);"  class="btnCe flex">x</div>
+                        </li>
+                    </ul>
+                    <div id="JS_copy1"  class="j-sg flex">
+                        <p class="flex">增加新的阶梯(最设置5个)</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="title ms"></div>
+                    <div class="m_text" data-id="1">
+                        <textarea name="detail" onchange="dom.showText(this)" v-model="data.config.detail"></textarea>
+                    </div>
+                    <div class= "upInp d_up" >
+                      <!--  <p>(请上传一张产品图片，不上传则不现实)</p>-->
+                        <input  type="file"  onchange="dom.showPreview(this,$('#dWarp'))">.
+                        <img class="pic" id="detail_img" v-bind:src="data.config.detail_img" style="width: 100%;">
+                        <input name= "detail_img"  type="hidden"  >
+                        <div onclick="dom.siInput(this)"  class="btnCg flex">换图</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="title jgjs"></div>
+                    <ul class="img-xp" id="outfit"></ul>
+                    <div id="clone-m" class="j-sg flex">
+                        <p class="flex">请上传一张产品图片，不上传则不现实(最多上传10张)</p>
+                    </div>
+                    <div id="clone-t" class="j-sg flex">
+                        <p class="flex">请上编写产品描述(最多添加10个)</p>
+                    </div>
+                </li>
+                <li >
+                    <div class="title gz"></div>
+                    <textarea class="text_rule" name="act_rule" v-model="data.config.act_rule" ></textarea>
+                </li>
+                <li >
+                    <div class="title ljxx"></div>
+                    <textarea class="text_king" name="prize_info" v-model="data.prizeinfo" ></textarea>
+                </li>
+                <li>
+                    <div class="title teltel"></div>
+                    <input name="tel" class="tel" v-model="data.config.tel"  type="tel">
+                    <p class="telMsg">客户可通过此电话号码咨询活动事宜，建议留下手机号保持手机通畅</p>
+                </li>
+                <li>
+                    <div class="title msg"></div>
+                    <div class="getMsg">
+                        <p class="telMsg">自定义项为空则不显示，最多可填写6个字节，如有用户报名，此内容不再做任何修改</p>
+                        <ul class="flex">
+                            <li class="flex">
+                                <input class="input1" type="text" value="姓名" disabled>
+                                <label class="label flex" for="a">
+                                    <input checked disabled id="a" type="radio" >必选项</label>
+                            </li>
+                            <li class="flex">
+                                <input class="input1" type="text" value="手机号码" disabled>
+                                <label class="label flex" for="b">
+                                    <input checked disabled id="b" type="radio" >必选项</label>
+                            </li>
+                            <li class="flex">
+                                <input name="project[name_1][name]" class="input2" type="text" placeholder="信息项目名称" >
+                                <label class="label flex" for="c"><input id="c" name="project[name_1][check]" type="checkbox" >可选项</label>
+                            </li>
+                            <li class="flex">
+                                <input name="project[name_2][name]" class="input2"  type="text" placeholder="信息项目名称" >
+                                <label class="label flex" for="d"><input id="d" name="project[name_2][check]" type="checkbox" >可选项</label>
+                            </li>
+                            <li class="flex">
+                                <input name="project[name_3][name]" class="input2" type="text" placeholder="信息项目名称" >
+                                <label class="label flex" for="e"><input  id="e" name="project[name_3][check]" type="checkbox" >可选项</label>
+                            </li>
+                            <input type="hidden" name="aid" value="{$aid}">
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div v-show="com">
+        <div class="pHeader">
+            <div class="music"></div>
+             <div class="qrcode"></div>
+            <a href="{:U('user/index')}"><div class="user flex">个人<br />中心</div></a>
+            <div class="footer">
+                <div class="bjBtn flex">
+                    <div class="flex edit" v-on:click="toggle();">{{btnText}}</div>
+                    <div class="flex prt" v-on:click="upInp();" id="clipArea">保存活动</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alertWarp" class="flex none">
+        <div class="main flex">
+            <div class="btn" onclick="$(this).parents('#alertWarp').addClass('none');">x</div>
+            <h3>我要报名</h3>
+            <p class="tell">所填写信息不会公开，仅用于活动兑奖</p>
+            <form id="active_form" method="post" >
+                <div class="setMsg flex">
+                    <input type="text" name="user_name" placeholder="请输入姓名(必填项)">
+                    <input type="tel" name="phone_number" placeholder="请输入手机号(必填项)">
+                    <input type="hidden" name="aid" value="{$aid}">
+                    <input type="hidden" name="pay_money" value="{:AesEnCrypt(unserialize($act_info['config'])['deposit'])}">
+                    <input type="hidden" name="act_id" value="{$act_id}">
+                    <input type="hidden" name="back_act" value="{$back_act}">
+                </div>
+                <div class="setMsg flex" v-html="data.project"></div>
+                <div class="wxPay none">
+                    <p>温馨提示：报名成功，请前往支付页面</p>
+                    <div class="toPay flex" >前往支付</div>
+                </div>
+                <div class="submit flex" id="join_form">提交</div>
+            </form>
+        </div>
+    </div>
+</div>
+<audio class="none" id="audio1"   loop="loop" controls="controls" preload>
+    <source src="__CSS__/music.mp3" type="audio/ogg">
+    <source src="__CSS__/music.mp3" type="audio/mpeg">
+</audio>
+<div class="flex company" >本活动最终解释权为九紫春集团所有</div>
+</body>
+<script type="text/javascript">
+    var dom = {
+        index_k:1,
+        index_m:$('#mWarp').find('img').length,
+        index_t:$('#mWarp').find('p').length,
+        siInput:function(te){
+            $(te).prevAll('input').click();
+        },
+        del:function(show,set){
+            for(var i = 0;i < show.length;i++){
+                if(show.eq(i).data('id') == set) return i;
+            }
+        },
+        getData:function(obj){
+            return obj.parent('li').data('id');
+        },
+        getDatas:function(obj){
+            return obj.parents('li').data('id');
+        },
+        closeImg:function(tab){
+            $('#clone-m').removeClass('none');
+            $(tab).parent('li').remove();
+            var index =  this.getData($(tab));
+            var index2 = this.del($('#mWarp img'),index);
+            $('#mWarp img').eq(index2).remove();
+        },
+        closeText:function(tab) {
+            $('#clone-t').removeClass('none');
+            var index = this.getData($(tab));
+            $(tab).parent('li').remove();
+            var index2 = this.del($('#mWarp p'),index);
+            $('#mWarp p').eq(index2).remove();
+        },
+        closeInput:function(tab){
+            $('#JS_copy1').removeClass('none');
+            var index = this.getData($(tab));
+            $(tab).parent('li').remove();
+            var index2 = this.del($('#step li'),index);
+            $('#step li').eq(index2).remove();
+        },
+        showInput:function(text){
+            var textWord = $(text).val();
+            var index = this.getDatas($(text));
+            var index2 = this.del($('#step li'),index);
+            if($(text).hasClass('input1')){
+                $('#step li').eq(index2).find('em.input1').text(textWord);
+            }else  if($(text).hasClass('input2')){
+                $('#step li').eq(index2).find('em.input2').text(textWord);
+            }else  if($(text).hasClass('input3')){
+                $('#step li').eq(index2).find('div.input3').text(textWord);
+            }
+        },
+        showText:function (text){
+            var textWord = $(text).val();
+            var index = this.getData($(text));
+            var index2 = this.del($('#mWarp p'),index);
+            $('#mWarp p').eq(index2).text(textWord);
+        },
+        showPreview:function (source,show){
+            var file = source.files[0];
+            if (window.FileReader) {
+                var fr = new FileReader();
+                fr.onloadend = function(e) {
+                    $(source).next('img').attr('src',e.target.result).css('width','100%');
+                    $(source).prev('p').addClass('none');
+                    $(source).nextAll('div.btnCg').removeClass('none');
+                    if( dom.getData($(source))){
+                        var index = dom.getData($(source));
+                        var index2 = dom.del(show.find('img'),index);
+                        show.find('img').eq(index2).attr('src',e.target.result).css('width','100%');
+                    } else{
+                        show.find('img').eq(0).attr('src',e.target.result).css('width','100%');
+                    }
+                };
+                fr.readAsDataURL(file);
+            }
+        }
+    };
+    $(function(){
+        //克隆上传图片
+        $('#clone-m').click(function(){
+            dom.index_m ++;
+            var warpImg =  '<li class= "upInp m_up" data-id="'+dom.index_m+'"><p>' + '(请上传一张产品图片，不上传则不现实)'+
+                '</p><input   type="file"  onchange="dom.showPreview(this,$(\'#mWarp\'))">' +
+                '<img class="pic"><input class="uploadsrc" name= "uploadsrc[]" type="hidden">' +
+                '<div onclick="dom.siInput(this)"  class="btnCg flex none">'+ '换图' +
+                '</div><div onclick="dom.closeImg(this);"  class="btnCe  flex">' +'X' +'</div></li>';
+            $('#mWarp').append('<img data-id="' +dom.index_m +'" src="">');
+            $('#outfit').append(warpImg);
+            if($('.m_up').length == 10) $('#clone-m').addClass('none');
+        });
+        //克隆上传文段
+        $('#clone-t').click(function(){
+            dom.index_t ++;
+            var warpText =  '<li class="m_text" data-id="'+dom.index_t+'"><' +
+                'textarea name= "file[]" onchange="dom.showText(this)"></textarea>' +
+                '<div onclick="dom.closeText(this);" class="btnCe  flex">'+'x'+ '</div></li>';
+            $('#mWarp').append('<p data-id="'+ dom.index_t+'"></p>');
+            $('#outfit').append(warpText);
+            if($('.m_text').length == 5) $('#clone-t').addClass('none');
+        });
+        //克隆活动阶梯
+        $('#JS_copy1').click(function(){
+            dom.index_k ++;
+            var str = '<li data-id="'+dom.index_k+'"><div class="show flex">'+'满';
+            str +='<input class="input1" name= "'+'config[step]['+dom.index_k +'][man]'+
+                '" type = "number" onchange="dom.showInput(this)">' + '人，每人只需';
+            str +='<input class="input2" name= "'+'config[step]['+dom.index_k +'][money]'+
+                '"  type = "number" onchange="dom.showInput(this)">'+'元/人';
+            str += '</div><div class="text flex">';
+            str +='<input class="input3" name= "'+'config[step]['+dom.index_k +'][desc]'+
+                '" onchange="dom.showInput(this)" type = "text" placeholder="有就显示没有就不显示"></div>';
+            str +='</div><div onclick="dom.closeInput(this);" class="btnCe flex">' + 'x'+ '</div></li>';
+
+            var str1 = '<li data-id="'+dom.index_k+'"><div class="show">' +'满'+
+                '<em class="input1"></em>' + '人,每人只需';
+            str1 += '<em class="input2"></em>'+'元/人'+'</div><div name= "'+'d'+dom.index_k +
+                '" class="input3 text flex "></div></li>';
+            $('.set_dep').append(str);
+            $('#step').append(str1);
+            if($('.set_dep li').length == 5) $(this).addClass('none');
+        });
+        //音乐播放按钮
+        $('.music').click(function(){
+            var myAudio = document.getElementById('audio1');
+            if(myAudio.paused){
+                myAudio.play();
+                $('.music').addClass('musicP');
+            }else{
+                myAudio.pause();
+                $('.music').removeClass('musicP');
+            }
+        })
+        $('.music').click();
+
+
+        // 用户添加活动-回调
+        var addreturn = function (ex) {
+            if (ex.error != 200) {
+                alert(ex.msg);
+                $('.edit').click();
+            } else if (ex.error == 301){
+                window.location.href = ex.data.url;
+            } else{
+                window.location.href= ex.data.redirect_url;
+                //window.location.href = "{:U('Sales/Active/detail')}"+'?aid='+ex.data.aid+'&act_id='+ex.data.act_id;
+            }
+        };
+        // 用户添加活动-提交
+        $('.prt').on('click', function(){
+            var IMG = $('.m_up .pic');
+            var count = IMG.length;
+            for(var i=0;i<count;i++){
+                if(IMG[i].src) {
+                    //同步机构介绍
+                    one_obj.funUploadFile(IMG[i].src, i, $(".m_up .uploadsrc"));
+                }
+            }
+            if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test($('#detail_img')[0].src))
+            {
+                    one_obj.funUploadFile($('#detail_img')[0].src,0,$("input[name='detail_img']"));
+            }
+
+
+            var act_starttime = $("input[name='act_starttime']");
+            var act_endtime = $("input[name='act_endtime']");
+            act_starttime.attr('value',$('#act_starttime')[0].innerHTML);
+            act_endtime.attr('value',$('#act_endtime')[0].innerHTML);
+            //$('#rule_info').attr('value',$('.textareaGz')[0].innerHTML);
+            /* $('#rule_info').attr('value',$('.textareaGz')[0].innerHTML);    //同步活动规则
+             $('#prize_info').attr('value',$('.splinKing')[0].innerHTML);    //同步领奖信息*/
+            var data = $('#Activrform').serialize();
+            Jiniu.ajax("/Sales/Active/edit.html",data,addreturn,'POST','JSON',false);
+        });
+
+        // 用户参与活动提交表单
+        $('#active_join').bind('click', function(){
+            var join_check = function(ex){
+                if(ex.error == 200){
+                    $('#alertWarp').removeClass('none');
+                }else if (ex.error == 301){
+                    window.location.href = ex.data.url;
+                }else{
+                    alert(ex.msg);
+                }
+            }
+            //判断活动是否存在  用户是否登录
+            var act_id = $("input[name='act_id']").val();
+            var aid = $("input[name='aid']").val();
+            var data = 'act_id='+act_id+'&aid='+aid;
+            Jiniu.ajax("/Sales/Active/chechjoin.html",data,join_check,'POST','JSON',false);
+            $('#join_form').on('click', function(){
+                var data = $('#active_form').serialize();
+                Jiniu.ajax("/Sales/Active/join.html",data,join_active,'POST','JSON',false);
+            });
+            //前往支付页面
+            var wxApaly = function(){
+                $('#join_form').addClass('none');
+                $('.wxPay').removeClass('none');
+            };
+            // 用户参与活动回调
+            var join_active = function (ex) {
+                if(ex){
+                    var join = ex.data;
+                    var toPay = function(join) {
+                        var data = {
+                            order_amount: "{$act_data['config']['deposit']}",
+                            attend_id: join,
+                            act_id: "{$act_id}",
+                            pay_form_token: "{$pay_form_token}"
+                        };
+                        Jiniu.ajax("{:U('payment/pay')}", data, function (ex) {
+                            if(ex){
+                                if(ex.error ==200){
+                                    $("body").append(ex.contents);
+                                }else{
+                                    alert(ex.msg);
+                                }
+                            }else {
+
+
+
+                            }
+
+                        }, 'POST', 'JSON', false);
+                    };
+
+                    if (ex.error == 200) {
+                        toPay(join)
+                        wxApaly();
+                        $('.toPay').click();
+                    } else if (ex.error == 301){
+                        window.location.href = ex.data.url;
+                    }
+                    else{
+                        alert(ex.msg);
+                        //window.location.href=ex.data.url;
+                    }
+                };
+            };
+        });
+        var status = vue.data.status;
+        var curPo = vue.data.cur_man;
+        if(status == 0){
+            $('.edit').click();
+            $('.footer').remove();
+            $('#outTimeTime').removeClass('none');
+            $('#showTime').addClass('none');
+        }else {
+            $('#active_join').unbind('click');
+        };
+        //进度条
+        var obj = $('ul.dep li'),
+            leh = obj .length,
+            maxPo = obj.eq(leh-1).find('.input1').text();
+        $('.fill').css('width',(curPo/maxPo)*9 + 'rem');
+        //倒计时
+
+       setInterval("hkhp.outTime(vue.data.act_endtime,$('#day'),$('#hous'),$('#min'),$('#ss'))",1000);
+
+        // 用户添加活动-上传图片同步
+        var one_obj = {
+            /**
+             * @param base64Codes
+             * 图片的base64编码
+             */
+            funUploadFile: function(base64Codes,i,img_dom){
+                var self = this;
+                var formData = new FormData();
+                //convertBase64UrlToBlob函数是将base64编码转换为Blob
+                //append函数的第一个参数是后台获取数据的参数名,在php中用$FILES['imageName']接收，
+                formData.append("file",self.convertBase64UrlToBlob(base64Codes),'file.jpg');
+                $.ajax({
+                    url : "{:U('Img/Uploader/index@'.C('IMG_SERVER', null, $_SERVER['HTTP_HOST']), array('module'=>MODULE_NAME, C('VAR_AJAX_SUBMIT')=>1,'cat_id'=>C('IMG_UPLOAD_CATE')))}",
+                    type : "POST",
+                    data : formData,
+                    dataType:"json",
+                    processData : false,         // 告诉jQuery不要去处理发送的数据
+                    contentType : false,        // 告诉jQuery不要去设置Content-Type请求头
+                    async : false,   //  一定要同步 同步  同步
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success:function(data){
+                        if (data.error > 0) {
+                            alert(data.msg);
+                        } else {
+                            img_dom.eq(i).attr('value',data.data.savepath + data.data.savename);
+                            //$(".m_up .uploadsrc").eq(i).attr('value',data.data.savepath + data.data.savename);
+                        }
+                    },
+                    error:function(ex){
+
+                    },
+
+                });
+
+            },
+            /**
+             * 将以base64的图片url数据转换为Blob
+             * @param urlData
+             * 用url方式表示的base64图片数据
+             */
+            convertBase64UrlToBlob: function(urlData){
+                //去掉url的头，并转换为byte
+                if(urlData =='') return;
+                var bytes=window.atob(urlData.split(',')[1]);
+                //处理异常,将ascii码小于0的转换为大于0
+                var ab = new ArrayBuffer(bytes.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < bytes.length; i++){
+                    ia[i] = bytes.charCodeAt(i);
+                }
+                // 此处type注意与photoClip初始化中的outputType类型保持一致
+                return new Blob( [ab] , {type : 'image/jpeg'});
+            }
+        };
+    });
+
+
+    var methods = {
+        toggle:function(){
+            this.tab.show = !this.tab.show;
+            this.tab.hide = !this.tab.hide;
+            if(this.tab.show ==true){
+                this.btnText = '返回编辑';
+            }else{
+                this.btnText = '返回预览';
+            }
+        },
+        upInp:function(){
+            this.tab.show = true;
+            this.tab.hide = false;
+            this.btnText = '返回编辑';
+        },
+        toBr: function(str){
+            str = str.split('\n').join('<br />');
+            return str;
+        },
+        toTime:function(y){
+            x =  y.replace(/[^0-9]/ig,"");
+            year = x.substring(0, 4);
+            month = x.substring(4,6);
+            day = x.substring(6, 8);
+            hour = x.substring(8, 10);
+            minute = x.substring(10,12);
+            if (y.indexOf('下午') != -1) {
+                hour =(parseInt(hour) + 12).toString();
+            }
+            format = year + "-" + month + "-" + day + ' ' + hour + ':' + minute;
+            return format;
+        }
+    };   //c
+    var vue= new Vue({
+        el: '#app',
+        data: {
+            tab:{show:false, hide:true},
+            com:true,
+            btnText:'返回预览',
+            data:{$act_info},
+            list:{$join_user}
+        },
+        methods:methods
+    });
+    //判断页面是在手机端上运行
+    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+         $('.wi .in1').addClass('opacity');
+         $('.wi .show').removeClass('opacity');
+    } else {
+        $('.wi .in1').removeClass('opacity');
+         $('.wi .show').addClass('opacity');
+    }
+</script>
+</html>

@@ -1,0 +1,44 @@
+<volist name="store_list" id="list" empty="$store_empty">
+        <li>
+            <div class="flex-wrap">
+                <div class="nou">
+                    <a href="{$list.url}">
+                        <img src="{:echo_img($list['store_label'])}" alt="">
+                    </a>
+                </div>
+                <div class="flex-con ware">
+                    <div class="flex-vertical" >
+                        <a href="{$list.url}">
+                            <div class="flex-con" style="color:#282828; font-size: .7rem;">{$list.store_name}</div>
+                        </a>
+                        <div class="wujiaox bg5">
+                        </div>
+                       <!-- <div class="flex-con locatWhere">
+                            <em>{$list.address}</em>
+                        </div>-->
+                        <div class="xiaol">
+                            <!--<i class="myF icon-dianzan"></i>--><em style="color: #5f5f5f;">月销 {$list.store_sales} 单</em>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="juli">
+                    <em>{$list.distance}KM</em>
+                </div>-->
+            </div>
+            <div class="guzhe">
+                <p class="stp">{$list.store_descript}</p>
+                <if condition="!empty($list['goods_list'])">
+                <ul class="slist forother">
+                    <volist name="list.goods_list" id="goods_list" empty="$store_empty">
+                        <li class="licon">
+                            <a href="{$goods_list.url}">
+                                <img src="{:echo_img($goods_list['goods_thumb'])}" alt="">
+                            </a>
+                            <p>{$goods_list.goods_price_format}</p>
+                        </li>
+                    </volist>
+                </ul>
+                </if>
+            </div>
+        </li>
+    </volist>

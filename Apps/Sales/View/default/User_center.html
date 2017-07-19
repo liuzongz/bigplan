@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>我的活动</title>
+    <include file="Public/header" />
+    <script src="__JS__/vue.min.js"></script>
+    <style type="text/css">
+        .nav{
+            height: 1rem;width: 10rem;
+            border-bottom:1px solid #bfbfbf ;
+            flex-flow: row nowrap;-webkit-flex-flow: row nowrap;
+            align-items: stretch;-webkit-align-items: stretch;
+            justify-content: space-around;-webkit-justify-content: space-around;
+        }
+        .nav li{
+            line-height: 1rem;flex: 1;
+            text-align: center;
+        }
+        .nav li.cur em{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border-bottom:1px solid red;
+        }
+        #tab{margin-top: 1.93rem;}
+        .tabWrap{border: none; width: 10rem; overflow-y: scroll;background-color: #fff;margin: 0;padding: 0;}
+        .tabPage{}
+        .tabPage li{
+            margin-bottom: .3rem;
+            align-items: center;-webkit-align-items: center;
+            background-color: #f1f1f1;
+        }
+        .tabPage li .img{
+            margin: 0 .2rem;overflow: hidden;
+            width: 1.6rem;height: 1.6rem;
+            align-items: center;-webkit-align-items: center;
+            justiy-content: center;-webkit-justify-content: center;
+        }
+        .tabPage li .img img{
+            max-width: 1.6rem;
+            max-height: 1.6rem;
+        }
+        .tabPage li a{
+            width: 100%;padding: .2rem 0;
+        }
+        .tabPage li .title{
+            flex:1;-webkit-flex: 1;
+            height: 1.6rem;margin: 0 .3rem;
+        }
+        .tabPage li .title .title_up{
+            margin: .2rem 0;  font-size: 1.1em;  color: #4b4b4b;
+            justify-content: space-between;-webkit-justify-content: space-between;
+        }
+        .tabPage li .title .title_up .seeBtn{
+            /* width: 2.5rem;height: .8rem;
+             align-items: center;-webkit-align-items: center;
+             justify-content: center; -webkit-justify-content: center;
+             font-size: .5em;color: #fff;
+             background-color: #ff9333;
+             border:1px solid red;
+             -webkit-border-radius:.2rem;
+             -moz-border-radius:.2rem;
+             border-radius:.2rem;*/
+            color: #fa6d52;
+        }
+        .tabPage li .title .title_down{
+            width: 7.42rem;  line-height: .8rem;  color: #949292;font-size: .9em;
+        }
+        .edit{
+            height: .88rem;
+            -webkit-align-items: center;  align-items: center;
+            justify-content: flex-end;  -webkit-justify-content: flex-end;
+        }
+        .edit a{
+            align-self: flex-end;-webkit-align-self: flex-end;
+            padding-right: .2rem;
+            color: #da4c1f;
+        }
+        .edit i{
+            margin-right: .3rem;
+            font-size: 1.4em;
+        }
+        .btnall{
+            height: 1rem;
+            align-items: center;-webkit-align-items:center;
+            justify-content: space-around;-webkit-justify-content: space-around;
+            background-color: #fff;border-bottom: 1px solid #f1eded;
+
+        }
+        .btnall em{
+            font-size: .9em;color: #7d7d7d;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+        }
+        .btnall em a{
+            align-items: center;-webkit-align-items:center;
+            justify-content: center;-webkit-justify-content:center;
+            color: #7d7d7d;
+        }
+        .popUpWindows{
+            position: fixed;top:0; width: 10rem;height: 100%;background:rgba(0,0,0,.4);
+        }
+        .popUpWindows .erw{
+            position: absolute;top:27%;left: .75rem; margin: 0 auto;
+            width: 8.5rem;background-color: #fff;border-radius: .2rem;
+        }
+        .popUpWindows .erw p.title{
+            position: relative;height: 1.58rem;line-height: 1.58rem;text-align: center;
+            font-size: 1.2em;color: #626263;font-weight: bold;
+        }
+        .popUpWindows .erw p.title i{
+            position: absolute;right: .2rem;font-weight: bold;color: #949494;
+        }
+        .popUpWindows .erw .img{
+            width: 100%;height: 5rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+        }
+        .popUpWindows .erw .img img{
+            max-width: 5rem;max-height: 5rem;
+        }
+        .popUpWindows .erw p.msg{
+            text-align: center;line-height: 1.9rem;font-size: .8em;color:#000 ;
+        }
+    </style>
+</head>
+<body class="none">
+    <div style="position: fixed; top:0;width: 10rem;background-color: #fff;">
+            <div class="edit flex"><a class="flex" href="{:get_server('SALES_SERVER', '/active/index', ['store_token'=>$store_token], 1)}"><i class="myF icon-edit04"></i>制作活动</a></div>
+        <ul class="nav flex" id="nav">
+            <li onclick="tab(this,'all',0);" ><em>全部</em></li>
+            <li onclick="tab(this,'cur',1);"><em>我参与的</em></li>
+            <li onclick="tab(this,'will',2);"><em>未开始</em></li>
+            <li onclick="tab(this,'doing',3);"><em>进行中</em></li>
+            <li onclick="tab(this,'done',4);"><em>已结束</em></li>
+        </ul>
+    </div>
+    <div id="tab">
+        <div class="tabWrap none"><ul class= "tabPage"></ul></div>
+        <div class="tabWrap none"><ul class= "tabPage"></ul></div>
+        <div class="tabWrap none"><ul class= "tabPage"></ul></div>
+        <div class="tabWrap none"><ul class= "tabPage"></ul></div>
+        <div class="tabWrap none"><ul class= "tabPage"></ul></div>
+    </div>
+    <div class="popUpWindows none" >
+        <div class="erw">
+            <p class="title">长按二维码,保存图片<i class="myF icon-guanbi1"></i></p>
+            <div class="img flex"><img  src="__IMG__/noajax.jpg" ></div>
+            <p class="msg">这个活动实在太优惠了,赶快扫码来参加吧!</p>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    $('.tabWrap').css('height',(hkhp.Hremn($(window).height())-1.93)+'rem');
+    var index = "", p= [],maxP=[], url='',tab = function(tab,page,cur){
+        if(tab == $('#nav li.cur')[0])return false;
+        index = cur;
+        $(tab).addClass('cur').siblings().removeClass('cur');
+        $('#tab .tabWrap').eq(cur).show().siblings().hide();
+        console.log(index);
+        url = "{:U('active/get_my_act')}?store_token={$store_token}&type="+page;
+        if($(tab).hasClass('ajax')) return false;
+        else {
+            p[index] = 1;
+            Jiniu1.loading('数据加载中...');
+            Jiniu.ajax(url+'&p='+p[index], '', getList,'POST','JSON',false);
+        }
+        $(tab).addClass('ajax');
+    };
+    var getList = function(ex){
+        if(p[index] == 1){
+            Jiniu1.closeloading();
+            $('#tab .tabWrap').eq(index).append('<div class="sl-loading flex"></div>');
+            $('#tab .tabWrap').eq(index).find('.sl-loading').html("上拉加载");
+        }else $('#tab .tabWrap').eq(index).find('.sl-loading').html("上拉加载");
+        if(ex.error == 200){
+            var item = ex.data.asume;
+            if(item == "" && p[index] == 1){
+                $('#tab .tabWrap').eq(index).find('.sl-loading').remove();
+                $('#tab .tabWrap').eq(index).append('<img id="img"  style="width: 100%;" src="__IMG__/noajax.jpg" >');
+            }else{
+                for(var i =0;i<item.length;i++){
+                    var str = '<li class="tab"><a class="flex" href="'+item[i].url+'"><div class="img flex"><img src="'+item[i].act_image+'" onerror="this.src=\'__IMG__/wp-de.png\'"></div><div class="title"><div class="title_up flex" >'+item[i].act_name+'<div class="seeBtn flex" >'+item[i].active_status+'</div></div><div class="title_down overtext" >'+item[i].item_name+'</div></div></a><div class="btnall flex"><em class="entry_blank flex"><a class="flex" href="'+item[i].chart_url+'"><i class="myF icon-sign"></i>'+"报名表"+'</a></em><em data-url="'+item[i].url+'"  onclick="alert_ewm(this);"  class="qrcode_active flex"><i class="myF icon-erweima"></i>'+"生成二维码"+'</em><em class="flex"><i class="myF icon-bianji"></i>'+"编辑"+'</em><em class="flex"><i class="myF icon-gengduo"></i>'+"更多操作"+'</em></div></li>';
+                    $('#tab .tabWrap').eq(index).find('ul.tabPage').append(str);
+                };
+                p[index]++;maxP[index] = ex.data.pagecount;
+                if(maxP[index] ==1)  $('#tab .tabWrap').eq(index).find('.sl-loading').html("后面没有了");  //防止第一页数据太少无法检测数据没有了
+            };
+        };
+    };
+    $('#tab .tabWrap').HscrollButtom(function(){
+        if(p[index] > maxP[index]){
+            $('#tab .tabWrap').eq(index).find('.sl-loading').html("后面没有了");
+            return false;
+        }else{
+            $('#tab .tabWrap').eq(index).find('.sl-loading').html('<i></i>'+'加载中...');
+            Jiniu.ajax(url+'&p='+p[index], '', getList,'POST','JSON',false);
+        }
+    });
+    var alert_ewm = function(tab){
+        var $url = $(tab).data('url');
+        var data = 'data=' + encodeURIComponent($url);
+        $('.popUpWindows').show();
+        $('.popUpWindows img').attr('src','__IMG__/waiting.gif');
+        Jiniu.ajax("{$img_url}", data, function(ex){
+            var qrcode = "//{:C('UPLOAD_SERVER')}" + '/' + ex.data.filepath;
+            $('.popUpWindows img').attr('src',qrcode);
+
+        },'post','JSON',false);
+    };
+    $(function(){
+        //$('.qrcode_active').bind('click', blank_return);
+        $('#nav li').eq(0).click();
+        $('i.icon-guanbi1').click(function(){
+            $('.popUpWindows').hide();
+        });
+    });
+
+</script>
+
+</html>

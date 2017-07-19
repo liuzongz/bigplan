@@ -1,0 +1,37 @@
+<li class="comImg m-Buttom <eq name="mod" value="0">m-Right</eq>">
+<a href="{$ll.url}&{$dealer_suf}">
+    <img src="<if condition="!empty($ll['goods_thumb'])">{$ll.goods_thumb}<else/>__IMG__/logox2.png</if>" onerror="this.src='__IMG__/logox2.png'" />
+</a>
+<p class="">
+    <a class="sN_change" href="{$ll.url}&{$dealer_suf}">
+        {$ll.goods_name|msubstr=0,10}
+    </a>
+</p>
+<div class="buy">
+    <if condition="session('is_dealer')==1">
+        <!--积分商品-->
+        <div class="buyRMB">
+            <em class="danW">¥</em><em>{$ll.stock_price}</em>
+        </div>
+        <if condition="intval($ll['shop_price']) neq 0">
+            <!-- <div class="nobuyRMB"><i><del class="JS_zhi"><em class="danW">¥</em>{$ll.shop_price}</del><del style="color:#c5c5c5;"></del></i></div>-->
+        </if>
+        <else />
+        <!--普通商品-->
+        <div class="buyRMB">
+            <em class="danW">¥</em><em>{$ll['deposit_price']?:$ll['shop_price']}</em>
+        </div>
+        <if condition="(intval($ll['market_price']) neq 0)">
+            <php>//不显示市场价条件(intval($ll['market_price']) neq 0) and (intval($ll['deposit_price']) eq 0)</php>
+
+            <!--<div class="nobuyRMB">
+                <i><del class="JS_zhi"><em class="danW">¥</em>{$ll.market_price}</del><del style="color: #c5c5c5;"></del></i>
+            </div>-->
+            <div class="backKp" id="J_backKp">
+                <a href="">返<em class="JS_zhi">{$ll.shop_price}</em>KP</a>
+            </div>
+        </if>
+    </if>
+</div>
+<!--<a class="buy-but" href="{$ll.url}">{$goods_btn}</a>-->
+</li>

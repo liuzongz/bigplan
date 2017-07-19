@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>美家家商城手机站 －－ 购物车</title>
+    <meta name="keywords" content="{$page.keywords}" />
+    <meta name="description" content="{$page.description}" />
+    <include file="Public:head" />
+    <script type="text/javascript" src="__PUBLIC__/js/idangerous.swiper.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/transport.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</head>
+<body>
+<style type="text/css">
+    .add_consi{margin:2px 0;}
+    .add_consi ul.list{height:auto;overflow:hidden;}
+    .add_consi ul.list li.item{zoom:1;width:100%;height:auto;overflow:hidden;padding:.2rem 0;}
+    .add_consi ul.list li.item .t{float:left;width:3rem;padding:.3rem 0;}
+    .add_consi ul.list li.item .c{float:left;width:12.1rem;overflow:hidden;height:auto;}
+    .add_consi ul.list li.item .c input{width:11.58rem;padding:.4rem .2rem;font-size:.5rem;}
+    .add_consi ul.list li.item .c.city select{width:3.8rem;}
+    .add_consi ul.list li.item .c.city select.city,.add_consi ul.list li.item .c.city select.district{margin-left:.3rem;}
+    .add_consi ul.list li.item .c textarea{width:11.15rem;}
+    .add_consi ul.list li.item .c .best_time{width:12rem;}
+    .add_consi ul.list li.item.btn{text-align:center;}
+    .add_consi ul.list li.item .input_button{margin:0 auto;}
+    .add_consi .box_title .icon{display:block;background:url('__PUBLIC__/images/201504/next.png') no-repeat;width:.3rem;height:.5rem;background-size:.3rem .5rem;position:relative;margin-top:.1rem;}
+    .add_consi .box_title{cursor:pointer;}
+
+    .consi_list{}
+    .consi_list ul.list{margin-top:.4rem;}
+    .consi_list ul.list li.item{margin: 0;background-image:url('__PUBLIC__/images/201504/better2.png');}
+    .consi_list ul.list li.item.current{background-image:url('__PUBLIC__/images/201504/better1.png');}
+    .address .userhandle .left{display:none;}
+    .address:hover .userhandle .left{display:block}
+    .address.current .userhandle .left{display:block}
+    .btn .input_button{width:6rem;}
+</style>
+<div class="main">
+    <include file="Public:header1" />
+    <div class="codeer">
+        <include file="Public:user_head" />
+        <div class="consignee">
+            <div class="add_consi table_box confirmPage">
+                <div class="box_title">
+                    <span class="left">添加收货地址</span>
+                    <span class="icon right"></span>
+                </div>
+                <form name="add_consi" class="consiFrm" id="JS_consiFrm" method="post">
+                <ul class="list box_content none">
+                    <li class="item">
+                        <div class="t">收货人</div>
+                        <div class="c"><input type="text" class="input_class" name="nickname" id="JS_nickname" /></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">城市</div>
+                        <div class="c city">
+                            <select name="province" class="select province" id="JS_province"><option value="">省</option><volist name="region_list" id="list"><option value="{$list.region_id}">{$list.region_name}</option></volist></select><select name="city" class="select city" id="JS_city"><option value="">市</option></select><select name="district" class="select district" id="JS_district"><option value="">区/县</option></select>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="t">地址</div>
+                        <div class="c"><textarea name="addr" id="JS_addr"></textarea></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">邮箱</div>
+                        <div class="c"><input type="email" class="input_class" name="email" id="JS_email" /></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">电话</div>
+                        <div class="c"><input type="text" class="input_class" name="tel" id="JS_tel" /></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">手机</div>
+                        <div class="c"><input type="text" class="input_class" name="mobile" id="JS_mobile" /></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">邮编</div>
+                        <div class="c"><input type="number" class="input_class" name="zipcode" id="JS_zipcode" maxlength="6" /></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">标志建筑</div>
+                        <div class="c"><input type="text" class="input_class" name="biuding" id="JS_biuding" /></div>
+                    </li>
+                    <li class="item">
+                        <div class="t">送货时间</div>
+                        <div class="c">
+                            <select name="best_time" class="best_time" id="JS_best_time">
+                                <option value="">选择送货时间</option>
+                                <volist name="besttimelist" id="list">
+                                    <option value="{$list.id}">{$list.title}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="item btn">
+                        <input type="hidden" name="id" value="" id="JS_id" />
+                        <input type="hidden" name="uri" value="" />
+                        <input type="button" class="input_button c-btn-oran-big" id="JS_button" value="提交" />
+                        <input type="reset" class="input_button c-btn-oran-big" id="JS_setEmpty" value="清空" />
+                    </li>
+                </ul>
+                </form>
+            </div>
+            <div class="consi_list table_box confirmPage ">
+                <ul class="list">
+                    <volist name="consignee_list" id="consignee" empty="$consign_empty">
+                    <li class="item address <if condition="$consignee.address_id eq $address_id"> current</if>">
+                        <div class="userinfo">
+                            <div class="username"><i class="icon"></i><span>{$consignee.consignee}</span></div>
+                            <div class="usertel"><i class="icon"></i><span>{$consignee.mobile}</span></div>
+                        </div>
+                        <div class="userinfo useraddr">
+                            {$consignee.country_name} {$consignee.province_name} {$consignee.city_name}
+                            {$consignee.district_name} {$consignee.address} {$consignee.zipcode}
+                        </div>
+                        <div class="userhandle">
+                            <a href="javascript:void(0);" class="left" data-id="{$consignee.address_id}"><if condition="$consignee.address_id eq $address_id">当前默认地址<else/>点此设置为默认</if></a>
+                            <span class="right">
+                                <a href="javascript:void(0);" class="edit_address" data-id="{$consignee.address_id}">修改</a>
+                                <a href="javascript:void(0);" class="del_address" data-id="{$consignee.address_id}">删除</a>
+                                <a href="{$url.select_address}{$consignee.address_id}">选择</a>
+                            </span>
+                        </div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){consi.init()});
+    var consi = {};
+    consi.init = function(){
+        var list = $('.consi_list .edit_address');
+        var del = $('.consi_list .del_address');
+        var add = $('.add_consi .box_content');
+        var addbtn = $('.add_consi .box_title');
+        var setconsi = $('.userhandle a.left');
+        var url = ['{$url.get_consignee}','{$url.get_region}','{$url.add_consignee}','{$url.set_consignee}','{$url.del_consignee}'];
+        var text = [$('#JS_id'),$('#JS_nickname'),$('#JS_province'),$('#JS_city'),$('#JS_district'),$('#JS_addr'),$('#JS_email'),$('#JS_tel'),$('#JS_zipcode'),$('#JS_biuding'),$('#JS_best_time'),$('#JS_button'),$('#JS_mobile'),$('#JS_setconsi'),$('#JS_setEmpty')];
+        var moren = ['<option value="">省</option>','<option value="">市</option>','<option value="">区/县</option>'];
+        var selectObj;
+
+        list.on('click', function(){
+            var id = $(this).data('id');
+            consi.addEmpty();
+            text[10].val(-1);
+            Ajax.call(url[0],'id=' + id,consi.editaddressResponse,'post', 'json');
+        });
+        consi.editaddressResponse = function(ex){
+            $(document).scrollTop(0);
+            if (ex.error != 0){
+                alert(ex.message);
+                if (ex.error == 11){
+                    location.href = ex.content.url;
+                }
+            }
+            else {
+                var data = ex.content;
+                consi.addSelectList(text[2],data.provincelist);
+                consi.addSelectList(text[3],data.citylist);
+                consi.addSelectList(text[4],data.districtlist);
+                text[0].val(data.address_id);
+                text[1].val(data.consignee);
+                text[2].val(data.province);//country
+                text[3].val(data.city);
+                text[4].val(data.district);
+                text[5].val(data.address);
+                text[6].val(data.email);
+                text[7].val(data.tel);
+                text[8].val(data.zipcode);
+                text[9].val(data.sign_building);
+                text[10].val(data.best_time);
+                text[12].val(data.mobile);
+                add.show();
+            }
+        };
+        consi.addSelectList = function(obj, list){
+            if (list && obj) {
+                var l = list.length;
+                for (var i=0;i < l;i++){
+                    obj.append('<option value="' + list[i].region_id + '">' + list[i].region_name + '</option>')
+                }
+            }
+        };
+        text[2].on('change',function(){
+            var id = $(this).val();
+            consi.selectObj = $(this);
+            text[3].html(moren[1]);
+            text[4].html(moren[2]);
+            Ajax.call(url[1],'id=' + id,consi.getRegionResponse,'post','json');
+        });
+        text[3].on('change',function(){
+            var id = $(this).val();
+            consi.selectObj = $(this);
+            text[4].html(moren[2]);
+            Ajax.call(url[1],'id=' + id,consi.getRegionResponse,'post','json');
+        });
+        consi.getRegionResponse = function(ex){
+            var n = 4;
+            if (consi.selectObj.attr('id') == 'JS_province') {
+                n = 3;
+            }
+            if (ex.centent){
+                consi.addSelectList(text[n],ex.centent);
+            }
+        };
+        addbtn.on('click', function(){
+            add.toggleClass(function(){return 'none';});
+        });
+        consi.addEmpty = function(){
+            text[2].html(moren[0]);
+            text[3].html(moren[1]);
+            text[4].html(moren[2]);
+        };
+        text[11].on('click',function(){
+            var id,nick,prov,city,dist,addr,email,tel,zipcode,building,best,mobile;
+            id = text[0].val();
+            nick = text[1].val();
+            prov = text[2].val();
+            city = text[3].val();
+            dist = text[4].val();
+            addr = text[5].val();
+            email = text[6].val();
+            tel = text[7].val();
+            zipcode = text[8].val();
+            building = text[9].val();
+            best = text[10].val();
+            mobile = text[12].val();
+            if (nick == ''){
+                alert('请输入收货人姓名！');
+                text[1].focus();
+            } else if (prov == '') {
+                alert('请选择收货省份');
+            } else if (city == '') {
+                alert('请选择收货城市');
+            /*} else if (dist == '') {
+                alert('请选择收货区或县');*/
+            } else if (addr == '') {
+                alert('请输入详细地址');
+                text[5].focus();
+            } else if (tel == '' && mobile == '') {
+                alert('电话和手机号码请输入任意一个');
+                text[7].focus();
+            } else {
+                var data = '';
+                data += 'id=' + id;
+                data += '&nick=' + nick;
+                data += '&prov=' + prov;
+                data += '&city=' + city;
+                data += '&dist=' + dist;
+                data += '&addr=' + addr;
+                data += '&email=' + email;
+                data += '&tel=' + tel;
+                data += '&zipcode=' + zipcode;
+                data += '&building=' + building;
+                data += '&best=' + best;
+                data += '&mobile=' + mobile;
+                Ajax.call(url[2],data,consi.ConsigneeResponse,'post','json');
+            }
+        });
+        consi.ConsigneeResponse = function(ex){
+            if (ex.error > 0){
+                alert(ex.message);
+                if (ex.error == 11){
+                    location.href = ex.content.url;
+                }
+            }else {
+                location.reload();
+            }
+        };
+        text[14].on('click',function(){text[0].val('');});
+        setconsi.on('click',function(){
+            var id = $(this).data('id');
+            if (isNaN(id)) {
+                alert('设置失败！')
+            } else {
+                Ajax.call(url[3],'id=' + id, consi.ConsigneeResponse,'post','json');
+            }
+        });
+        del.on('click',function(){
+            var id = $(this).data('id');
+            if (isNaN(id)) {
+                alert('删除失败！')
+            } else {
+                Ajax.call(url[4],'id=' + id, consi.ConsigneeResponse,'post','json');
+            }
+        })
+    };
+</script>
+</body>
+</html>

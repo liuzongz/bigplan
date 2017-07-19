@@ -1,0 +1,78 @@
+<div class="pddc-property-one pddc-gray-warp">
+    <div class="pddcp-one-wp ppdc-white-wrap">
+        <div class="pddcp-one-top">
+            <ul>
+                <if condition="$goods_info.goods_jingle">
+                    <li class="clearfix">
+                        {$goods_info.goods_jingle}
+                    </li>
+                </if>
+                <if condition="$goods_info.is_promote eq 1">
+                    <li class="clearfix">
+                        <span class="key">促销价：</span>
+                        <div class="price value">
+                            <span id="JS_Price" style="font-size:18px;font-weight:bold;">￥{$goods_info.promote_price}</span>
+                            <if condition="$promo">
+                                {$promo}
+                            </if>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <span class="key">原售价：</span>
+                        <div class="value"><del>￥{$goods_info.shop_price}</del></div>
+                    </li>
+                <else/>
+                    <li class="clearfix" style="width:50%;float:left;">
+                        <span class="key"><if condition="$is_stock eq 1">经销价格<elseif condition="$is_stock eq 2"/>{$_CFG.integral_name}<else/>价格</if>：</span>
+                        <div class="price value" id="JS_Price" style="font-size:18px;font-weight:bold;">
+                            <if condition="$is_stock eq 2">{$goods_info.shop_price}<else/>￥{$goods_info.shop_price}</if>
+                        </div>
+                    </li>
+                </if>
+                <li class="clearfix" style="width:50%;float: right;">
+                    <span class="key"><if condition="$is_stock eq 1">商城价格<else/>市场价</if>：</span>
+                    <div class="value"><del>￥{$goods_info.market_price}</del></div>
+                </li>
+                <li class="clearfix" style="width:100%;">
+                    <span class="key">浏览量：</span>
+                    <div>{$goods_info.click_count}次</div>
+                </li>
+                <if condition="$goods_info.is_virtual == '1'">
+                    <li class="clearfix">
+                        <span class="key">提货方式：</span>
+                        <div class="value">电子兑换券</div>
+                    </li>
+                    <li class="clearfix">
+                        <span class="key">有效期：</span>
+                        <div class="value">
+                            即日起 到 {$goods_info.virtual_indate_str}
+                            <if condition="$goods_info.buyLimitation and $goods_info.buyLimitation gt 0">                         （每人次限购 {$goods_info.buyLimitation} 件）
+                            </if>
+                        </div>
+                    </li>
+                    <else/>
+                    <if condition="$goods_info.is_presell == '1'">
+                        <li class="clearfix">
+                            <span class="key">预售：</span>
+                            <div class="value">{$goods_info.presell_deliverdate_str } 日发货</div>
+                        </li>
+                    </if>
+                    <if condition="$goods_info.is_fcode == '1'">
+                        <li class="clearfix">
+                            <span class="key">购买类型：</span>
+                            <div class="value">F码优先购买（每个F码优先购买一件商品）</div>
+                        </li>
+                    </if>
+                </if>
+            </ul>
+        </div>
+        <div class="pddcp-one-hide">
+            <div class="clearfix">
+                <span class="key">商品描述：</span>
+            </div>
+            <p id="mobile_body">
+                暂无商品描述
+            </p>
+        </div>
+    </div>
+</div>

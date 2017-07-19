@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="__JS__/swipe.js"></script>
+    <script type="text/javascript" src="__JS__/common.js"></script>
+</head>
+<body class="max640 bgf1" >
+<header>
+<include file="Public:header2" />
+</header>
+<section>
+<div class="comMain">
+    <include file="Public:slide" />
+</div>
+ <div class="asMe">
+     <div class="kpHelp">
+         <a href="{:U('article/index') . '?id=37&isfull'}"><img src="__IMG__/kp_help.jpg" /></a>
+     </div>
+     <div class="bgC_nav">
+         <ul>
+             <li><a href="{:U('Store/index')}"><em class="c1"><i class="myF icon-cf-c14"></i></em><p>店铺</p></a></li>
+             <li><a href="{:U('fenlei/index')}"><em class="c2"><i class="myF icon-fenlei"></i></em><p>分类</p></a></li>
+             <li><a href="{:U('gift/index')}"><em class="c3"><i class="myF icon-ku"></i></em><p>兑物</p></a></li>
+             <li><a href="{:U('cart/index')}"><em class="c4"><i class="myF icon-gouwuche"></i></em><p>购物车</p></a></li>
+         </ul>
+     </div>
+     <if condition="!empty($notice)">
+     <div class="hkMsg">
+         <img src="__IMG__/hkhot_head.jpg"/>
+         <div class="hkMsg_word J_notice1">
+             <ul>
+                 <volist name="notice" id="info">
+                 <li class="item">
+                     <if condition="!empty($info['url'])"><a href="{$info.url}"></if>
+                     <p>
+                     <if condition="!empty($info['keyword'])">
+                     <i class="hot">{$info.keyword}</i>{$info.title}
+                     <else/>
+                     <i class="myF icon-xiaoxi1 gon"></i>汇客公告
+                     </if>
+                     </p>
+                     <p class="hotWord">{$info.title|msubstr=0,20}</p>
+                     <if condition="!empty($info['url'])"></a></if>
+                 </li>
+                 </volist>
+             </ul>
+         </div>
+     </div>
+     </if>
+     <div class="hotSeller">
+         <a class="of_left" href="#"><img src="__IMG__/head_index_of1.jpg" /></a>
+         <a class="of_right1" href="#"><img src="__IMG__/head_index_of2.jpg" /></a>
+         <a class="of_right2" href="#"><img src="__IMG__/head_index_of3.jpg" /></a>
+     </div>
+ </div>
+
+    <volist name="cate_list" id="list">
+        <if condition="!empty($list['goods_list']['goods_list'])">
+            <div class="comBack-all">
+                <div class="comBack">
+                    <a class="imgClass" href="{$list.url}"><img src="{$list.cat_logo}" onerror="$(this).parent().remove()" /></a>
+                    <div class="againstH b-Buttom flex-wrap" style="height:1rem;padding: .3rem 0; overflow:hidden;zoom:1;">
+                        <h2>{$list.cat_name}</h2>
+                        <a class="flex-con spanFr" href="{$list.url}" >查看全部</a>
+                    </div>
+                    <ul class="comCp"> <!--comCp1产品显示一排两列-->
+                        <volist name="list.goods_list.goods_list" id="ll"  mod="2" offset="0" length='4' empty="$godos_empty">
+                            <li class="comImg">
+                                <div class="bgHot none"><img src="__IMG__/hot.png" alt=""></div>
+                                <a href="{$ll.url}">
+                                    <img src="{:echo_img($ll['goods_thumb'])}" />
+                                </a>
+                                <p class="">
+                                    <a class="sN_change" href="{$ll.url}">
+                                        {$ll.goods_name}
+                                    </a>
+                                </p>
+                                <div class="buy">
+                                    <!--<div class="moreTime">-->
+                                    <!--&lt;!&ndash;<div class="left"><del class="delSt">¥&lt;!&ndash;{$ll.stock_price}&ndash;&gt;129</del></div>&ndash;&gt;-->
+                                    <!--</div>-->
+                                    <div class="buyRMB">
+                                        <div class="left"><em class="danW">¥</em><em class="price">{$ll['deposit_price']?$ll['deposit_price']:price_format($ll['shop_price'])}</em></div>
+                                        <!--<div class="right">已售33件</div>-->
+                                    </div>
+                                </div>
+                            </li>
+                        </volist>
+                    </ul>
+
+                </div>
+            </div>
+        </if>
+    </volist> <!--活动产品列表-->
+</section>
+<footer>
+    <include file="Public:menu1" />
+</footer>
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var bullets = document.getElementById('position').getElementsByTagName('li');
+        var banner = Swipe(document.getElementById('mySwipe'), {
+            auto: 2000,
+            continuous: true,
+            disableScroll: true,
+            callback: function(pos) {
+                var i = bullets.length;
+                while(i--) {
+                    bullets[i].className = ' ';
+                }
+                bullets[pos].className = 'cur';
+            }
+        });
+    });
+</script>
+<script>
+    (function(){
+        var $notice = $('.J_notice1>ul');
+        var s = 1;
+        var e = $notice.find('li').length;
+        $notice.html($notice.html()+$notice.html());
+        if(e<=1) return ;
+        function up(){
+            if(s===0){
+                $notice.css("top",0);
+            }else{
+                $notice.animate({top:-s*2+'rem'},1000);
+            }
+            s++;
+            if(s>e){
+                s=0;
+            }
+        }
+        setInterval(function(){up()},3000);
+    })();
+</script>
+
+</html>

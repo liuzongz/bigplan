@@ -1,0 +1,26 @@
+<li class="comImg discount">
+    <div class="bgHot"><img src="__IMG__/hot.png" alt=""></div>
+    <a href="{$goods.url}">
+        <img src="{:echo_img($goods['goods_thumb'])}" />
+    </a>
+    <p class=""><a class="sN_change" href="{$goods.url}">
+        {$goods.goods_name|msubstr=0,10}</a></p>
+    <div class="buy">
+        <!--<div class="moreTime">-->
+            <!--<div class="left">-->
+                <!--<if condition="intval($goods['market_price']) gt 0">-->
+                    <!--<div class="left"><del class="delSt">¥{:price_format($goods['market_price'])}</del></div>-->
+                <!--</if>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="buyRMB">
+            <div class="left"><!--<em class="danW">¥</em>--><em class="price">{$goods['act_format_price']}</em></div>
+            <if condition="$goods['act_endtime'] gt 0">
+            <div class="right">
+                <i class="myF icon-xianshi" style="font-size: .8rem;color:red;margin-right: .1rem;"></i>
+                <em>仅剩<em>{:($goods['act_endtime'] - time())}</em>小时</em><!--限时-->
+            </div>
+            </if>
+        </div>
+    </div>
+</li>

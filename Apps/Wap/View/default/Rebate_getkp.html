@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+
+        <style type="text/css">
+            .zl{max-width:768px;width:100%;}
+            .kp-tit{border-top:1px solid #ffbe99;border-bottom: 1px solid #ffbe99; background: #fff1e9;padding: 0 .2rem;}
+            .kp-tit .kp-p{color: #794f3f;margin-bottom: .3rem;}
+            .kpHq{width: 100%;}.bgcolor{background-color: #f1f1f1;} .colo{color: red;}
+            .kpHq .kpmsg{line-height: 1.5rem;margin: .3rem 0;padding-left: .5rem; border-top:1px solid #e2e2e2;border-bottom: 1px solid #e2e2e2;}
+            .kpHq .kpmsg em{color:red;}
+            .tableLq thead tr td{width: 4rem;}
+            .tableLq  tr td{border:none;line-height: 1.5rem;}
+            .tableLq  tr td .but{background-color: #f1f1f1;color: #a6a6a6; padding: 0 .5rem; border:1px solid #e2e2e2;border-radius: .5rem;}
+            .tableLq  tr td.cur .but{background-color: #fff1e9; color: #f76b1c;border:1px solid #ffceb3;}
+        </style>
+    </head>
+<body style="margin:0 auto;">
+<header>
+    <div class="head-warp max640">
+        <div class="head">
+            <a class="left" href="javascript:history.go(-1)">
+                <i class="myF icon-left"></i>
+            </a>
+
+            <h3>KP券领取</h3>
+            <a class="right" id="manu-cd" href="javascript:void(0)">
+                <i class="myF icon-caidan"></i>
+                <script>
+                    (function(){
+                        var main_navs = [];
+                        main_navs.push("/wap/index/index.html");
+                        main_navs.push("/wap/gift/index.html");
+                        main_navs.push("/wap/fenlei/index.html");
+                        main_navs.push("/wap/cart/index.html");
+                        main_navs.push("/wap/user/index.html");
+                        main_navs.push("/wap/stock/fenlei.html");
+                        var current_url = "/wap/rebate/getkp.html";
+                        var id = ""||false;
+                        if(main_navs.indexOf(current_url)>=0&&!id){
+                            $('.head a.left,a.right').addClass("none");
+                        }
+                        //分类单独去除
+
+                    })()
+
+                    $(document).ready(function(){
+                        $('#manu-cd').click(function(){
+                            $('#toggle').toggle();
+                        });
+                        $('#toggle,#manu-cd').on("touchstart",function(event){
+                            event.stopPropagation();
+                        });
+                        $(document).on("touchstart",function(){
+                            $('#toggle').hide();
+                        });
+
+                    });
+                </script>
+            </a>
+
+        </div>
+
+        <div class="hide-nav none" id="toggle">
+            <div class="menu">
+                <a href="/wap/index/index.html"><i class="myF icon-shouye"></i>
+                    <p>首页</p>
+                </a>
+                <a href="/wap/fenlei/index.html?"><i class="myF icon-fenlei"></i>
+                    <p>分类</p>
+                </a>
+                <a href="/wap/cart/index.html?"><i class="myF icon-gouwuche"></i>
+                    <p>购物车</p>
+                </a>
+                <a href="/wap/user/index.html"><i class="myF icon-gerenzhongxin"></i>
+                    <p>个人中心</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%;height: 2rem;"></div>
+    <script>function myEvent(obj,ev,fn){if(obj.attachEvent){obj.attachEvent('on'+ev,fn);}else{obj.addEventListener(ev,fn,false);}}myEvent(window,'load',function(){var oRTT=document.getElementById('JS_backTop');var pH=document.documentElement.clientHeight;var scrollTop;window.onscroll=function(){scrollTop=document.documentElement.scrollTop||document.body.scrollTop;if(scrollTop>=pH){oRTT.style.display='block';}else{oRTT.style.display='none';}return scrollTop;};});</script>
+    <div class="backTop none" id="JS_backTop" onclick=" $('body,html').animate({scrollTop:0},10);"><i class="myF icon-huidingbu"></i></div>
+</header>
+<div class="zl">
+    <div class="kp-tit">
+        <br class="kp-p">
+        <span class="colo">积分返现规则须知及享受服务：</span></br>
+            1、KP券激活成功后，将按不同额度的KP券发放红包。</br>
+            2、法定节假日不发放红包。</br>
+            3、激活后的KP券可以兑换成等额{$_CFG['integral_name']}。</br>
+            4、{$_CFG['integral_name']}可在商城兑换商品，需支付运费。</br>
+            5、当日KP券红包会在次日0点5分拨出。</br>
+            6、红包满100元可提取为商城余额，提取将收取<!--{$trouble}-->8%的手续费。</br>
+            7、商城余额可在商城购物或满100元申请提现转入您的支付宝。</br>
+    </div>
+</div>
+<div class="kpHq">
+    <div class="kpmsg bgcolor"><em>当前KP点：</em><em>{$user_info.consume_total}</em></div>
+    <div class="tableLq">
+        <table border="0" cellspacing="0" cellpadding="0" class="type_list">
+            <thead>
+            <tr class="bgcolor" >
+                <td>面值</td>
+                <td>数量（张）</td>
+                <td>消耗KP点</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="type_list" id="list" mod="2">
+                <tr <eq name="mod" value="1"> class="bgcolor"</eq>>
+                <td>{$list.nickname}</td>
+                <td>{$list.num}</td>
+                <td>{$list.value}</td>
+                <td <if condition="$list.num gt 0">class="cur"</if>><a class="but" href="javascript:void(0);" data-id="{$list.id}">领取</a></td>
+                </tr>
+            </volist>
+            </tbody>
+            <script type="text/javascript">
+                (function(){
+                    $('.type_list').find('td.cur').find('.but').on('click', function(item){
+                        if ($(this).parent().hasClass('cur')){
+                            var id = $(this).data('id');
+                            if (confirm('确定要领取当前额度KP劵吗？')) {
+                                Jiniu.ajax('{:U("kp2")}','ajax=1&id=' + id,function(ex){
+                                    if (ex.error != 200) {
+                                        alert(ex.msg);
+                                    } else {
+                                        location.reload();
+                                    }
+                                },'POST','JSON');
+                            }
+                        } else {
+                            alert('暂无KP劵可领取！');
+                        }
+                    });
+                })();
+            </script>
+        </table>
+    </div>
+</div>
+</body>
+</html>

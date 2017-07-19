@@ -1,0 +1,26 @@
+<div class="table_box confirmPage discount ">
+    <div class="box_title">
+        <span class="left">优惠卷</span>
+                <span class="right">
+                    <input type="radio" name="bonus" class="bonus o-t-cb" id="JS_discount_Enable" value="1" /> <label for="JS_discount_Enable">使用</label>
+                    <input type="radio" name="bonus" class="bonus o-t-cb" id="JS_discount_Disable" checked value="0" /> <label for="JS_discount_Disable">不使用</label>
+                </span>
+    </div>
+    <div class="box_content none">
+        <ul class="list">
+            <li class="item">
+                <div class="t left">已有红包</div>
+                <div class="c left">
+                    <select name="bonus_id" class="bonus_id">
+                        <option value="">请选择优惠卷</option>
+                        <volist name="bonus.bonus_list" id="list"><option value="{$list.bonus_id}">{$list.bonus_name}</option></volist>
+                    </select>
+                </div>
+            </li>
+            <li class="item">
+                <div class="t left">红包代码</div>
+                <div class="c left"><input type="text" class="input_text bonus_sn" value="0" name="bonus_sn" id="JS_bonus_sn" /></div>
+            </li>
+        </ul>
+    </div>
+</div>

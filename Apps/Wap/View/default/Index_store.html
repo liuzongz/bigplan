@@ -1,0 +1,12 @@
+<volist name="store_list" id="list" empty="$store_empty">
+    <li><a href="{$list.url}">
+        <div class="brandinfo">
+            <p class="logo"><img src="__IMG__/white.png" data-original="{$list.store_avatar}" width="100" height="100" /></p>
+            <p class="name">{$list.store_name}</p>
+            <p class="pronum">商品共{$list.goods_count}件</p>
+        </div>
+        <div class="brandimg">
+            <img src="__IMG__/white.png" data-original="{$list.store_label}" width="324" />
+        </div></a>
+    </li>
+</volist>

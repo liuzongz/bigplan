@@ -1,0 +1,32 @@
+<div class="totalprice" id="JS_TotalPrice">
+    <div class="row">
+        <div class="row1">
+            <span id="JS_delbtn">删除选中</span>
+        </div>
+        <div class="row2 user_row ">
+
+            <div class="all_amount rbm {$is_dealer==2?'yfLh':''}">合计：
+                <span id="JS_total_Amt">
+                    <if condition="!empty($total['total']['goods_price_format'])">
+                        {$total['total']['goods_price_format']}
+                        <else/>
+                        ￥0元
+                    </if>
+                </span>
+            </div>
+
+            <if condition="$is_dealer neq 2">
+                <p>
+                    (合计不含运费)
+                </p>
+                <else />
+            </if>
+
+        </div>
+    </div>
+    <div class="sub_order rbm">
+        <input type="button" class="input_button " id="JS_suborder" value="" />
+         <div class="goBuy">结算(<span id="JS_total_num">{$total.total.goods_number}</span>)</div>
+    </div>
+    <input type="hidden" name="form_token1" value="{$form_token1}">
+</div>

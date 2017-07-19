@@ -1,0 +1,13 @@
+<ul class="allbrands">
+    <li <if condition="$is_index eq 1">class="on"</if>><a href="{:U('Index/index')}">{$_CFG.shop_name}</a></li>
+    <!--<li <if condition="$is_brand eq 1">class="on"</if>><a href="{:U('Index/index')}">品牌</a></li>-->
+    <!--<li <if condition="$is_active eq 1">class="on"</if>><a href="{:U('Active/index?id=1')}">抢购</a></li>
+    <li <if condition="$is_active eq 2">class="on"</if>><a href="{:U('Active/index?id=2')}">拼单</a></li>
+    <li <if condition="$is_active eq 3">class="on"</if>><a href="{:U('Active/index?id=3')}">拾宝</a></li>-->
+    <volist name="cat_list" id="list">
+        <li <if condition="$selected eq 0 and $key eq 0 or $selected eq $list['cat_id']">class="on"</if>><a href="{$list.url}">{$list.cat_name}</a></li>
+    </volist>
+    <li class="icon1 <if condition="$is_store eq 1">on</if>"><a href="{:U('Store/index')}">服务</a></li>
+    <!--<li><a href="{:U('Cart/index')}">购物车</a></li>-->
+    <li class="icon2"><a href="{:U('User/index')}">会员</a></li>
+</ul>

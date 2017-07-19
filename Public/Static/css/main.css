@@ -1,0 +1,17 @@
+@charset "utf-8"; /* CSS Document */
+html,body,p,figure,h1,h2,h3,h4,ul,li,dl,dt,dd,div img{ margin:0; padding:0; word-wrap:break-word;}
+header,section, footer,menu,title{ display:block;}
+ul,li{ list-style:none;}em,i{ font-style:normal;}h1,h2,h3,h4{ font-weight:normal;}img{ vertical-align:middle;}
+body{ font-family:"Droid SansDroid Sans","arial","Microsoft YaHei", "Helvetica Neue", "Hiragino Sans GB",  "\9ED1\4F53", Arial, sans-serif; color:#333; line-height:1.6; overflow-x:hidden;}
+span,em,i,a,div,li{-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none; -khtml-user-select: none; }
+input{outline:none;-webkit-appearance: none;-webkit-tap-highlight-color: rgba(0,0,0,0);}
+input,textarea{margin:0;}
+.ui-focus,.ui-btn:focus{-moz-box-shadow:0 0 12px #387bbe;-webkit-box-shadow:0 0 12px #387bbe;box-shadow:0 0 12px #387bbe}
+input,a,select,canvas{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+input,select,textarea{ font-family:"Helvetica Neue","microsoft yahei","Tamoma"; outline:none;}
+a:link,a:visited{ color:#333; text-decoration:none;}
+::-webkit-scrollbar{display:none;}
+body{ max-width: 768px; margin:0 auto;font-size: .6rem;background-color: white;}
+.left{float:left}
+.right{float:right;}
+.none{display:none}

@@ -1,0 +1,16 @@
+<dl>
+    <dt><i class="required">*</i>文字内容：</dt>
+    <dd>
+        <input type="text" name="ad_code" value="" class="w250">
+    </dd>
+</dl>
+<script>
+    $(function(){
+        //回显
+        <php>if(!empty($_adv) && $_adv_type->name == $_adv['media_type']):</php>
+            $('[name="ad_code"]').val('<{$_adv['ad_code']}>');
+        <php>endif</php>
+    });
+</script>
+
+

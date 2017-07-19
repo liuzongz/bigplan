@@ -1,0 +1,72 @@
+<if condition="1 eq 0">
+<div class="address">
+    <div class="userinfo">
+        <div class="username"><i class="icon"></i><span>{$consignee.consignee}</span></div>
+        <div class="usertel"><i class="icon"></i><span>{$consignee.mobile}</span></div>
+    </div>
+    <div class="userinfo useraddr">
+        {$consignee.country_name} {$consignee.province_name} {$consignee.city_name} {$consignee.district_name} {$consignee.address} {$consignee.zipcode}
+    </div>
+    <div class="userhandle"> <a href="{$url.edit_address}">修改</a> <input type="hidden" name="address_id" value="{$consignee.address_id}" /></div>
+</div>
+</if>
+<div class="address1 confirmPage">
+    <div class="thead title">
+        <span class="left">收货人信息</span>
+        <span class="right edit_address <if condition="empty($consignee)">none</if>">修改</span>
+    </div>
+    <div class="tbody contents">
+        <div class="address_list <if condition="$consignee == ''">none</if>">
+            <input type="hidden" name="address_id" value="{$consignee.address_id}" class="list_id" id="JS_address_id" />
+            <div>收货人：<span class="list_nick">{$consignee.consignee}</span></div>
+            <div>详细地址：<span class="list_addr">{$consignee.province_name} {$consignee.city_name} {$consignee.district_name} {$consignee.address}</span></div>
+            <div>联系电话：<span class="list_tel"><if condition="$consignee.mobile neq ''">{$consignee.mobile}<else/>{$consignee.tel}</if></span></div>
+        </div>
+        <ul class="list address_listAndAdd <if condition="$consignee === ''">none</if>">
+            <volist name="consignee_list" id="cons" key="k">
+            <li class="item">
+                <input type="radio" name="consignee" id="cons_{$cons.address_id}" class="input_radio o-t-cb" value="{$cons.address_id}" <if condition="$k eq 1">checked</if> />
+                <label for="cons_{$cons.address_id}"><span class="cons_name">{$cons.consignee}</span> <span class="cons_tel"><if condition="$cons.mobile neq ''">{$cons.mobile}<else/>{$cons.tel}</if></span> <span class="cons_addr">{$cons.province_name} {$cons.city_name} {$cons.district_name} {$cons.address} </span></label>
+            </li>
+            </volist>
+            <li class="item">
+                <input type="radio" name="consignee" id="cons_new" class="input_radio o-t-cb" value="0" <if condition="$consignee eq '' and empty($consignee_list)">checked</if> id="JS_addnew" />
+                <label for="cons_new">使用新地址</label>
+                <div class="add_address <if condition="!empty($consignee_list)">none</if>" id="JS_add">
+                    <ul class="ll">
+                        <li class="it">
+                            <div class="h_font">收货人<em style="color: red;margin-left: .1rem;">*</em></div>
+                            <input type="text" class="consignee_name" name="consignee_name"  placeholder="收货人信息(必填)" />
+                        </li>
+                        <li class="it">
+                            <div class="h_font">手机号码<em style="color: red;margin-left: .1rem;">*</em></div>
+                            <input type="text" class="mobile" name="mobile"  placeholder="收货人手机号(必填)"/>
+                        </li>
+                        <li class="it">
+                            <div class="h_font">配送地址<em style="color: red;margin-left: .1rem;">*</em></div>
+                            <div class="flex selectCity">
+                                <select class="provice region" data-ss="1"><option value="">--请选择--</option></select>
+                                <select class="city region" data-ss="2"><option value="">--请选择--</option></select>
+                                <select class="area region" data-ss="3"><option value="">--请选择--</option></select>
+                            </div>
+                            <textarea class="xiangxi_addr" name="xiangxi_addr" placeholder="建议填写详细收货地址:如街道/乡镇,小区/村庄的名称,门牌号(必填)"></textarea>
+                        </li>
+                        <li class="it">
+                            <div class="h_font">配送时间<em style="color: red;margin-left: .1rem;">*</em></div>
+                            <div><select class="besttime">
+                                <option value="0">选择最佳送货时间</option>
+                                <volist name="best_time" id="time">
+                                <option value="{$time.id}">{$time.text}</option>
+                                </volist>
+                            </select></div>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+            <li class="item" style="text-align:center;">
+                <input type="button" class="input_button save_address" value="保存地址" />
+            </li>
+        </ul>
+    </div>
+</div>

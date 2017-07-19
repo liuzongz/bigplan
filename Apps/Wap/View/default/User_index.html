@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .userCenter_head{width:100%;height:13.64rem;text-align:center; background:url(__IMG__/user-bg.png);background-size:16rem 13.64rem; }
+        .userCenter_head .warpOne{width:8.5rem;height:8.5rem;overflow:hidden; margin-top:1rem; text-align: center; border:4px solid #c6e0e4;display: inline-block;border-radius: 100%;}
+        .userCenter_head .warpTwo{width:6.5rem;height:6.5rem;margin-top: 1rem;overflow:hidden;text-align: center; border:2px solid #d0eaea;display: inline-block;border-radius: 100%;}
+        .userCenter_head .imgUh{width:5rem;height:5rem;margin-top: .6rem;overflow:hidden;text-align:center;border-radius:4rem;border:2px solid #53c7d5; background-color:#f1f1f1;display: inline-block;}
+        .userCenter_head .imgUh img{width:100%;}
+        .userCenter_head .userH{color:#ff6600;letter-spacing: 3px; font-weight: 600;font-size: .7rem;margin-top: -2rem;line-height:1.5rem;height: 2rem;}
+        .userCenter_head .telMsg{color: #ff9600;padding-bottom: .3rem; background:url(__IMG__/user-bg-name.png) bottom no-repeat;background-size: 16rem .2rem; }
+        .userOption{width:100%;position: relative;top:-0.1rem;background-color:#f8f8f8}
+        .userOption ul{width:100%;margin-top: -.5rem;width: 100%;height: 11.5rem;margin-top: -.5rem;background: url(/Public/Wap/images/user-bolang.png) bottom no-repeat;  background-size: 16rem 8rem;}
+        .userOption ul li{float:left;width:25%;padding:.7rem 0; text-align: center;}
+        .userOut{width: 100%;margin-top:3rem; background-color: #f8f8f8;}
+        .userOption ul li i.icon-wodedingdan{color: #fdab2b;}
+        .userOption ul li i.icon-mingpian{color: #ff4055;}
+        .userOption ul li i.icon-qianbao{color: #2274e7;}
+        .userOption ul li i.icon-huiyuan{color:#F4A83A;}
+        .userOption ul li i.icon-bianji{color: #34bf4c;}
+        .userOption ul li i.icon-fenxiang{color:#FFA401;}
+        .userOption ul li i.icon-iconfontruzhu{color: #39c157;}
+        .userOption ul li i.icon-libao01{color: #46bbb3;}
+        .userOption ul li i.icon-wenti01{color: #928bfd;}
+        .userOption ul li i.icon-huodong01{color: #3cadf5;}
+        .userOption ul li i.icon-chuandan01{color: #ff8840;}
+        .userOut a{ width:96%;display: block; height:1.5rem;background-color:#ff6600;clear:both;margin:0 2% 1rem 2%;border-radius:.2rem;text-align:center;line-height:1.5rem;color:white;}
+        .notice1{text-align: left;position: relative;bottom:0;overflow: hidden;height:1.2rem;margin-top: .1rem;line-height: 1.2rem;padding: 0 .5rem;}
+        .notice1>ul{position: absolute;top:0;text-align: left}
+        .notice1>ul li a i.xiaoXi{display: inline-block;vertical-align: top;color: #ffb82d;}
+    </style>
+</head>
+<body>
+    <include file="Public:header1" />
+    <div class="userCenter_head">
+        <div class="warpOne">
+            <div class="warpTwo">
+                <div class="imgUh">
+                    <a href="{:U('Profile/index')}">
+                        <img src="<if condition="!empty($memberInfo['user_avatar'])">{$memberInfo.user_avatar}<else/>__IMG__/logox2.png</if>" onerror="this.src = '__IMG__/logox2.png'" >
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="userH">{$memberInfo.nickname}</div>
+        <p class="telMsg">
+
+            <!--<span>{$memberInfo.vip_name}</span>-->
+            <!--<if condition="!$is_weixin"> 您由-->
+                <!--<if condition="$memberInfo.parent_name neq ''">{$memberInfo.parent_name}-->
+                    <!--<else/>{$_CFG.shop_name}-->
+                <!--</if> 推荐-->
+            <!--</if>-->
+        </p>
+        <div class="notice1">
+            <ul>
+                <foreach name="notice" item="list">
+                    <li><a href="{:U('notice',array('id'=>$list['id']))}">{$list['title']}</a></li>
+                </foreach>
+            </ul>
+        </div>
+    </div>
+
+    <div class="userOption">
+        <ul>
+            <li><a href="{:U('Order/index?t=pay')}"><i style="display:inline-block;width:1.5rem;height:1.5rem;" class="myF icon-daifahuo"></i><p>待发货</p></a></li>
+            <li><a href="{:U('Order/index?t=confirm')}"><i style="display:inline-block;width:1.5rem;height:1.5rem;" class="myF icon-yifahuo" ></i><p>已发货</p></a></li>
+            <li><a href="{:U('Order/index?t=comment')}"><i style="display:inline-block;width:1.5rem;height:1.5rem;" class="myF icon-yishouhuo"></i><p>已收货</p></a></li>
+            <li><a href="{:U('Order/index?t=refund')}"><i style="display:inline-block;width:1.5rem;height:1.5rem;" class="myF icon-yituikuan"></i><p>已退货</p></a></li>
+            <volist id="menu" name="menus" key="k">
+                <volist name="menu" id="ll" key="kk">
+                    <li><a href="{$ll.url}"><i class="myF icon-{$ll.icon}" style="display:inline-block;width:1.5rem;height:1.5rem;color:{$ll['color']?:'#737383'}"></i><p>{$ll.name}</p></a></li>
+                </volist>
+            </volist>
+        </ul>
+    </div>
+    <div class="userOut"><a href="{:U('User/logout')}">退出会员</a></div>
+    <!--<div style="text-align: center;color:#c4c4c4;font-size:.5rem;"><a href="{:U('article/index') . '?id=36'}">汇客惠品相关认证</a> 鄂ICP备12017310号-1</div>-->
+    <footer>
+        <include file="Public:menu1" />
+    </footer>
+    <script>
+        (function(){
+            var $notice = $('.notice1>ul');
+            var s = 1;
+            var e = $notice.find('li').length;
+            $notice.html($notice.html()+$notice.html());
+            if(e<=1) return ;
+            function up(){
+                if(s===0){
+                    $notice.css("top",0);
+                }else{
+                    $notice.animate({top:-s*2+'em'},1000);
+                }
+                s++;
+                if(s>e){
+                    s=0;
+                }
+
+            }
+
+            setInterval(function(){up()},3000);
+
+        })();
+    </script>
+</body>
+</html>
+

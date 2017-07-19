@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        #warp{  position: relative;  width: 16rem;height:26.4rem;overflow: hidden;  }
+        #warp #img{  width: 100%; }
+        #userHead{  position: absolute;  align-items: center;-webkit-align-items: center;  justify-content: center;-webkit-justify-content: center;  width: 3.2rem;height: 3.2rem;  background-color: #fff;  }
+        #userHead img{  max-width: 3rem;max-height: 3rem;  padding: .1rem;  }
+        #userName{  position: absolute;  height: 1.6rem;min-width: 7.5rem;line-height: 1.6rem;padding-left:.5rem;  background: rgba(255, 255, 255, .2);  border-radius: .8rem;font-size: .7rem;  }
+        #userEwm{  position: absolute;  align-items: center;-webkit-align-items: center;  justify-content: center;-webkit-justify-content: center;  width: 6.4rem;height: 6.4rem;  background-color: #fff;  }
+        #userEwm img{  max-width: 6.4rem;max-height: 6.4rem;  }
+    </style>
+</head>
+<body>
+<div id="warp">
+    <img id="img" src="{:echo_img($info['store_config']['bg_img'])}" alt="">
+    <div id="userHead" class="flex">
+        <img  src="{:echo_img($info['user_avatar'])}">
+    </div>
+    <div id="userName" class="flex">我是 {$info['nickname']}</div>
+    <div id="userEwm" class="flex">
+        <img  src="{:echo_img($info['img_address'])}">
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var user = {
+        x:("{$info['store_config']['qr_config']['userX']|default=121}"/20) + 'rem',
+        y:("{$info['store_config'][qr_config][userY]|default=32}"/20) + 'rem'
+    },ewm = {
+        x:("{$info['store_config']['qr_config']['ewmX']|default=39}"/20) +'rem',
+        y:("{$info['store_config'][qr_config][ewmY]|default=31}"/20) +'rem'
+    },uhead = {
+        x:("{$info['store_config']['qr_config']['uHeadX']|default=96}"/20) +'rem',
+        y:("{$info['store_config']['qr_config']['uHeadY']|default=232}"/20) +'rem'
+    };
+    $('#userName').css({'left':user.x,'top':user.y});
+    $('#userHead').css({'left':ewm.x,'top':ewm.y});
+    $('#userEwm').css({'left':uhead.x,'top':uhead.y});
+
+
+</script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/swipe.js"></script>
+</head>
+<body style="background-color: #f1f1f1;">
+<header>
+    <div class="head-seach max640">
+        <form method="" action="{:U('Gift/fenlei')}">
+            <input class="seach-int b-All" name="keywords" type="search" value="" placeholder="沙诗雅" />
+            <input type="hidden" name="id" value="0">
+            <input type="hidden" name="aid" value="{$info.act_id}">
+            <input type="hidden" name="is_dealer" value="2">
+        </form>
+    </div>
+    {@weibi_slide}
+</header>
+<section>
+    <div class="fenlei">
+        <ul class="icon">
+            <volist name="category_list" id="cate">
+                <li class="item">
+                    <div class="icon"><a href="{$cate.url}"><img src="{:echo_img($cate['stock_icon'])}" /></a></div>
+                    <div class="text">{$cate.cat_name}</div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <volist name="category_list" id="cate">
+        <if condition="!empty($cate['goods_list'])">
+                <div class="comBack-all">
+                    <if condition="!empty($cate['cat_info']['stock_banner'])">
+                        <div class="fenlei_ad"><img src="{:echo_img($cate['stock_banner'])}" /></div>
+                    </if>
+                    <div class="comBack">
+                        <div class="againstH b-Buttom flex-wrap" style="height:1rem;padding: .3rem 0; overflow:hidden;zoom:1;">
+                            <h2>{$cate.cat_name}</h2>
+                            <a class="flex-con spanFr" href="{$cate.url}" >查看全部</a>
+                        </div>
+                    <ul class="comCp">
+                        <volist name="cate.goods_list" id="goods" offset="0" length='4' empty="$goods_empty" mod="2" >
+                            <include file="Public:goods_list2" />
+                        </volist>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </if>
+    </volist>
+</section>
+<footer>
+    <if condition = "$is_dealer==1">
+        <include file="Public:menu2" />
+        <else />
+        <include file="Public:menu1" />
+    </if>
+</footer>
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $(window).scroll(function() {
+            var scroH = $(this).scrollTop();
+            var b = scroH / 600;
+            $('.head-seach').css('background', 'rgba(255,0,0,' + b + ')');
+        });
+
+        var bullets = document.getElementById('position').getElementsByTagName('li');
+        var banner = Swipe(document.getElementById('mySwipe'), {
+            auto: 2000,
+            continuous: true,
+            disableScroll: true,
+            callback: function(pos) {
+                var i = bullets.length;
+                while(i--) {
+                    bullets[i].className = ' ';
+                }
+                bullets[pos].className = 'cur';
+            }
+        });
+
+    });
+
+
+</script>
+</html>

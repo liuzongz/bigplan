@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="__JS__/swipe.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ihDDHwCX7FaUlPhKV1o9iQa5OLBAu0lE"></script>
+    <style type="text/css">
+        body{background-color: #eee;}
+        .index0106{position: absolute;width: 100%;max-width: 768px;top:0;}
+        .setheader{ max-width: 768px;background-color: #fff; }
+        .back{z-index: 99; position: absolute;top:0;left: 0; line-height: 2rem;width: 2rem;height: 2rem; text-align: center;}
+        .city_select{width:100%;height: 2rem;line-height: 2rem;text-align: center;}
+        .cityA{width:100%;max-width:768px; padding: .3rem 0; background: #fff;margin: .5rem 0;border-bottom: 1px solid #aaa;}
+        .cityA .setCity{max-width: 3rem; margin-left:.5rem;text-align: center;line-height: 1.4rem;   font-size: .6rem;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;word-break: break-all; }
+        .cityA .lc{line-height: 1.4rem;margin:  0 .1rem; }
+        .ipk{margin: 0 .5rem;height: 1.4rem; background: #eee;border:1px solid #eee;border-radius: .1rem;position: relative;}
+        .input_text{border:none;background: #eee;color: #a6a6a6;line-height: 1.4rem;font-size: .6rem;}
+        .ipk .iconS{width: 1.5rem;text-align: center;line-height: 1.4rem;}
+        .ipk .iconS i{font-size: .8rem;color: #a6a6a6;}
+        .ipk .pot{position: absolute;width: 1.2rem;text-align: center; right: .2rem;top:0;line-height: 1.4rem;}
+        .ipk .pot i{opacity: .5;}
+        .gb{background-color:#fff;margin-top: .5rem;max-width: 100%;width: 768px;}
+        .gb .la{padding-left: .5rem;width: 1.5rem; line-height: 2rem;}
+        .gb .gc{line-height: 2rem;}
+        .gb .sr{ width: 2rem;text-align: center;line-height: 2rem;}
+
+        .Bhtml,.Chtml{width: 100%;max-width: 768px; background-color: #fff;position: absolute;top:0;left: 0;z-index: 999;min-height: 100%;}
+        #JS_header{position: fixed;width: 100%;top:0; max-width: 768px;background-color: #fff; z-index: 999;}
+        #JS_header .back{z-index: 99; position: absolute;top:0;left: 0; line-height: 2rem;width: 2rem;height: 2rem; text-align: center;}
+        #JS_header .city_select{width:100%;height: 2rem;line-height: 2rem;text-align: center;}
+        .warpCityS{background-color: #eee; padding-bottom: .6rem;}
+        ul.cityStyle li{float: left;width: 4.2rem;margin:.2rem 0 .2rem .6rem; border: 1px solid #b5b5b5;border-radius: .1rem; text-align: center;height: 1.6rem;line-height: 1.6rem;font-size: .6rem;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;word-break: break-all;}
+        .warpCityS .song p.forLeftM{padding:.6rem 0 .3rem .6rem;}
+        .cityAll{}
+        .cityAll>ul>li{background-color: #eee;}
+        .cityAll>ul>li>a{position: relative; top: -2rem;display: block; height: 0; overflow: hidden;}
+        .cityAll>ul>li>ul{background: #fff;}
+        .cityAll>ul>li>ul>li{background-color: white;margin: 0 0 0 .6rem; line-height: 2rem;border-bottom: 1px solid #e2e2e2;}
+        .rightNavCity{position: fixed;right:0;top:4.1rem;padding: 0 .2rem;border-radius: .1rem;}
+        .rightNavCity ul li{text-align: center;}
+        .rightNavCity ul li a{color: #00aa88;text-align: center;font-size: .4rem;}
+        .floatUp{position: fixed;top:50%; left:5rem; text-align: center;width: 6rem;height: 3rem; }
+        .floatUp .textClass{padding: .3rem .4rem;font-size: 1.5rem; background:rgba(0,0,0,.6); color:white; }
+
+        .cityB{width: 100%;}
+        .cityB .back_loctaion{width: 2rem;height: 2rem;line-height: 2rem;text-align: center;}
+        .cityB .lc{line-height: 1.4rem;margin:  0 .1rem; }
+        .cityB .ipk{margin: .3rem .5rem;height: 1.4rem;line-height: 1.4rem; background: #eee;border:1px solid #eee;border-radius: .1rem;position: relative;}
+        .maker{width: 1rem;height: 1rem;position: absolute;top:6rem;left: 7.5rem; }
+        .maker i{color: red;}
+        .seachAdd{width: 100%;max-width: 768px;min-height: 300px; position: absolute;overflow: auto; background: #eee;}
+        .top5{top:5rem;}
+        .top12{top:12rem;}
+        .seachAdd ul{background: #fff;}
+        .seachAdd ul li{background: #fff;border-bottom: 1px solid #e2e2e2;margin-left:.5rem;padding:  .4rem 0.4rem .4rem 0; }
+        .seachAdd ul li p.p1 i{color:#a6a6a6;}
+        .seachAdd ul li p.p1 em{color: #333;font-size: .7rem;}
+        .seachAdd ul li p.p2{padding-left: 1rem;color: #a6a6a6;}
+        .seachAdd ul li p.p1 i.dangqian{margin-left: 1rem;padding: 0 .1rem;border-radius: .1rem; background-color: #4a964d;color: white;}
+
+    </style>
+</head>
+<body class="max640 bgf1" >
+    <div class="index0106" id="JS_index0106">
+        <include file="Public:header2" />
+        <div class="comMain">
+            {@index_slide}
+        </div>
+        <div class="asMe">
+            <div class="LtArea" style="display:none;">
+                <em onclick="fnopenA();"><i class="myF icon-location" ></i>
+                    <em id="JS_locationTitle">{$location['name']}</em><i class="myF icon-down"></i>
+                </em>
+            </div>
+            <div class="bgC_nav clearfix">
+                <ul>
+                    <!--<volist name="store_cate" id="cate" key="key">
+                        <li><a href="{$cate.url}"><em class="c{:($key + 1)}"><i class="myF icon-{$cate.icon_style}"></i></em><p>{$cate.cat_name}</p></a></li>
+                    </volist>-->
+                    <li><a href="{:U('Store/index')}"><em class="c1"><i class="myF icon-cf-c14"></i></em><p>店铺</p></a></li>
+                    <li><a href="{:U('fenlei/index')}"><em class="c2"><i class="myF icon-fenlei"></i></em><p>分类</p></a></li>
+                    <li><a href="{:U('gift/index')}"><em class="c3"><i class="myF icon-ku"></i></em><p>兑物</p></a></li>
+                    <li><a href="{:U('cart/index')}"><em class="c4"><i class="myF icon-gouwuche"></i></em><p>购物车</p></a></li>
+                    <li><a href="{:U('Store/index')}"><em class="c5"><i class="myF icon-qita"></i></em><p>其他</p></a></li>
+                </ul>
+            </div>
+
+        <div class="idnext flex-wrap">
+            <div class="qiang" >
+                <div class="timeGet JNWidget" data-type="countdown" data-cfg="{time:'{$act_goods['discount']['act_endtime']}',Hobj:'.timeH',Mobj:'.timeM',Sobj:'.timeS'}">  <!--,eobj:'.timeMm':callback:callback-->
+                    <i class="timeH">00</i>:<i class="timeM">00</i>:<i class="timeS">00</i>
+                </div>
+                <div class="shopImg1">
+                    <if condition="$act_goods['discount']['goods']['goods_id'] && intval($act_goods['discount']['act_endtime']) egt time()">
+                        <a href="{$act_goods['discount']['goods']['url']}">
+                            <img src="{:echo_img($act_goods['discount']['goods']['goods_thumb'])}" alt="" />
+                        </a>
+                        <elseif condition="$act_goods['discount']['goods']['goods_id'] && intval($act_goods['discount']['act_endtime']) lt time()"/>
+                        <img src="{:echo_img('__IMG__/index_panic_end.png')}" alt="" />
+                        <else/>
+                            <img src="{:echo_img('__IMG__/index_panic_none.png')}" alt="" />
+                    </if>
+                </div>
+            </div>
+
+            <div class="flex-con">
+                <div class="flex-vertical">
+                    <div class="flex-con">
+                        <div class="flex-wrap"style="text-align: center;">
+                            <div class="flex-con xian">
+                                <div class="shopImg2">
+                                    <if condition="!$act_goods['panic']">
+                                        <img src="{:echo_img('__IMG__/index_panic_end.png')}" alt="" />
+                                        <else/>
+                                        <a href="{$act_goods['panic']['url']}">
+                                            <img src="{:echo_img($act_goods['panic']['goods_thumb'])}" alt="" />
+                                        </a>
+                                    </if>
+                                </div>
+                            </div>
+                            <div class="flex-con fan">
+                                <div class="shopImg2">
+                                    <if condition="!$act_goods['kp']">
+                                        <img src="{:echo_img('__IMG__/index_panic_end.png')}" alt="" />
+                                        <else/>
+                                        <a href="{$act_goods['kp']['url']}">
+                                            <img src="{:echo_img($act_goods['kp']['goods_thumb'])}" alt="" />
+                                        </a>
+                                    </if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-con ping">
+                        <div class="shopImg3">
+                            <!--<a href="/">-->
+                            <img src="{:echo_img('__IMG__/Pintuan.png')}" alt="" />
+                            <!--</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shopTal JNWidget" data-type="scroll" data-cfg="{url:'{:U('Index/get_store_list')}?p=',obj:$(window),show_box:$('.shopList'),show_status:$('.list_botton'),page_name:'p',star_load:1}" id="content">
+        <div class="imgHot none"><img  src="__IMG__/1.jpg" alt=""></div>
+        <div class="flex-wrap padhead none">
+            <div class="flex-con pad pl" ></div>
+            <div class="sto"><i>附近店铺</i></div>
+            <div class="flex-con pad pr" ></div>
+        </div>
+        <ul class="shopList"></ul>
+        <div class="list_botton">上拉加载更多</div>
+    </div>
+    <include file="Public:menu1" />
+</div>
+
+    <div class="Ahtml none">
+        <div class="setheader">
+            <div style="position: relative;">
+                <div class="back" id="JS_Select"><i class="myF icon-left"></i></div>
+                <div class="city_select">选择收货地址</div>
+            </div>
+        </div>
+        <div class="cityA flex-wrap">
+            <div class="flex-wrap none" id="JS_cityOut" onclick="fnopenCitySelect();" >
+                <div class="setCity flex-con" id="JS_setCity">北京</div>
+                <div class="lc"><i class="myF icon-down" style="font-size: .6rem;"></i></div>
+            </div>
+            <div class="flex-con">
+                <div class="flex-wrap ipk">
+                    <div class="iconS"><i class="myF icon-sousuo-sousuo"></i></div>
+                    <input class="flex-con input_text" id="JS_search" value="" type="text" placeholder="查找小区/大厦/学校等">
+                    <div class="pot none" id="JS_close" onclick="fnclosebtn();"><i class="myF icon-guanbi1"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="gb flex-wrap" onclick="fnopenC();" style="color: #4a964d;" >
+            <div class="la"> <i class="myF icon-dingwei1"></i></div>
+            <div class="flex-con gc">定位当前位置</div>
+            <div class="sr"><i class="myF icon-right"></i></div>
+        </div>
+        <div class="seachAdd none top5" id="JS_Ahtmllist">
+            <form action="">
+
+            </form>
+        </div>
+    </div>
+
+    <div class="Bhtml none">
+        <div id="JS_header">
+            <div style="position: relative;">
+                <div class="back" onclick="fncloseCitySelect();"><i class="myF icon-left"></i></div>
+                <div class="city_select">选择城市</div>
+            </div>
+        </div>
+        <div style="height: 2rem;"></div>
+
+        <div class="cityAll clearfix">
+
+            <ul class="chao" id="JS_chao">
+                <li class="item" data-tag="热门">
+                    <a name="remen" id="JS_remen"> </a>
+                    <div class="warpCityS" style="border-bottom: 1px solid #e2e2e2;">
+                        <div class="song">
+                            <p class="forLeftM">热门城市</p>
+                            <ul class="cityStyle clearfix">
+                                <li>武汉</li>
+                                <li>成都</li>
+                                <li>重庆</li>
+                                <li>广州</li>
+                                <li>杭州</li>
+                                <li>南京</li>
+                                <li>上海</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <foreach name="city" item="list" key="k">
+                    <li class="item" data-tag="{$k}"><a class="itema" name="{$k}" id="JS_{$k}" ></a><i class="forlt">{$k}</i>
+                        <ul class="lei">
+                            <foreach name="list" item="v">
+                                <li>{$v}</li>
+                            </foreach>
+                        </ul>
+                    </li>
+                </foreach>
+            </ul>
+        </div>
+        <div class="rightNavCity" id="JS_rightNavCity"><ul class="cityMoat">
+            <li><a href="#remen">热门</a></li>
+            <li><a href="#A">A</a></li>
+            <li><a href="#B">B</a></li>
+            <li><a href="#C">C</a></li>
+            <li><a href="#D">D</a></li>
+            <li><a href="#E">E</a></li>
+            <li><a href="#F">F</a></li>
+            <li><a href="#G">G</a></li>
+            <li><a href="#H">H</a></li>
+            <li><a href="#I">I</a></li>
+            <li><a href="#J">J</a></li>
+            <li><a href="#K">K</a></li>
+            <li><a href="#L">L</a></li>
+            <li><a href="#M">M</a></li>
+            <li><a href="#N">N</a></li>
+            <li><a href="#O">O</a></li>
+            <li><a href="#P">P</a></li>
+            <li><a href="#Q">Q</a></li>
+            <li><a href="#R">R</a></li>
+            <li><a href="#S">S</a></li>
+            <li><a href="#T">T</a></li>
+            <li><a href="#U">U</a></li>
+            <li><a href="#V">V</a></li>
+            <li><a href="#W">W</a></li>
+            <li><a href="#X">X</a></li>
+            <li><a href="#Y">Y</a></li>
+            <li><a href="#Z">Z</a></li>
+        </ul></div>
+        <div class="floatUp none" id="JS_floatUp"><em class="textClass">A</em></div>
+    </div>
+    <div class="Chtml none" id="JS_location" >
+        <div class="cityB flex-wrap"  onclick="fncloseC();">
+            <div class="back_loctaion" ><i class="myF icon-left"></i></div>
+            <div class="flex-con">
+                <div class="flex-wrap ipk">
+                    <div class="iconS"><i class="myF icon-sousuo-sousuo"></i> </div>
+                    <div class=" flex-con" style="color: #a6a6a6;">查找小区/大厦/学校等</div>
+                </div>
+            </div>
+        </div>
+        <div id="allmap" style="width: 100%; height: 10rem;"></div>
+        <div class="maker"><i class="myF icon-location"></i></div>
+        <div class="seachAdd top12" id="JS_seachTop12">
+        </div>
+    </div>
+<script>
+/*
+    $(function getRTime(){
+        var now_time = new Date().getTime();
+        var act_endtime = "{$act_goods['discount']['act_endtime']}";//活动结束时间
+        var end_time = act_endtime * 1000;
+        var h ,m,s ,w;
+        var t = end_time - now_time;
+
+        if (t > 0) {
+            h = checkTime(Math.floor(t / 1000 / 60 / 60));
+            m = checkTime(Math.floor(t / 1000 / 60 % 60));
+            s = checkTime(Math.floor(t / 1000 % 60));
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+            $('.timeH').text(h);
+            $('.timeM').text(m);
+            $('.timeS').text(s);
+
+        }else if(t <= 0){
+            $('.timeH').text('00');
+            $('.timeM').text('00');
+            $('.timeS').text('00');
+        }
+        setTimeout(getRTime,1000);
+    });*/
+</script>
+</body>
+</html>

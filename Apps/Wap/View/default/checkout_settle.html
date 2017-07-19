@@ -1,0 +1,14 @@
+<div class="settle">
+    <div class="box_title">
+        <div class="left">
+            实付款：
+            <span class="rmb orange total_amount">
+              {$total['total_amount']}
+            </span>
+        </div>
+        <if condition="$total.integral gt 0">
+        <div class="left">{$_CFG['integral_name']}：<span class="rmb orange integral">{$total.integral}</span></div>
+        </if>
+        <div class="right"><input type="button" value="立即下单" id="JS_submit" /></div>
+    </div>
+</div>

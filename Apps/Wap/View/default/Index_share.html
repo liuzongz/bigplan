@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="http://t2.jiniu.cc/Public\Wap\js/jquery.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<a href="weixin://profile/gh_12fe7efd9d1e">关注</a>
+<script type="text/javascript">
+    function WeiXinAddContact(wxid){
+
+        if (typeof WeixinJSBridge == 'undefined') return false;
+        alert(wxid);
+        WeixinJSBridge.invoke('addContact', {
+            webtype: '1',
+            username: wxid
+        }, function(d) {
+            // 返回d.err_msg取值，d还有一个属性是err_desc
+            // add_contact:cancel 用户取消
+            // add_contact:fail　关注失败
+            // add_contact:ok 关注成功
+            // add_contact:added 已经关注
+            // WeixinJSBridge.log(d.err_msg);
+        });
+    }
+//通过微信分享
+function WeiXinShareBtn() {
+    if (typeof WeixinJSBridge == "undefined") {
+        alert("请先通过微信xxxx");
+    } else {
+        WeixinJSBridge.invoke('shareTimeline', {
+        "title": "xxx",
+                "link": "http://www.xxx.com",
+                "desc": "关注xxx",
+                "img_url": "http://www.xxx.com/xxx.png"
+    });
+}
+}
+
+function r(f){(
+        typeof WeixinJSBridge == 'undefined'||(typeof WeixinJSBridge.invoke == 'undefined'))?setTimeout('r('+f+')',200):f()}
+    r(function(){
+        WeiXinAddContact("gh_406057312000");
+    });
+</script>
+</body>
+</html>

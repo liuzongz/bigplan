@@ -1,0 +1,12 @@
+<volist name="brand_list" id="list" empty="$brand_empty">
+    <li><a href="{:U('Brand/info') . '?id=' . $list['brand_id']}">
+        <div class="brandinfo">
+            <p class="logo"><span><img src="__IMG__/white.png" data-original="/{$list.brand_logo}" /></span></p>
+            <p class="name" style="margin-top:20px;">{$list.brand_name}</p>
+            <p class="pronum">商品共{$list.goods_count}件</p>
+        </div>
+        <div class="brandimg">
+            <img src="__IMG__/white.png" data-original="/{$list.brand_figure}" />
+        </div></a>
+    </li>
+</volist>

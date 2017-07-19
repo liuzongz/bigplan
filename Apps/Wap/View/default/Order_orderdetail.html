@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>订单详细信息</title>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .order-detail{margin:0 auto;}
+        .order-detail .box{padding: .2rem;}
+        .order-detail .box .boxhead{height:auto;overflow:hidden;zoom:1;}
+        .order-detail .box .boxbody{padding-left: 1rem;}
+        .orderstatus{background:#5d6b85;color:#fff;padding: .5rem 0;}
+        .orderstatus i, .consignee i, .logistics i{font-size: .8rem;margin-right: .2rem;}
+        .consignee{}
+        .logistics{}
+        .logistics .boxbody{color:#359a2b;}
+        .user_info{padding-left:1rem;}
+        .user_info .box{border-bottom:1px solid #e2e2e2;}
+        .goods_list{padding:.1rem .2rem;background:#efefef;}
+        .goods_list ul.item{height:auto;overflow:hidden;}
+        .goods_list ul.item li.list{height:auto;overflow:hidden;margin:.1rem 0;}
+        .goods_list ul.item .image{width:3rem;height:3rem;overflow:hidden;}
+        .goods_list ul.item .image a{display:table-cell;vertical-align:middle;text-align:center;width:3rem;height:3rem;}
+        .goods_list ul.item img{max-width:3rem;max-height:3rem;}
+        .goods_list ul.item .text{width:8.8rem;margin:0 .2rem;}
+        .goods_list ul.item .text .title{line-height: .7rem;height: 1.5rem;overflow:hidden;color:#333;}
+        .goods_list ul.item .text .spec {color:#999;}
+        .goods_list ul.item .text .serv {}
+        .goods_list ul.item .other{width:3rem;text-align:right;}
+        .order_fee{padding:.1rem .4rem;}
+        .order_fee .feiyong{height:auto;overflow:hidden;zoom:1;}
+        .order_fee .feiyong .red{color:#FF0000}
+        .order_fee .amount{border-bottom:1px solid #e2e2e2;}
+        .order_time{padding:.1rem .4rem;color:#999;}
+        .order_handle{padding:.1rem .4rem;text-align:right;}
+        .order_handle a{border:1px solid #666;padding:.08rem .3rem;margin:0 .2rem;}
+        .order_handle a.red{border-color:#ff395e;color:#ff395e;}
+
+    </style>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="order-detail">
+    <div class="orderstatus">
+        <div class="box">
+            <div class="title boxhead"><i class="myF icon-daifahuo"></i>{$order_info.status.status_name}</div>
+            <div class="content boxbody">订单编号：{$order_info.order_sn}</div>
+            <div class="content boxbody">交易时间：{$order_info.add_time}</div>
+            <div class="content boxbody">订单金额：{$order_info.order_amount_formated} （含运费：￥{$order_info.shipping_fee}）</div>
+            <div class="content boxbody">支付金额：{$order_info.pay_fee_formated} （含运费：￥{$order_info.shipping_fee}）</div>
+        </div>
+    </div>
+    <div class="consignee">
+
+        <div class="box">
+            <div class="title boxhead">
+                <span class="left"><i class="myF icon-shouhuodizhi"></i>收货人：{$order_info.consignee}</span>
+                <span class="right" style="line-height: 1.3rem;"><if condition="$order_info.mobile neq ''">{$order_info.mobile}<else/>{$order_info.tel}</if></span>
+            </div>
+            <div class="content boxbody">收货地址：{$order_info.province_name} {$order_info.city_name} {$order_info.district_name} {$order_info.address}</div>
+        </div>
+    </div>
+    <div class="logistics">
+
+        <div class="box">
+            <div class="title boxhead">
+                <span class="left"> <i class="myF icon-wuliuxinxi"></i>物流信息</span>
+                <span class="right"><if condition="$order_info.shipping_name neq ''">{$order_info.shipping_name}：{$order_info.shipping_num}</if></span>
+            </div>
+            <volist name="order_info.shipping_list.data" id="list" empty="$empty_shipping">
+                <if condition="$key lt 1">
+            <div class="content boxbody">
+                <div class="">{$list.context}</div>
+                <div class="">{$list.time}</div>
+            </div>
+                </if>
+            </volist>
+        </div>
+    </div>
+    <div class="user_info">
+        <div class="box">
+            <div class="title boxhead">
+                <span class="left">{$order_info.user_name}</span>
+            </div>
+        </div>
+    </div>
+    <div class="goods_list">
+        <ul class="item">
+            <volist name="order_info.goods_list" id="goods">
+            <php>$is_gift = ($order_info['goods_list'][0]['extension_code']==='gift'
+                or $order_info['goods_list'][0]['extension_code']==4);
+            </php>
+            <li class="list">
+
+                <div class="left image"><a href="{$goods.url}"><img src="{:echo_img($goods['goods_thumb'])}" /></a></div>
+                <div class="left text">
+                    <div class="title">
+                        <a href="{$goods.url}">
+                            {$goods.goods_name}
+                        <if condition="$goods['act_name']">
+                            <em class="red">[{$goods.act_name}]</em>
+                        </if>
+                        </a>
+                    </div>
+                    <div class="spec">{$goods.goods_attr}</div>
+                    <div class="serv none"><a href="#">七天包换</a></div>
+                </div>
+                <div class="right other">
+                    <if condition="$is_gift">
+                        <div class="price">{$goods.integral}{$_CFG.integral_name}</div>
+                    <else />
+                        <div class="price">￥{$goods.goods_price}</div>
+                    </if>
+                    <div class="number">×{$goods.goods_number}</div>
+                    <div class="handle none"><a href="#">申请售后</a></div>
+                </div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="order_fee">
+        <div class="feiyong">
+            <span class="left">运费：</span>
+            <span class="right">￥{$order_info.shipping_fee}</span>
+        </div>
+        <if condition="$is_gift">
+            <!--<div class="feiyong">-->
+                <!--<span class="left">积分抵扣：</span>-->
+                <!--<span class="right">-￥0.00</span>-->
+            <!--</div>-->
+        <else />
+            <div class="feiyong">
+                <span class="left">积分抵扣：</span>
+                <span class="right">-￥0.00</span>
+            </div>
+        </if>
+        <div class="feiyong amount">
+            <span class="left">实付款（含运费）：</span>
+            <span class="right red">￥{$order_info.pay_fee}</span>
+        </div>
+    </div>
+    <div class="order_time">
+        <div class="order_sn">订单编号：{$order_info.order_sn}</div>
+        <if condition="$order_info.pay_result_id neq ''"><div class="pay_sn">微信支付编号：{$order_info.pay_result_id}</div></if>
+        <if condition="$order_info.add_time neq 0"><div class="add_time">创建时间：{$order_info.add_time}</div></if>
+        <if condition="$order_info.pay_time neq 0"><div class="add_time">付款时间：{$order_info.pay_time}</div></if>
+        <if condition="$order_info.shipping_time neq 0"><div class="add_time">发货时间：{$order_info.shipping_time}</div></if>
+    </div>
+    <div class="order_handle">
+        <volist name="order_info.status.handle" id="handle">
+            <a href="{$handle.url}" <if condition="$handle.click neq ''">onclick="{$handle.click}"</if> <if condition="$handle['class']">onclick="{$handle['class']}"</if>>{$handle.text}</a>
+        </volist>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<div class="goumai">
+        <span class="main-op-warp main-op-hg">
+            <a href="{:U('cart/index')}" class="quarter">
+                <span class="i-cart"></span>
+            </a>
+        </span>
+    <empty name="has_buy">
+        <if condition="$goods_info.is_virtual eq '1'">
+            <a href="javascript:void(0)" class="btn-success col-xs-12 ui-link buy-now">立即购买</a>
+        <elseif condition="$goods_info.is_presell == '1'"/>
+            <a href="javascript:void(0)" class="btn-success col-xs-12 ui-link presell">预售购买</a>
+        <elseif condition="$goods_info.is_fcode == '1'"/>
+            <a href="javascript:void(0)" class="btn-success col-xs-12 ui-link fcode">F码购买</a>
+        <else/>
+            <a href="javascript:void(0)" class="btn-success col-xs-12 ui-link add-to-cart" id="JS_buynow">立即购买</a>
+            <if condition="$goods_info.promotion_type neq 'groupbuy'">
+                <a href="javascript:void(0)" class="btn-danger col-xs-12 ui-link add-to-cart" id="gouwuc">加入购物车</a>
+            </if>
+        </if>
+        <else />
+        <font color="red">您已参与购买体验</font>
+    </empty>
+</div>

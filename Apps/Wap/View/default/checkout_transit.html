@@ -1,0 +1,37 @@
+<div class="transit confirmPage">
+    <div class="title">
+        <div class="left"><i></i><span>确认产品信息</span></div>
+        <div class="right"><a href="{$url.edit_flow1}" class="none">修改</a></div>
+    </div>
+    <div class="content">
+        <ul class="list">
+            <volist name="cart_list" id="list">
+            <li class="item">
+                <input type="hidden" name="rec_id[]" class="rec_id" value="{$list.rec_id}" />
+                <div class="image">
+                    <a href="{$list.url}"><img src="{:echo_img($list['goods_thumb'])}" /></a>
+                </div>
+                <div class="info">
+                    <div class="tit">
+                        <a href="{$list.url}">{$list.goods_name}
+                    <if condition="$list['act_name']">
+                        <em class="red">[{$list.act_name}]</em>
+                    </if>
+                        </a>
+                    </div>
+                    <div class="spec">
+                        <volist name="list.attr_list" id="ll">
+                            <span class="attr_name">{$key}:</span>
+                            <span class="attr_value"><foreach name="ll" item="vv" key="kk"><if condition="$kk gt 0">,</if>{$vv.attr_value}</foreach></span>;
+                        </volist>
+                    </div>
+                    <div class="price">
+                        <div class="num pp">数量：{$list.goods_number}</div>
+                        <div class="pri pp rmb">单价：{$list.goods_price_format}</div>
+                    </div>
+                </div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+</div>

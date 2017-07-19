@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <META CONTENT="no-cache" HTTP-EQUIV="Pragma">
+    <meta content="no-store" http-equiv="Cache-Control"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="x-ua-compatible" content="ie=7"/>
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css?20150406" />
+    <script type="text/javascript" src="__JS__/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        !function(a){function b(){var b=g.getBoundingClientRect().width;b/c>640&&(b=640*c),a.rem=b/16,g.style.fontSize=a.rem+"px"}var c,d,e,f=a.document,g=f.documentElement,h=f.querySelector('meta[name="viewport"]'),i=f.querySelector('meta[name="flexible"]');if(h){/*console.warn("将根据已有的meta标签来设置缩放比例");*/var j=h.getAttribute("content").match(/initial-scale=(["']?)([d.]+)1?/);j&&(d=parseFloat(j[2]),c=parseInt(1/d))}else if(i){var j=i.getAttribute("content").match(/initial-dpr=(["']?)([d.]+)1?/);j&&(c=parseFloat(j[2]),d=parseFloat((1/c).toFixed(2)))}if(!c&&!d){var k=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),c=a.devicePixelRatio;c=k?c>=3?3:c>=2?2:1:1,d=1/c}if(g.setAttribute("data-dpr",c),!h)if(h=f.createElement("meta"),h.setAttribute("name","viewport"),h.setAttribute("content","initial-scale="+d+", maximum-scale="+d+", minimum-scale="+d+", user-scalable=no"),g.firstElementChild)g.firstElementChild.appendChild(h);else{var l=f.createElement("div");l.appendChild(h),f.write(l.innerHTML)}a.dpr=c,a.addEventListener("resize",function(){clearTimeout(e),e=setTimeout(b,30)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(e),e=setTimeout(b,30))},!1),"complete"===f.readyState?f.body.style.fontSize=12*c+"px":f.addEventListener("DOMContentLoaded",function(){f.body.style.fontSize=12*c+"px"},!1),b()}(window);
+    </script>
+    <style type="text/css">
+        body{padding:0;margin:0;border:0;font-size:.4rem;font-family:'microsoft yahei';}
+        .left{float:left}
+        .right{float:right;}
+        .none{display:none;}
+        ul,li{margin:0;padding:0;list-style:none;}
+        em{font-style:normal;}
+        i,a{text-decoration: none;}
+        .icon{background:url('__IMG__/icon.png') no-repeat 0;display:block;background-size:4rem;}
+
+        .main{max-width:640px;overflow:hidden;margin:0 auto;min-width:120px;}
+        .head{height:2rem;background:#d9434e;padding: .2rem .5rem;}
+        .head .back{background-position: -2.7rem .4rem;height:2rem;width:2rem;}
+        .head .menu{background-position: .27rem .35rem;height:2rem;width:2rem;}
+
+        .menu_list{height:2.8rem;border-bottom:1px solid #e2e2e2;}
+        .menu_list ul{text-align:center;}
+        .menu_list ul li.item{display:inline-block;margin:.12rem .8rem;font-size:.5rem;text-align:center;}
+        .menu_list a{display:block;color:#999;font-family:'microsoft yahei';}
+        .menu_list .index{background-position: .2rem -1.44rem;height:1.8rem;width:1.8rem;}
+        .menu_list .fenlei{background-position: -2.43rem -3.15rem;height:1.8rem;width:1.8rem;}
+        .menu_list .cart{background-position: -2.43rem -1.44rem;height:1.8rem;width:1.8rem;}
+        .menu_list .user{background-position: .2rem -3.15rem;height:1.8rem;width:1.8rem;}
+        .menu_list i{margin:0 auto;}
+
+        .img_slide{width:100%;height:auto;overflow:hidden;}
+        .img_slide ul{height:auto;overflow:hidden;position:relative;    box-sizing: content-box;    display: flex;}
+        .img_slide ul li.item{ -webkit-flex-shrink: 0;-ms-flex: 0 0 auto; flex-shrink: 0;position: relative;width:100%;text-align:center;}
+        .img_slide ul li.item a{display:table-cell;width:100%;height:10rem;vertical-align:middle;text-align:center;margin:0 auto;}
+        .img_slide ul li.item a img{margin:0 auto;max-width:100%;}
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="head">
+            <div class="left"><a href="javascript:history.back();" class="back icon"></a></div>
+            <div class="right"><a href="javascript:void(0)" class="menu icon" onclick="$('.menu_list').toggleClass('none')"></a></div>
+        </div>
+        <div class="menu_list none ">
+            <ul class="list">
+                <li class="item">
+                    <i class="icon index"></i>
+                    <a href="#">首页</a>
+                </li>
+                <li class="item">
+                    <i class="icon fenlei"></i>
+                    <a href="#">分类</a>
+                </li>
+                <li class="item">
+                    <i class="icon cart"></i>
+                    <a href="#">购物车</a>
+                </li>
+                <li class="item">
+                    <i class="icon user"></i>
+                    <a href="#">个人中心</a>
+                </li>
+            </ul>
+        </div>
+        <div class="img_slide">
+            <ul class="list">
+                <li class="item"><a href="#"><img src="http://image.meilele.com/images/small/323/width/414/height/274/mode/1/encrypt/57c83335c51cbb976b34b07f78057b70/path/YKkxtD0+l8CT6mdTP0jUTosXyzGqRaYb484nDncYwHM8Cgp0x7fFM5wmzow7Budb_78JKbnW+Ru_UYuvL4cthRTCxO3vpl8Bn7Nf837W32eLk3jS1hedKsaVUyUkDNlB.jpg" /></a></li>
+                <li class="item"><a href="#"><img src="http://image.meilele.com/images/small/176/width/414/height/274/mode/1/encrypt/691af6835da285aef4d3bada77aa2e2f/path/YKkxtD0+l8CT6mdTP0jUTosXyzGqRaYb484nDncYwHOxUH5QNzMpK2+J6vN8z3LiG5VL9VkoFxJZQhwSOLMpbOlsOi0oFJTfLSYfolmfSmLZs_n6YOerIAlnwAkMZxgg.jpg" /></a></li>
+                <li class="item"><a href="#"><img src="http://image.meilele.com/images/small/107/width/414/height/274/mode/1/encrypt/7477498ad9d421b464d17a761cdaa4dc/path/YKkxtD0+l8CT6mdTP0jUTosXyzGqRaYb484nDncYwHOmHaA4vECe759oH0rJVkASUFdnVPORv8ptVSGToO3H1+noaI6mhu321UcaBs0cEXM_IBEts7_RRlaNQyn4A0LR.jpg" /></a></li>
+            </ul>
+        </div>
+        <div class="" style="background:blue">11</div>
+    </div>
+</body>
+</html>

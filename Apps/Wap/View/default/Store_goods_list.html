@@ -1,0 +1,43 @@
+<div class="comBack-all">
+    <div class="comBack">
+        <ul class="comCp">
+            <volist name="store_goods" id="goods" offset="0" length='99' empty="$goods_empty" mod="2" >
+                <include file="Active:ordinary" />
+            </volist>
+        </ul>
+    </div>
+</div>
+
+<script>
+    var ob =  loadList({
+        tpl:'<li class="comImg">'+
+        '<a href="{url}"><img src="{goods_thumb}" onerror="this.src=\'/Public/Wap/images/logox2.png\'"/></a>'+
+        '<p class=""><a class="sN_change" href="{url}">{goods_name}{act_name}</a></p>'+
+        '<div class="buy">'+
+        '<div class="buyRMB">'+
+        '<div class="left"><em class="price">{format_price}</em></div>'+
+        '</div>'+
+        '</div>'+
+        '</li>',
+        wrapper:'.comCp',
+        request_url:'{:U("Store/goodsList",array("id"=>$store_info["store_id"], "ajax"=>1))}',
+    });
+
+    ob.dcallback = function(data){
+        var list = data.contents.goods_list;
+        for(var i in list){
+            if(!list[i].act_format_price){
+                list[i].format_price = '￥' + list[i].shop_price * 100 /100  + "元";
+            }else {
+                list[i].format_price = list[i].act_format_price;
+            }
+            if(list[i].act_type){
+                list[i].act_name = '<em class="red">['+ list[i].act_name +']</em>';
+            }else{
+                list[i].act_name = '';
+            }
+        }
+        data.contents.goods_list = list;
+
+    }
+</script>

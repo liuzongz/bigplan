@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html><head>
+    <style>
+        .pagination a,.pagination span{margin:0 .1rem;border:1px solid #e2e2e2;padding:0 .3rem;}
+        .pagination span {border-color:red;}
+        .yj table.h{width:96%;margin:0 auto;}
+        .table_jilu tr.bor1 td:nth-child(3){
+            border:none;
+            -moz-box-shadow:-1px 1px 7px #ccc;
+            -webkit-box-shadow:-1px 1px 7px #ccc;
+            box-shadow:-1px 1px 7px #ccc;
+        }
+        .table_jilu tr.bor1 td:nth-child(3){background-color:#F6F6F6}
+        .yj .table_jilu{background-color: #F6F6F6 !important;}
+        .yj .table_jilu table{background-color:#fff}
+        .bor1 .t3{color: #ff9000;}
+        .bor1 .current{color: sandybrown;}
+
+        /*表单调整*/
+        .table_jilu tr.bor td  {padding:.4rem !important;height:3rem;}
+        .bor td:nth-child(1){width:15%}
+        .bor td:nth-child(2){width:60%;text-align: left}
+        .bor td:nth-child(3){width:22%}
+    </style>
+    <!--<title>我的钱包</title>-->
+    <include file="Public:head2" />
+</head>
+<body class="max768">
+<include file="Public:header1" />
+
+<div class="main yj">
+    <div class="yj_warp" style="background-color:#667d66;">
+        <p class="yj_q">
+            <span class="left" > KP（点）</span>
+        </p>
+        <p class="yj_num">{:floor($user_info['consume_total'])}</p>
+        <div class="yj_tx" ><a href="{:U('Rebate/getkp').'?store_token='.$store_token}">获取KP点</a></div>
+    </div>
+    <div class="table_jilu">
+
+        <table class="h" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr class="bor1">
+                <td class="w33" ><a style="color: #ff9000;" href="{:U('dynamic')}">余额</a></td>
+                <td class="w33" ><a style="color: orangered" href="{:U('index')}">红包</a></td>
+                <td class="w33 " style="color:#667d66;">KP点</td>
+            </tr>
+            </tbody>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+
+            <volist name="kp.list" id="log" empty="$hongbao_empty">
+                <tr class="bor">
+                    <td data-date="{$log.add_time}">
+                        <a class="tImg left"><img src="{:echo_img($user_info['user_avatar'])}" alt=""></a>
+                    </td>
+                    <td>
+                        <p class="yuan">{$log.amount}</p>
+                        <p style="color:#999">{$log.desc}{$log['admin_note']?",":""}{$log.admin_note}</p>
+                    </td>
+                    <td>
+                        <p style="color:{$log.paid_state.col};">{$log.paid_state.txt}</p>
+                        <p style="color:#999">
+                            <!--{$log.month} -->
+                            {$log.day}
+                        </p>
+                    </td>
+                </tr>
+            </volist>
+
+            </tbody>
+            <tfoot><tr><td colspan="3" class="pagination mt10">{$pageStr}</td></tr></tfoot>
+        </table>
+    </div>
+</div>
+<style>
+    .a{position:relative}
+</style>
+<script>
+    (function(){
+        function add_pre(money){
+            if(parseInt(money)>0){
+                $re = "+"+money.toString();
+            }else{
+                $re = "-"+Math.abs(money).toString();
+            }
+            return $re;
+        }
+
+        $('.yuan').each(function(){
+            var money = $(this).html();
+            var tmp  = add_pre(money);
+            $(this).html(tmp);
+        });
+        var yj = $('.yj_num').html();
+        if(parseInt(yj)<0){
+            $('.yj_num').html('-'+Math.abs(yj).toString());
+        }else{
+            $('.yj_num').html(yj.toString());
+        }
+
+    })();
+</script>
+</body>
+</html>

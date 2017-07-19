@@ -1,0 +1,13 @@
+<div class="totalprice" id="JS_TotalPrice">
+    <div class="row">
+        <div class="row1">
+            <div class="select_all left"><label for="JS_selectall"><input type="checkbox" class="input_checkbox checkbox_background" id="JS_selectall" <if condition="!$total['total']['is_selected']"> checked</if> /> 全选</label></div>
+            <div class="del_btn left"><span class="input_button" id="JS_delbtn">删除</span></div>
+        </div>
+        <div class="row1 user_row">
+            <div class="all_pis left">数量：<span id="JS_total_num">{$total.total.goods_number}</span></div>
+            <div class="all_amount rbm orange left">已选合计：<span id="JS_total_Amt">{$total.total.goods_price_format}</span></div>
+        </div>
+    </div>
+    <div class="sub_order rbm"><input type="button" class="input_button " id="JS_suborder" value="去结算" /></div>
+</div>

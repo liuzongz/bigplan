@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <!--<script type="text/javascript" src="__JS__/jquery.mobile-1.4.2.min.js"></script>-->
+    <script type="text/javascript" src="__JS__/swipe.js"></script>
+</head>
+<body>
+<include file="Public:header1" />
+<section>
+    <div class="swipeAll">
+        <div class="swipeTwo">
+            <include file="Public:slide" />
+            <!--<div class="addWrap">
+                <div class="swipe" id="mySwipe">
+                    <div class="swipe-wrap">
+                        <div>
+                            <a href="javascript:;"><img class="img-responsive" src="/Public/Wap/images/3.jpg"/></a>
+                        </div>
+                    </div>
+                </div>
+                <ul id="position">
+                    <li class=""></li>
+                </ul>
+            </div>-->
+            <volist name="cat_list" id="list">
+                <if condition="!empty($list['list'])">
+            <div class="brandWarp">
+                <div class="brandName">
+                    <p class="C_a">{$list.cat_name}</p>
+                </div>
+                <div class="brandImg">
+                    <div class="lt">
+                        <a href="{$list.url}">
+                            <img src="{$list.cat_img}" />
+                        </a>
+                    </div>
+                    <div class="rt">
+                        <volist name="list.list" id="ll" offset="0" length='4'>
+                        <a href="" class="bt"><img  src="{$ll.brand_logo}" alt=""></a>
+                        </volist>
+                    </div>
+                </div>
+            </div>
+                </if>
+            </volist>
+            <!--<div class="brandWarp">
+                <div class="brandName">
+                    <p class="C_b">食品乐园</p>
+                </div>
+                <div class="brandImg">
+                    <div class="lt">
+                        <a href="brand-list.html" >
+                            <img src="/Public/Wap/images/brand-b.gif" />
+                        </a>
+                    </div>
+                    <div class="rt">
+                        <a href=""><img class="bt" src="/Public/Wap/images/brand-b1.gif" alt=""></a>
+                        <a href=""><img class="bt" src="/Public/Wap/images/brand-b2.gif" alt=""></a>
+                        <a href=""><img src="/Public/Wap/images/brand-b3.gif" alt=""></a>
+                        <a href=""><img src="/Public/Wap/images/brand-b4.gif" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="brandWarp">
+                <div class="brandName">
+                    <p class="C_c">护肤品牌</p>
+                </div>
+                <div class="brandImg">
+                    <div class="lt">
+                        <a href="brand-list.html" >
+                            <img src="/Public/Wap/images/brand-c.gif" />
+                        </a>
+                    </div>
+                    <div class="rt">
+                        <a href=""><img class="bt" src="/Public/Wap/images/brand-c1.gif" alt=""></a>
+                        <a href=""><img class="bt" src="/Public/Wap/images/brand-c2.gif" alt=""></a>
+                        <a href=""><img src="/Public/Wap/images/brand-c3.gif" alt=""></a>
+                        <a href=""><img src="/Public/Wap/images/brand-c4.gif" alt=""></a>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        var bullets = document.getElementById('position').getElementsByTagName('li');
+        var banner = Swipe(document.getElementById('mySwipe'), {
+            auto: 2000,
+            continuous: true,
+            disableScroll: true,
+            callback: function(pos) {
+                var i = bullets.length;
+                while(i--) {
+                    bullets[i].className = ' ';
+                }
+                bullets[pos].className = 'cur';
+            }
+        });
+
+    </script>
+</section>
+<footer>
+    <if condition = "$is_dealer eq 1">
+        <include file="Public:menu2" />
+        <else />
+        <include file="Public:menu1" />
+    </if>
+</footer>
+</body>
+</html>

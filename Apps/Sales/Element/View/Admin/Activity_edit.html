@@ -1,0 +1,45 @@
+<foreach name="_list" item="_">
+    <dl class="favourable-config">
+        <dt>
+            <i class="icon-edit"></i>
+            <input readonly class="w80" type="text" name="config[<{$key}>][title]" value="<{$_['title']}>" data-default="<{$_['title']}>">：
+        </dt>
+        <dd>
+            <i class="icon-edit"></i>
+            <input readonly name="config[<{$key}>][value]" type="text" value="<{$_['value']}>" data-default="<{$_['value']}>">
+            <p><i class="icon-edit"></i>描述：<input readonly class="w250" type="text" name="config[<{$key}>][desc]" value="<{$_['desc']}>" data-default="<{$_['desc']}>"></p>
+        </dd>
+    </dl>
+</foreach>
+<if condition="$rebate[rebate][value] gt 0">
+    <dl class="favourable-config">
+    <dt>
+        <a class="addlevel"><img src="__IMG__/add.ico"></a><i></i>
+        <input readonly class="w80" type="text" name="" value="返利阶层设置"  >
+    </dt>
+    <dd class="level-settig">
+        <i class="rebate level"></i>
+        <foreach name="rebate[rebate][level]" item="_">
+            <div id="level_<{$key}>">
+                <input type="text" name="config[rebate][level][]"  placeholder="人数分布，如1,10" value="<{$_}>"><input type="text"  placeholder="占反还额度百分比"  value="<{$rebate[rebate][percent][$key]|default=0}>" name="config[rebate][percent][]"><a  class="cutlevel"><img src="__IMG__/minus.ico"></a>
+            </div>
+        </foreach>
+    </dd>
+    </dl>
+</if>
+<script>
+    $(function(){
+        <empty name="_is_special">
+            $('.favourable-config i').click(function(){
+                var self = $(this), input = self.next(), readonly = input.prop('readonly');
+                self.attr('class', readonly ? 'icon-minus-sign' : 'icon-edit');
+                input.prop('readonly', !readonly);
+                if(!readonly) input.val(input.attr('data-default'));
+            });
+        <else />
+            $('.favourable-config i').hide();
+        </empty>
+    });
+</script>
+
+

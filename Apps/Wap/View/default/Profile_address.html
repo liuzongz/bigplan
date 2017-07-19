@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head>
+    <title>地址管理</title>
+    <include file="Public:head2" />
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+<div class="main zl">
+    <div class="nav-tab-top">
+        <ul>
+            <li><a href="{:U('Profile/index').'?store_token='.$store_token}">个人资料</a></li>
+            <li><a href="{:U('Profile/pass').'?store_token='.$store_token}">修改密码</a></li>
+            <li><a href="{:U('Profile/email').'?store_token='.$store_token}">修改邮箱</a></li>
+            <li class="cur"><a href="{:U('Profile/address').'?store_token='.$store_token}">地址管理</a></li>
+        </ul>
+    </div>
+    <div class="dizi">
+        <volist name="address_list" id="list" empty="$address_empty">
+        <div class="bord">
+            <p class="name">{$list.consignee}（{$list.mobile}）</p>
+            <p class="j-dizi">{$list.province_name} {$list.city_name} {$list.district_name} {$list.address}</p>
+            <p class="bianji"><a href="{:U('edit_address') . '?id=' . $list['address_id'].'&store_token='.$store_token}">编辑</a>|<a href="{:U('del') . '?id=' . $list['address_id']}" onclick="return confirm('确定要删除吗？');">删除</a></p>
+        </div>
+        </volist>
+        <div class="register"><a class="register-butt" href="{:U('add').'?store_token='.$store_token}">添加地址</a></div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+</head>
+<body style="margin:0 auto;">
+<style type="text/css">
+    .reg li.flex .yanzhen{width:3rem;height: 1.5rem;position: absolute;right: 0px;top: .3rem;border-left: 1px solid #ff9600;}
+    .reg li.flex{padding: 0 .5rem;height: 2rem; align-items: center;-webkit-align-items: center; border-bottom:1px solid #e2e2e2;}
+    .reg li.flex input{border: none;flex: 1;-webkit-flex:1;height: 1.5rem;font-size: .6rem;color: #a5a5a5;}
+    .reg li.flex span.wTh3{width: 3rem;margin-right: .5rem;}
+
+</style>
+<include file="Public:header1" />
+<div class="zl">
+    <div class="nav-tab-top">
+        <ul>
+            <li><a href="{:U('Profile/index').'?store_token='.$store_token}">个人资料</a></li>
+            <li><a href="{:U('Profile/pass').'?store_token='.$store_token}">修改密码</a></li>
+            <li class="cur"><a href="{:U('Profile/email').'?store_token='.$store_token}">修改邮箱</a></li>
+            <li><a href="{:U('Profile/address').'?store_token='.$store_token}">地址管理</a></li>
+        </ul>
+    </div>
+    <form method="post" id="mod_email">
+        <ul class="reg">
+            <li class="flex"> <span class="wTh3">您的密码</span>
+                <input type="password" name="password" id="password" placeholder="请输入密码"></li>
+            <li class="flex">  <span class="wTh3">新的邮箱</span>
+                <input type="email" name="email" id="email" placeholder="请输入邮箱"></li>
+            <li class="flex" style="position: relative;"> <span class="wTh3">验证码</span>
+                <input type="text"   name="verify" id="verify" placeholder="请输入验证码" minlength="4" maxlength="4">
+                <img class="yanzhen" id="verifyimg" src="{:U('verify').'?store_token='.$store_token}"></li>
+        </ul>
+        <div class="register"><button class="register-butt" type="submit">提交</button></div>
+    </form>
+</div>
+<script>
+    (function(){
+        $('#verifyimg').click(function(){
+            this.src = "{:U('verify').'?store_token='.$store_token . '&rnd=' }'" + new Date().getTime();
+            $('#verify').val('').focus();
+
+        });
+        $('#mod_email').submit(function(){
+            var $password = $('#password').val(),
+                    $email = $('#email').val(),
+                    $verify = $('#verify').val();
+            if($password==""){
+                alert("请输入密码");
+            }
+            else if(($password.length < 6 || $password.length > 18)){
+                alert('请输入正确的密码！必须大于6位小于18位');
+            }
+            else if($email==""){
+                alert("请输入邮箱");
+            }
+            else if(!Jiniu.checkEmail($email)){
+                alert("请输入正确的邮箱格式");
+            }
+            else if($verify==''){
+                alert('请输入验证码！');
+            }else{
+                return true;
+            }
+            return false;
+        });
+    })();
+</script>
+</body>
+</html>

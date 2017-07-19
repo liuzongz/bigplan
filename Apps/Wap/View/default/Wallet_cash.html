@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .reg li.flex{height:2rem;align-items: center;-webkit-align-items: center; padding: 0 .5rem;border-bottom: 1px solid #e2e2e2;}
+        .reg li.flex span.wTh3{width: 4rem;}
+        .reg li.flex input{height: 1.5rem;flex: 1;-webkit-flex: 1; border:none;font-size: .6rem;color: #a6a6a6;}
+        .reg li.flex select{height: 1.5rem;border: none; font-size: .6rem;color: #a6a6a6;}
+        .register .register-butt{max-width: 100%; margin: .5rem .2rem;height: 1.5rem;color: white;background-color:#ff6600;border:1px solid #ff6600;width: 15.6rem; border-radius: .2rem;font-size: .7rem;}
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+
+<form id="reg-form" action="{:U()}" method="post">
+    <ul class="main reg">
+        <li class="flex">
+            <span class="wTh3">最大提现金额</span>
+            <span class="max_money">{$user_info.user_money}</span>
+        </li>
+        <li class="flex">
+            <span class="wTh3">提现帐户</span>
+            <select name="cash_id" class="cash_id">
+                <option value="{$cash_account.id}">{$cash_account.pay_account}[{$cash_account.pay_username}]</option>
+            </select>
+        </li>
+        <li class="flex">
+            <span class="wTh3">提现金额</span>
+            <input type="number"  class="cash_num" name="cash_num" placeholder="不能超过最大提现金额" maxlength="10" autocomplete="off">
+            <input type="hidden" name="ref" value="{$ref}" />
+            <input type="hidden" name="form_token" value="{$form_token}" />
+        </li>
+    </ul>
+    <div class="register"><button class="register-butt" type="submit">下一步</button></div>
+</form>
+<script type="text/javascript">
+    (function(){
+        var yj = $('.max_money').html();
+        if(parseInt(yj)<0){
+            $('.max_money').html('-￥'+Math.abs(yj).toString());
+        }else{
+            $('.max_money').html('￥'+yj.toString());
+        }
+    })();
+    var $submit = function($e){
+        //$e.preventDefault();
+        var $cash_id = $('.cash_id').val(),$cash_num = parseFloat($('.cash_num').val());
+        if ($cash_id == '') {
+            alert('请选择提现帐户类型');
+        } else if ($cash_num <= 0) {
+            alert('请输入提取金额！');
+        } else {
+            return true;
+        }
+        return false;
+    };
+    var check_cash = function (){
+        var cash = $(this).val();
+        cash = cash.replace(/[^\d{1,5}]/g,'');
+        //cash = parseFloat(cash);
+        $(this).val(cash);
+    };
+    $('.cash_num').keypress(check_cash);
+    $('#reg-form').bind('submit', $submit);
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<volist name="goods_list" id="list" empty="$goods_empty">
+    <li class="item">
+        <a href="{$list.url}">
+            <div class="brandinfo">
+                <p class="name-logo"><span><img src="/{$list.brand_logo}" alt="{$list.brand_name}" /></span></p>
+                <p class="name-tit"><if condition="$list.goods_short_name">{$list.goods_short_name}<else/>{$list.goods_name}</if></p>
+                <p class="price">￥{$list.shop_price}</p>
+                <p class="pronum"><del>￥{$list.market_price}</del></p>
+                <!--<p class="nshop"><span class="shop" href="{$list.store_url}">立即购买</span></p>-->
+            </div>
+            <div class="brandimg">
+                <img src="__IMG__/white.png" data-original="/{$list.goods_thumb}" width="324"  />
+            </div>
+        </a>
+    </li>
+</volist>

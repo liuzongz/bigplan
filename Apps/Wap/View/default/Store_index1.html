@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/common.js"></script>
+    <script type="text/javascript" src="/Public/Wap/js/vue.min.js"></script>
+</head>
+<body>
+<header>
+    <include file="Public:header1" />
+</header>
+<section>
+    <div class="comBack-all">
+        <div class="uListHead b-Buttom" >
+            <ul class="uNav">
+                <li class="lt cur" id="JS__xl"><em>综合排序</em><i></i></li>
+                <li class="lt"><em>销量优先</em><i></i></li>
+                <li class="lt"><em>信用</em><i></i></li>
+                <li class="rt"><i class="myF icon-pailie2"></i></li>
+            </ul>
+        </div>
+        <!--<div class="allShop" id="JS_getJson">
+            <volist name="store_list" id="list" empty="$store_empty">
+            <if condition="!empty($list['goods_list'])">
+            <div class="shopClass">
+                <a class="shopUser" href="{$list.url}"><img src="{$list.store_label}" alt="" onerror="this.src='__IMG__/logox2.png'"></a>
+                <div class="shopTell">
+                    <p class="shopName color-a">{$list.store_name}</p>&lt;!&ndash; color-a color-b  color-c  color-d &ndash;&gt;
+                    <p>
+                        &lt;!&ndash;<em>销量: <span class="">{$list[goods_count]*7}</span></em>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;
+                        <em>共{$list.goods_count}件宝贝</em>
+                    </p>
+                </div>
+                <a class="jumpShop" href="{$list.url}">进店</a>
+                <div class="aLLBaby">
+                    <volist name="list.goods_list" id="ll" offset="0">
+                    <div class="babyShow">
+                        <a href="{$ll.url}">
+                            <img src="{$ll.goods_thumb}" alt="" onerror="this.src='__IMG__/logox2.png'">
+                            <i class="JS_zhi">{$ll['deposit_price']?:$ll['act_format_price']}</i>
+                        </a>
+                    </div>
+                    </volist>
+                </div>
+                <p class="aShop"><a href="#">其他相识店铺</a></p>
+            </div>
+            </if>
+            </volist>
+        </div>-->
+        <div id="JS_getJson">
+            <div class="allShop" v-for="x in shopsList">
+                    <div class="shopClass">
+                        <a class="shopUser" v-bind:href= "x.url" >
+                            <img v-bind:src= "x.store_label" alt="" onerror="this.src='__IMG__/logox2.png'" />
+                        </a>
+                        <div class="shopTell">
+                            <p class="shopName color-a">{{x.store_name}}</p>
+                            <p>
+                                <em>销量: <span class="">{{x.goods_count}}</span></em>
+                                <em>共{{x.goods_count}}件宝贝</em>
+                            </p>
+                        </div>
+                        <a class="jumpShop" v-bind:href="x.url">进店</a>
+                        <div class="aLLBaby">
+                              <div class="babyShow" v-for="y in x.goods_list">
+                                    <a v-bind:href="y.url">
+                                        <img v-bind:src="y.goods_thumb" alt="" onerror="this.src='__IMG__/logox2.png'">
+                                        <i class="JS_zhi">{{y.deposit_price == 0 ? y.act_format_price: y.deposit_price}}</i>
+                                    </a>
+                              </div>
+                        </div>
+                        <p class="aShop"><a>其他相识店铺</a></p>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    $(document).ready(function(){
+        function myclickfun(){
+            $(this).addClass("cur").siblings().removeClass("cur");
+        }
+        $(".uListHead ul.uNav li.lt").on('click',myclickfun);
+    });
+    var goodsVue =  new Vue({
+        el:'#JS_getJson',
+        data:{shopsList:""},
+        methods: {
+            nameSearch: function (i) {
+                var _self = this, url="{:U('Store/index',array('ajax'=>1))}?sort=&order=&keywords=&ids=&p="+i;
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    success:function(data) {
+                        if(data.error ==0){
+                            _self.shopsList = data.contents.goods_list;
+                        }else{
+                            $('.list_botton').html('后面没有了')
+                        }
+                    }
+                });
+            }
+        }
+    });
+       goodsVue.nameSearch(i);
+
+</script>
+<!--$('.list_botton').html('<span><img src="/Public/Wap/images/loading1.gif" /></span><span>加载中....</span>')-->
+</html>

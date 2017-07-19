@@ -1,0 +1,29 @@
+<div class="max768" style="position: fixed;top:0;height:3.5rem;width: 100%;z-index: 999;background-color: white;">
+   <div class="head-seach01 max640">
+      <a href="{:U('fenlei/index')}" class="left" style="margin-left:.7rem "><i class="myF icon-fenlei"></i></a>
+      <form method="get" action="{:U('Fenlei/index')}" style="display: inline-block;">
+         <input class="seach-int b-All" name="keywords" type="search" value="" placeholder="沙诗雅" />
+         <input type="hidden" name="id" value="0">
+      </form>
+      <a href="{:U('cart/index')}" class="right" style="margin-right: .7rem;"><i class="myF icon-gouwuche"></i></a>
+   </div>
+   <div class="child_ul">
+      <ul>
+         <li class="cur">
+            <a href="{:U('fenlei/index') . '?id=' . $list['cat_id']}"><em>推荐</em></a>
+         </li>
+          <volist name="cate_list" id="list">
+                <li class="">
+                   <a href="{:U('fenlei/index') . '?id=' . $list['cat_id']}"><em>{$list.cat_name}</em></a>
+                </li>
+          </volist>
+      </ul>
+      <script>
+          var $obj = $('.child_ul ul li');
+          for(var i=0;i<$obj.length;i++){
+              $obj.eq(i).css('left',i*($obj.width()));
+          }
+      </script>
+   </div>
+</div>
+<div style="width: 100%;height: 3.5rem;"></div>

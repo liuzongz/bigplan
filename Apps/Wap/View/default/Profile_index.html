@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+    <script src="__JS__/js_upload1/hammer.js"></script>
+    <script src="__JS__/js_upload1/iscroll-zoom.js"></script>
+    <script src="__JS__/js_upload1/jquery.photoClip.min.js"></script>
+    <script src="{:get_server('IMG_SERVER','/Uploader/login',[C('VAR_SESSION_ID') => AesEnCrypt(session_id()),'module' => MODULE_NAME],1)}"></script>
+    <style type="text/css">
+        .clipArea{width: 100%;height:100%;top:0; position: fixed;display: none;}
+        .clipArea .xsUimg{width: 100%;height: 100%;max-width: 768px; position: fixed;top:2rem;background-color:black;}
+        .clipArea .btn{width: 100%;height: 2rem; position:fixed;top:0;max-width: 768px; background-color:black;color:white;}
+        .clipArea .btn .qxLt, .clipArea .btn .syRt{text-align: center; width: 2rem;height: 2rem;line-height: 2rem; }
+        #User_face{width: 100%;}
+    </style>
+</head>
+<body>
+<include file="Public:header1" />
+<form action="{:U('Profile/mod').'?store_token='.$store_token}" method="post">
+    <div class="zl">
+        <div class="nav-tab-top">
+            <ul>
+                <li class="cur"><a href="{:U('Profile/index').'?store_token='.$store_token}">个人资料</a></li>
+                <li><a href="{:U('Profile/pass').'?store_token='.$store_token}">修改密码</a></li>
+                <li><a href="{:U('Profile/email').'?store_token='.$store_token}">修改邮箱</a></li>
+                <li><a href="{:U('Profile/address').'?store_token='.$store_token}">地址管理</a></li>
+            </ul>
+        </div>
+        <div class="m-center m-pot">
+            <ul class="mc-cnt">
+                <li class="user_header" style="padding: .3rem .5rem;position: relative;">
+                    <input class="upload_img" id="file"  type="file" name="upload_img" accept="image/*">
+                    <div class="flex" style="align-items: center;-webkit-align-items: center;justify-content: space-between;-webkit-justify-content: space-between;"><em>头像</em>
+                        <div class="unti flex" style="align-items: center;-webkit-align-items: center;">
+                            <div class="child_img" id="view"><img id="User_face"  src="<if condition="!empty($user_info['user_avatar'])">{:img_url($user_info['user_avatar'])}<else/>__IMG__/logox2.png</if>" onerror="this.src='__IMG__/logox2.png'" /></div><i class="right myF icon-right"></i>
+
+                        </div>
+                    </div>
+                </li>
+                <li class="flex">
+                    <em>用户昵称</em>
+                    <input class="fr" style="padding-left: .2rem;" type="text" placeholder="请输入昵称" value="{$user_info.nickname}" name="nickname"/>
+                       <!-- <span class="fr">{$user_info.user_name}</span>-->
+                </li>
+                <li class="flex">
+                    <em >邮箱</em>
+                    <span style="width: auto;" class="fr bj">{$user_info.email}</span>
+                    <i style="color: #a6a6a6;">(此处仅显示结果)</i>
+                </li>
+                <li class="flex">
+                    <em>真实姓名</em>
+                    <input class="fr" style="padding-left: .2rem;" name="true_name" type="text" value="{$user_info.true_name}" {$user_info['true_name']?'disabled="disabled"':""}  placeholder="填写后不可更改"  />
+
+                </li>
+                <li class="flex">
+                   <em> 性别</em>
+                    <select name="sex" style="width: 4rem;border: none;height: 1.5rem; color: #a5a5a5;">
+                        <option  value="0" {$user_info['sex']==0?"selected='selected'":""}>保密</option>
+                        <option value="1" {$user_info['sex']==1?"selected='selected'":""}>男</option>
+                        <option value="2" {$user_info['sex']==2?"selected='selected'":""}>女</option>
+                    </select>
+                        <!--<if condition="$user_info.sex eq 1">男<elseif condition="$user_info.sex eq 2" />女<else />保密</if>-->
+                </li>
+                <li class="flex" style="min-height: 2rem;height: auto;">
+                    <em>所在地区</em>
+                    <div class="fr border nucity flex" style="justify-content: space-around;-webkit-justify-content: space-around;flex-flow: row wrap;flex-flow: row wrap;">
+                        <select style="border: none;height: 1.5rem;color: #a5a5a5;" name="province" class="province"><option value="">请选择</option></select>
+                        <select style="border: none;height: 1.5rem;color: #a5a5a5;" name="city" class="city"><option value="">请选择</option></select>
+                        <select style="border: none;height: 1.5rem;color: #a5a5a5;" name="district" class="area"><option value="">请选择</option></select>
+                        <!-- <span type="text" class="fr">{$user_info.user_areainfo}</span>-->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="register">
+        <input type="hidden" name="form_token" value="{$form_token}">
+        <input CLASS="register-butt" type="submit" value="提交">
+    </div>
+       <!--图片裁剪-->
+    <div  class="clipArea" >
+        <div  class="btn">
+            <div class="qxLt left" id="JS_qxXzhe">取消</div>
+            <div class="syRt right" id="clipBtn">使用</div>
+        </div>
+        <div id="clipArea" class="xsUimg" ></div>
+    </div>
+</form>
+</body>
+<script type="text/javascript">
+    // 你后台的接收地址
+    $("#file").click(function(){
+        $(".head-warp").hide();
+        $(".clipArea").show();
+    });
+    $("#clipBtn").click(function(){
+        $(".head-warp").show();
+        $(".clipArea").hide();
+    });
+    $("#JS_qxXzhe").click(function(){
+        $(".head-warp").show();
+        $(".clipArea").hide();
+    });
+    var one_obj = {
+        /**
+         * @param base64Codes
+         * 图片的base64编码
+         */
+        funUploadFile: function(base64Codes){
+            var self = this;
+            var formData = new FormData();
+            //convertBase64UrlToBlob函数是将base64编码转换为Blob
+            //append函数的第一个参数是后台获取数据的参数名,在php中用$FILES['imageName']接收，
+            formData.append("file",self.convertBase64UrlToBlob(base64Codes),'file.jpg');
+            $.ajax({
+                url : '{$upload_url}',
+                type : "POST",
+                data : formData,
+                dataType:"json",
+                processData : false,         // 告诉jQuery不要去处理发送的数据
+                contentType : false,        // 告诉jQuery不要去设置Content-Type请求头
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success:function(data){
+                    if (data.error > 0) {
+                        alert(data.msg);
+                    } else {
+                        $('#User_face').attr('src', data.data.src);
+                        Jiniu.ajax("{:U('ajax_user_face').'?store_token='.$store_token}",{str:data.data},function(ex){
+                            if (ex.error != 200) {
+                                alert(ex.msg);
+                            } else {
+                                console.log('上传成功');
+                            }
+                        },'POST','JSON',true);
+                    }
+                },
+                error:function(ex){
+                    console.log(ex);
+                },
+                async:true
+
+            });
+        },
+
+        /**
+         * 将以base64的图片url数据转换为Blob
+         * @param urlData
+         * 用url方式表示的base64图片数据
+         */
+        convertBase64UrlToBlob: function(urlData){
+            //去掉url的头，并转换为byte
+            var bytes=window.atob(urlData.split(',')[1]);
+
+            //处理异常,将ascii码小于0的转换为大于0
+            var ab = new ArrayBuffer(bytes.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < bytes.length; i++) {
+                ia[i] = bytes.charCodeAt(i);
+            }
+            // 此处type注意与photoClip初始化中的outputType类型保持一致
+            return new Blob( [ab] , {type : 'image/jpeg'});
+        },
+
+        init: function() {
+            var self = this;
+            $("#clipArea").photoClip({
+                width: 200,
+                height: 200,
+                file: "#file",
+                view: "#view",
+                ok: "#clipBtn",
+                loadStart: function () {
+                    /*   $(".photo-clip-rotateLayer").html("<img src='../../../../Public/Wap/images/loading111.gif'/>");*/
+                    console.log("照片读取中");
+                },
+                loadComplete: function () {
+                    console.log("照片读取完成");
+                },
+                clipFinish: function (dataURL) {
+                    $('#User_face').attr('src', '__IMG__/loading111.gif');
+                    self.funUploadFile(dataURL);
+                }
+            });
+        }
+    };
+
+    one_obj.init();
+</script>
+<script type="text/javascript">
+        var get_region = function ($id, $obj){
+            $.ajaxSettings.async = false;
+            var region = function (ex) {
+                if (ex.error == 0) {
+                    var data = ex.data,str = '<option value="">请选择</option>';
+                    $.each(data,function(ex,item){
+                        str += '<option value="' + item.region_id + '">' + item.region_name + '</option>';
+                    });
+                    $obj.html(str);
+                } else {
+                    alert(ex.msg);
+                }
+            };
+            Jiniu.ajax("{:U('Static/region') . '?id='}" + $id,'',region,'GET','JSON',false);
+        };
+
+
+
+        $(function(){
+            var s = $('.province'),c = $('.city'), a = $('.area'),str = '<option value="">请选择</option>';
+            //显示用户当前地区
+            var cs = parseInt("{$user_info.province}"||0);
+            var cc = parseInt("{$user_info.city}"||0);
+            var ca = parseInt("{$user_info.district}"||0);
+            get_region(0, s);s.children('option[value="'+cs+'"]').attr("selected","selected");
+            get_region(cs,c);c.children('option[value="'+cc+'"]').attr("selected","selected");
+            get_region(cc,a);a.children('option[value="'+ca+'"]').attr("selected","selected");
+
+            s.change(function(){
+                a.html(str);
+                c.html(str);
+                get_region($(this).val(), c);
+            });
+            c.change(function(){
+                a.html(str);
+                get_region($(this).val(), a);
+            });
+        });
+        $('.register-butt').click(function(){});
+    </script>
+</html>

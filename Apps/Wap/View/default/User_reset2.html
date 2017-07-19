@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <title>修改密码</title>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .reg .border{padding: .5rem 0 .5rem .5rem;position: relative;}
+        .reg .border .yanzhen{width:3rem;height: 1.5rem;position: absolute;right: 0px;top: .7rem;border-left: 1px solid #ff9600;}
+        .reg .register{text-align: center;margin-top: .5rem;}
+        .reg label.error{width: 100%;display: block;color: #ff9600;margin-top: -1rem;}
+    </style>
+    <script type="text/javascript" src="__JS__/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.validate.js"></script>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="reg">
+    <form id="reg-form" method="post" action="{:U('User/reset_pass') . 'step=3'}">
+        <div class="border">
+            <span>账户:</span>
+            <input type="text"   name="email" placeholder="{$info.email}" readonly="readonly" >
+        </div>
+        <div class="border">
+            <span>邮箱验证码:</span>
+            <input style="width: 6rem;" type="text" id="verify"  name="verify" placeholder="请输入刚收到的邮箱验证码">
+        </div>
+        <div class="border">
+            <span>密码:</span>
+            <input type="password" id="password"  name="password" placeholder="请输入6到15位数密码">
+        </div>
+        <div class="border">
+            <span>确认密码:</span>
+            <input type="password"   name="reppassword" placeholder="请重复输入密码">
+        </div>
+        <div class="register">
+            <input type="hidden" name="verify_id" value="{$verify_id}" />
+            <button class="register-butt" type="submit">立即修改</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(function(){
+        $('#reg-form').validate({
+            rules: {
+                password: {
+                    required: true,
+                    rangelength: [6, 15],
+                },
+                reppassword: {
+                    required: true,
+                    rangelength: [6, 15],
+                    equalTo:"#password",
+                },
+            },
+            messages: {
+                password: {
+                    required: "请输入密码",
+                    rangelength: '密码不得小于{0}-{1}位',
+                },
+                reppassword: {
+                    required: "请重复输入密码",
+                    rangelength: '密码不得小于{0}-{1}位',
+                    equalTo: '两次输入密码不一致'
+                },
+            }
+        });
+    });
+</script>
+</body>
+</html>

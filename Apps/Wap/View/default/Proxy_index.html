@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>代理商品活动公告</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/binding.css" /> 
+ </head> 
+ <body> 
+  <header id="header"></header>
+  
+  <div class="money-wp money-dl"> 
+
+    <if condition="$state gt 1">
+        <div class="money-wp-fff xu-text"> 
+             
+             <p><img src="/data/upload/shop/groupbuy/{:touid($II['token'], '-')}/{$proxy.picurl}" width=290/></p>
+        <div class="bottom">
+           <if condition="$state eq 2">
+               <label class="submit-border"><input type="submit" class="submit submit_js" value="活动已结束"></label>
+           <elseif condition="$state eq 3" />
+               <label class="submit-border"><input type="submit" class="submit submit_lj" value="立即参与" id="proxy_active" onclick="go_active()"></label>
+           <elseif condition="$state eq 4" />
+               <label class="submit-border"><input type="submit" class="submit submit_yj" value="您已参与"></label>
+           </if>
+         </div>
+        </div>
+   <else />
+        当前商家还未发布互动,尽请期待！
+    </if>
+  </div>
+  
+  <script type="text/html" id="voucher-list-tmpl"></script> 
+  <div id="footer"></div> 
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script> 
+
+  <script type="text/javascript">
+      //参与活动
+      function go_active(){
+		 //alert(SiteUrl+'{:U('Proxy/active?token='.$II['token'])}');
+		  //alert(WapSiteUrl+'/Proxy/active/token/{:$II['token']}');
+		  //location.href = '{:U('Proxy/active?token='.$II['token'])}';
+		  proxy_active = $('#proxy_active');
+		  $.ajax({
+			type:'get',
+			url:SiteUrl+'{:U('Proxy/active?token='.$II['token'])}',
+			success:function(result){
+				if(result){
+				  alert('参与成功');
+                  proxy_active.val("您已参与");
+                  proxy_active.removeClass("submit_lj").addClass("submit_yj");
+				}else{
+					alert('参与失败');
+				}
+			}
+		});
+      }
+  </script>
+
+ </body>
+</html>

@@ -1,0 +1,35 @@
+<dl>
+    <dt><i class="required">*</i>图片内容：</dt>
+    <dd class="img">
+        <span>
+            <input type="hidden" name="ad_code">
+            <img src="<{:img_server('__IMG__/default_img.png')}>">
+        </span>
+    </dd>
+</dl>
+<script>
+    $(function(){
+
+        var val = '';
+
+        $('.eject_con dd.img span').click(function(){
+            var img = $('img', this);
+            //清空原值,直接关闭,可以取消图片
+            img.attr('src', '<{:img_server('__IMG__/default_img.png')}>').prev().val(val);
+            Admin.album(function(id, src){
+                //点击相册图片,设置新值
+                img.attr('src', src).prev().val(id);
+                return true;
+            });
+        });
+
+        //回显
+        <php>if(!empty($_adv) && $_adv_type->name == $_adv['media_type']):</php>
+            val = -<{$_adv['ad_id']}>;
+            $('[name="ad_code"]').val(val).next().attr('src', '<{$_adv['ad_code']|img_server}>');
+        <php>endif</php>
+
+    });
+</script>
+
+

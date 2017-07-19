@@ -1,0 +1,6 @@
+<form method="post" action="{$pay_info.url}" name="gopay" >
+    <input type="hidden" name="biz_content" value="{$pay_info.biz_content}"/>
+</form>
+<script type="text/javascript">
+    $(function(){document.gopay.submit();})
+</script>

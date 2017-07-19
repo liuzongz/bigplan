@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2"/>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <style type="text/css">
+        .box{text-align:center;margin-top:5rem;}
+        .box .title{font-size:1rem;font-weight:bold;}
+        .box .content{margin-top:3rem;}
+    </style>
+</head>
+<body>
+<include file="Public:header1"/>
+<div class="main" style="min-height:18rem;">
+    <div class="box">
+        <div class="image">
+            <img src="__IMG__/loading.gif" />
+        </div>
+        <div class="text">
+            <div class="title">正在支付...</div>
+            <div class="content">订单已经提交支付处理，<br/>请稍候……请在订单详细页查看订单状态！</div>
+        </div>
+    </div>
+</div>
+{$pay_str}
+</body>
+</html>

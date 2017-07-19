@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>会员注册</title>
+    <style type="text/css">
+        html,body,ul,li,p{ margin: 0; padding: 0;}
+        body{max-width: 640px;margin: 0 auto;background: #f1f1f1;}
+        ul,li{ list-style: none;}
+        a{ color:#000;}
+        img{background: inherit;}
+        .header{background: #ffffff;border-bottom: 1px solid #ff9600;color: #373737;text-align: center;line-height: 35px;}
+        .reg{margin-top: 25px;}
+        .reg .border{border-bottom: 1px solid #cccccc;background: #ffffff;padding: 10px 0 10px 10px;position: relative;}
+        .reg .border span{font-size: 13px;}
+        .reg .border input{height: 29px;width: 73%;border: 0;}
+        .reg .border .yanzhen{width: 80px;height: 25px;position: absolute;right: 0px;top: 12px;border-left: 1px solid #ff9600;}
+        .reg .register{text-align: center;margin-top: 20px;}
+        .reg .register-butt{background: #ff9600;color: #ffffff;width: 44%;height: 38px;border: 1px solid #ff9600;border-radius: 8px;    font-size: 16px;}
+        .reg label.error{width: 100%;display: block;color: #ff9600;margin-top: 8px;}
+        .reg .border input:focus{outline: none;}
+    </style>
+    <link type="text/css" rel="stylesheet" href="__CSS__/x-n.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/reset.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/main.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/child.css">
+    <script type="text/javascript" src="__JS__/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.validate.js"></script>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header" />
+<div class="reg">
+    <form id="reg-form" action="{$url.register}" method="post">
+        <div class="border">
+            <span>账户</span>
+            <input type="text"   name="email" placeholder="请输入邮箱" value="">
+        </div>
+        <div class="border">
+            <span>密码</span>
+            <input type="password" id="password"  name="password" placeholder="请输入6到15位数密码" value="">
+        </div>
+        <div class="border">
+            <span>确认密码</span>
+            <input type="password"   name="reppassword" placeholder="请重复输入密码" value="">
+        </div>
+        <div class="border">
+            <span>验证码</span>
+            <input type="text"   name="number" placeholder="请输入验证码">
+            <img class="yanzhen" id="verifyimg" src="{:U('User/verify')}">
+        </div>
+        <div class="register">
+            <input type="hidden" name="back_act" value="{$back_act}" />
+            <button class="register-butt" type="submit">立即注册</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function(){
+        $('#reg-form').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    rangelength: [6, 15],
+                },
+                reppassword: {
+                    required: true,
+                    rangelength: [6, 15],
+                    equalTo:"#password",
+                },
+                number: {
+                    required: true,
+                    minlength: 4,
+                },
+            },
+            messages: {
+                email: {
+                    required: "请输入Email地址",
+                    email: "请输入正确的email地址"
+                },
+                password: {
+                    required: "请输入密码",
+                    rangelength: '密码不得小于{0}-{1}位',
+                },
+                reppassword: {
+                    required: "请重复输入密码",
+                    rangelength: '密码不得小于{0}-{1}位',
+                    equalTo: '两次输入密码不一致'
+                },
+                number: {
+                    required: "请输入验证码",
+                    minlength: '请输入{0}位验证码',
+                },
+            }
+        });
+        var verifyimg = $("#verifyimg").attr("src");
+        $("#verifyimg").click(function(){
+            if( verifyimg.indexOf('?')>0){
+                $("#verifyimg").attr("src", verifyimg+'&random='+Math.random());
+            }else{
+                $("#verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+            }
+        });
+    });
+</script>
+</body>
+</html>

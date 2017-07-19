@@ -1,0 +1,52 @@
+<header class="<if condition='$store_id eq $jzc_store'>none</if>">
+    <div class="head-warp max768 ">
+        <div class="head">
+            <PHP>$default ='javascript:history.go(-1)'; </PHP>
+            <a class="left" href="{$user_head['backUrl']?:$default}">
+                <i class="myF icon-left"></i>{$user_head['backText']}
+            </a>
+            <h3>{$user_head.title}</h3>
+            <a class="right" id="manu-cd" href="javascript:void(0)">
+                <script>
+                    (function(){
+                    })()
+
+                    $(document).ready(function(){
+                        $('#manu-cd').click(function(){
+                            $('#toggle').toggle();
+                        });
+                        $('#toggle,#manu-cd').on("touchstart",function(event){
+                            event.stopPropagation();
+                        });
+                        $(document).on("touchstart",function(){
+                            $('#toggle').hide();
+                        });
+
+                    });
+                </script>
+            </a>
+
+        </div>
+
+        <div class="hide-nav none" id="toggle">
+            <div class="menu">
+
+                <a href="{:U('index/index')}"><i class="myF icon-shouye"></i>
+                    <p>首页</p>
+                </a>
+                <a href="{:U('Fenlei/index')}"><i class="myF icon-fenlei"></i>
+                    <p>分类</p>
+                </a>
+                <a href="{:U('cart/index')}"><i class="myF icon-gouwuche"></i>
+                    <p>购物车</p>
+                </a>
+                <a href="{:U('User/index')}"><i class="myF icon-gerenzhongxin"></i>
+                    <p>个人中心</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%;height: 2rem;"></div>
+    <script>function myEvent(obj,ev,fn){if(obj.attachEvent){obj.attachEvent('on'+ev,fn);}else{obj.addEventListener(ev,fn,false);}}myEvent(window,'load',function(){var oRTT=document.getElementById('JS_backTop');var pH=document.documentElement.clientHeight;var scrollTop;window.onscroll=function(){scrollTop=document.documentElement.scrollTop||document.body.scrollTop;if(scrollTop>=pH){oRTT.style.display='block';}else{oRTT.style.display='none';}return scrollTop;};});</script>
+    <div class="backTop none" id="JS_backTop" onclick=" $('body,html').animate({scrollTop:0},10);"><i class="myF icon-huidingbu"></i></div>
+</header>

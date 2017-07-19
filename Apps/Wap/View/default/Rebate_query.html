@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        *{font-size:.5rem;}
+        ul{}
+        ul li.item{height:2rem;line-height:2rem;overflow:hidden;}
+        select{width:4rem;padding: .3rem 0;}
+        .find{width:2.2rem;height:1.3rem;margin-left:.5rem;}
+        .input_text{height:1rem;width:5rem;}
+        .query_list,.query_type{padding:0 .5rem;}
+        table{width:100%;}
+        table td,table th{height:1rem;line-height:1rem;}
+        table th{border-bottom:1px solid #e2e2e2;}
+        table td{border-bottom:1px dashed #e2e2e2;}
+        .pager{}
+        .pager ul{}
+        .pager ul li{display:inline-block; margin: 0 .1rem;}
+        .pager a, .pager span{}
+        .pager a,.pager span.currentpage{border: 1px solid #e2e2e2;padding: .1rem .2rem; }
+        .setKp img{height: .8rem;position: relative; top: -.15rem;}
+    </style>
+</head>
+<body>
+    <!--<include file="Public:header1" />-->
+    <section class="" style="margin-top:.5rem;">
+        <form action="{:U()}" method="post">
+            <ul>
+                <li class="item query_type">
+                    <span>
+                        券类型：
+                        <select name="type">
+                            <option value="0">所有面值</option>
+                            <volist name="kp_type" id="list">
+                            <option value="{$list.id}" <if condition="$data.type eq $list['id']">selected</if>>{$list.nickname}</option>
+                            </volist>
+                        </select>
+                    </span>&nbsp;&nbsp;
+                    <span>
+                        按 <select name="query" class="query_where">
+                            <option value="KP" <if condition="$data.query eq 'KP'">selected</if>>KP券号</option>
+                            <option value="AT" <if condition="$data.query eq 'AT'">selected</if>>激活时间</option>
+                            <option value="US" <if condition="$data.query eq 'US'">selected</if>>用户手机</option>
+                            <option value="CN" <if condition="$data.query eq 'CN'">selected</if>>公司名称</option>
+                        </select>
+                    </span>
+                    <span>
+                        <input type="submit" class="find" value="查询" />
+                    </span>
+                </li>
+                <li class="item query_list">
+                    <div class="query_from query_from_KP <if condition="$data.query neq 'KP' and $data.query neq ''">none</if>">
+                        从 <input type="tel" class="input_text" name="star_number" placeholder="5800008888" maxlength="10" value="{$data.star_number}" /> 到 <input class="input_text" type="tel" name="end_number" placeholder="5800009999" maxlength="10" value="{$data.end_number}" />
+                    </div>
+                    <div class="query_from query_from_AT <if condition="$data.query neq 'AT'">none</if>">
+                        从 <input type="date" class="input_text" name="star_date" value="{$data.star_date}" /> 到 <input class="input_text" type="date" name="end_date" value="{$data.end_date}" />
+                    </div>
+                    <div class="query_from query_from_US <if condition="$data.query neq 'US'">none</if>">
+                        手机号码：<input class="input_text" type="tel" name="mobile" value="{$data.mobile}" />
+                    </div>
+                    <div class="query_from query_from_CN <if condition="$data.query neq 'CN'">none</if>">
+                        公司名称：<input class="input_text" type="text" name="cnname" value="{$data.cnname}" />
+                    </div>
+                </li>
+            </ul>
+            <script type="text/javascript">
+                $(function(){
+                    $('.query_where').on('change',function(){
+                        var val = $(this).val();
+                        var list = $('.query_list');
+                        list.find('.query_from').addClass('none');
+                        list.find('.query_from_' + val).removeClass('none');
+                    }).change();
+                    $('.setKp').on('click', function(item){
+                        var that = $(this);
+                        that.html('<img src="__IMG__/loading.gif" />');
+                        var url = that.attr('data-href');
+                        var result = function(ex){
+                            if (ex.error == 200) {
+                                $('.name' + ex.data.kp_id).text(ex.data.status_name);
+                                that.text(ex.data.handle);
+                            } else {
+                                that.text('启用');
+                                alert(ex.msg);
+                            }
+                        };
+                        Jiniu.ajax(url,'',result,'GET','JSON');
+                    });
+                });
+            </script>
+        </form>
+        <table style="text-align:center;">
+            <thead>
+            <tr>
+                <th>券号</th>
+                <th>状态</th>
+                <th>激活时间</th>
+                <th>激活用户</th>
+                <th>公司名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="kp_list" id="list" empty="$empty_kp">
+            <tr>
+                <td>{$list.number}</td>
+                <td class="name{$list.id}">{$list.status_name}</td>
+                <td><if condition="$list.status neq 0 or ($list['status'] eq 4 and $list['user_id'] eq 0)">{$list.receivetime}</if></td>
+                <td><if condition="$list.status neq 0">{$list.member_name}</if></td>
+                <td><if condition="$list.status neq 0">{$list.cnname}</if></td>
+                <td><a href="javascript:void(0);" data-href="{:U('setKp') . '?id=' . $list['id']}" class="setKp"><if condition="in_array($list['status'],[0,1])">停用<elseif condition="$list.status eq 4"/>启用</if></a></td>
+            </tr>
+            </volist>
+            </tbody>
+            <if condition="!empty($kp_list)">
+            <tfoot>
+            <tr>
+                <td colspan="6" class="pager">{$page.show_page}</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="pager">{$page.info} </td>
+            </tr>
+            </tfoot>
+            </if>
+        </table>
+    </section>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<header id="header" class="maxwidth">
+    <div class="header-wrap">
+        <a href="<if condition="$user_head.backUrl neq ''">{$user_head.backUrl}<else/>javascript:history.back();</if>" class="header-back" title="<if condition="$user_head.backUrl neq ''">{$user_head.backText}<else/>返回</if>"><span class=" icon-left"></span></a>
+        <h2>{$user_head.title}</h2>
+        <a href="javascript:void(0)" id="btn-opera" class="i-main-opera" onclick="$('.main-opera-pannel').toggleClass('none');">
+            <span class=" icon-right"></span>
+        </a>
+    </div>
+    <div class="main-opera-pannel none">
+        <div class="main-op-table main-op-warp">
+            <a href="{:U('index/index')}" class="quarter"><span class="i-home icon-index"></span><p>首页</p></a>
+            <a href="{:U('fenlei/index')}" class="quarter"><span class="i-categroy icon-fenlei"></span><p>分类</p></a>
+            <a href="{:U('cart/index')}" class="quarter"><span class="i-cart icon-cart"></span><p>购物车</p></a>
+            <a href="{:U('user/index')}" class="quarter"><span class="i-mine icon-user"></span><p>个人中心</p></a>
+        </div>
+    </div>
+</header>

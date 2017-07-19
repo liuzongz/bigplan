@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单列表</title>
+    <include file="Public/head2" />
+    <style type="text/css">
+        body{text-align:center;margin: 0 auto;background-color: #f8f8f8;}
+        .order-list{font-size:.6rem;margin:0 auto;text-align:center;}
+        .order-list ul.list{}
+        .order-list ul.list li.item{height:auto;overflow:hidden;margin-top: .5rem;}
+        .order-list ul.list li.item .order_title{height:1.5rem;line-height:1.5rem;zoom:1;overflow:hidden;background:white;padding:0 .3rem;border-top: 1px solid #e2e2e2;}
+        .order-list ul.list li.item .order_goods{zoom:1;height:auto;overflow:hidden;border-top:1px solid #e2e2e2;padding: .5rem 0;position: relative}
+        .order-list ul.list li.item .order_goods .img{width:3rem;height:3rem;padding: 0 .5rem;}
+        .order-list ul.list li.item .order_goods .img a{display:table-cell;width:3rem;height:3rem;vertical-align:middle;text-align:center;}
+        .order-list ul.list li.item .order_goods .img img{max-width:3rem;max-height:3rem;}
+        .order-list ul.list li.item .order_goods .text{width:8rem;}
+        .order-list ul.list li.item .order_goods .text em{color:red;}
+        .order-list ul.list li.item .order_goods .text .goods_attr{text-align: left;}
+        .order-list ul.list li.item .order_goods .goods_number{width:4rem;}
+        .order-list ul.list li.item .order_goods .goods_number em{display: block;text-align: right;margin-right: .4rem;}
+        .order-list ul.list li.item .order_goods .goods_name{line-height:1rem;text-align: left;overflow: hidden;}
+        .order-list ul.list li.item .order_goods em.mRight{color:#999999;margin-top: .2rem;}
+        .order-list ul.list li.item .order_foot{height: 1.4rem;line-height: 1.4rem;overflow:hidden;zoom:1;border-top:1px solid #e2e2e2;padding:0 .3rem;border-width:1px 0;background-color: white;}
+        .order-list ul.list li.item .order_foot em{color:dimgray;}
+        .order-list ul.list li.item .order_handle{text-align:right;line-height:1.5rem;height:1.5rem;border-bottom: 1px solid #e2e2e2; padding:0 .3rem;background-color:white;}
+        .order-list ul.list li.item .order_handle a{display:inline-block;border:1px solid #e2e2e2;padding:0 .3rem;margin:.1rem;line-height:1rem;}
+        .pagination a,.pagination span{margin:0 .1rem;border:1px solid #e2e2e2;padding:0 .3rem;}
+        .pagination span {border-color:red;}
+        .no-record{margin-top: 2rem;}
+        .no-record .icon i{font-size: 5rem;color:#d7d8da;}
+        .no-record .text{margin-top: -1rem;}
+        .no-record .text .b{font-size: .7rem;}
+        .no-record .text .s{font-size: .5rem;margin-top: .2rem; color:#c0c0c0;}
+        .no-record .btn{margin-top: .5rem;}
+        .no-record a{border:1px solid #60646f;color:#60646f; padding: .2rem .8rem;border-radius: .1rem;}
+        .refund{position: absolute;bottom: 0;right:0;margin-right:.4em;margin-bottom: .4em}
+        .refund a{color:#00a0e9}
+    </style>
+</head>
+<body>
+<include file="Public:header1" />
+<div class="nav-tab-top">
+    <ul>
+        <li><a href="{:U('Order/index?t=unpaid').'?store_token='.$store_token}" ot="unpaid">待付款</a></li>
+        <li><a href="{:U('Order/index?t=pay').'?store_token='.$store_token}" ot="pay">待发货</a></li>
+        <li><a href="{:U('Order/index?t=confirm').'?store_token='.$store_token}" ot="confirm">已发货</a></li>
+        <li><a href="{:U('Order/index?t=comment').'?store_token='.$store_token}" ot="comment">已收货</a></li>
+        <!--<li><a href="{:U('Order/index?t=refund')}" ot="refund">已退货</a></li>-->
+    </ul>
+</div>
+
+<script>
+    (function(){
+        var t = "{$II['t']}";
+        $('.nav-tab-top>ul>li>a').each(function(i){
+            var ot = $(this).attr("ot");
+            if(ot===t){
+                $(this).parent().addClass("cur");
+            }
+        });
+    })();
+</script>
+<div class="order-list">
+    <if condition="!empty($order_list['list'])">
+    <ul class="list">
+        <foreach name="order_list.list" item="list">
+            <php>$is_gift = ($list['extension_code']==='gift'
+                or $list['extension_code']==4);
+            </php>
+            <if condition="$is_gift">
+                <li class="item {$list.style}">
+                    <div class="order_title">
+                        <span class="left">订单编号：<a href="{:U('Order/detail?id=' . $list['order_sn'])}">{$list.order_sn}</a></span>
+                        <span class="right">{$list.add_time}</span>
+                    </div>
+                    <volist name="list.goods_list" id="goods" empty="$empty_goods">
+                        <div class="order_goods">
+                            <div class="img left"><a href="{$goods.url}"><img src="{:echo_img($goods['goods_thumb'])}" /></a></div>
+                            <div class="text left">
+                                <div class="goods_name">{$goods.goods_name}</div>
+                                <div class="goods_attr">{$goods.goods_attr}</div>
+                            </div>
+                            <div class="goods_number right"><em class="">{$_CFG.integral_name}:{$goods.integral}</em><em class="mRight">x{$goods.goods_number}</em></div>
+                        </div>
+                    </volist>
+                    <div class="order_foot" >
+                        <div class="right" >
+                            <em>共{$list.goods_number}件商品</em>
+                            合计：{$list.order_amount_formated}<em>（含运费：{$list.shipping_fee_formated}）</em> <if condition="$list.integral gt 0"></if>
+                        </div>
+                    </div>
+                    <div class="order_handle">
+                        <span class="left" style="color: #ff6600;">{$list.status.status_name}</span>
+                        <span class="right">
+                    <volist name="list.status.handle" id="handle">
+                        <a  href="{$handle.url}" <if condition="$handle.click neq ''">onclick="{$handle.click}"</if>>{$handle.text}</a>
+                    </volist>
+                </span>
+                    </div>
+                </li>
+                <else />
+                <li class="item {$list.style}">
+            <div class="order_title">
+                <span class="left">订单编号：<a href="{:U('Order/detail?id=' . $list['order_sn'])}">{$list.order_sn}</a></span>
+                <span class="right">{$list.add_time}</span>
+            </div>
+            <volist name="list.goods_list" id="goods" empty="$empty_goods">
+            <div class="order_goods">
+
+                <div class="img left"><a href="{$goods.url}"><img src="{:echo_img($goods['goods_thumb'])}"/></a></div>
+                <div class="text left">
+                    <div class="goods_name">
+                        {$goods.goods_name}
+                        <if condition="$goods['act_name']">
+                            <em class="red">[{$goods.act_name}]</em>
+                        </if>
+                    </div>
+                    <div class="goods_attr">{$goods.goods_attr}</div>
+                </div>
+
+                <div class="goods_number right"><em class="">{$goods.goods_price_formated}</em><em class="mRight">x{$goods.goods_number}</em></div>
+                <if condition="$goods['refund_text']['text'] && !$goods['is_real']">
+                    <div class="refund">
+                        <php>
+                            $url=$goods['refund_text']['url']
+                                ?$goods['refund_text']['url']. '?id=' . $list['order_sn'] . '& rec_id=' .$goods['rec_id']
+                                :'javescript:;';
+                        </php>
+                        <a href="{$url}">
+                            {$goods['refund_text']['text']}
+                        </a>
+                    </div>
+                </if>
+            </div>
+            </volist>
+            <div class="order_foot" >
+                <div class="right" ><em>共{$list.goods_number}件商品</em>合计：{$list.order_amount_formated}<em>（含运费：{$list.shipping_fee_formated}）</em> <if condition="$list.integral gt 0"><em>（{$_CFG.integral_name}：{$list.integral}）</em></if></div>
+            </div>
+            <div class="order_handle">
+                <span class="left" style="color: #ff6600;">{$list.status.status_name}</span>
+                <span class="right">
+                    <volist name="list.status.handle" id="handle">
+                        <a href="{$handle.url}" <if condition="$handle.click neq ''">onclick="{$handle.click}"</if>>{$handle.text}</a>
+                    </volist>
+                </span>
+            </div>
+        </li>
+            </if>
+        </foreach>
+    </ul><!--1-->
+    <else/>
+        {$empty_order}
+    </if>
+    <div class="pagination mt10">
+        {$order_list.show}
+    </div>
+</div>
+</body>
+</html>

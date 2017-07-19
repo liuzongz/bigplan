@@ -1,0 +1,30 @@
+<ul class="list" id="JS_ListPro">
+    <volist name="total['list']" id="list">
+        <li class="flow_li">
+            <div class="row_input left">
+                <input type="checkbox" value="{$list.rec_id}" data-id="{$list.rec_id}" class="input_checkbox flow_checkbox checkbox_background" <if condition="$list['is_selected'] or $list.is_order_detail eq 1">checked</if> name="id[]" <if condition="$list.is_order_detail eq 1">disabled</if> />
+            </div>
+            <div class="row_image left">
+                <a href="{$list.url}" target="_blank">
+                    <img src="{:echo_img($list.goods_thumb)}" />
+                </a>
+            </div>
+            <div class="row_text_box left ">
+                <div class="row_title">
+                    <a href="{$list.url}" target="_blank">{$list.goods_name}</a>
+                </div>
+                <div class="row_spec">
+                    <volist name="list.attr_list" id="ll">
+                        <span class="attr_name">{$ll.attr_name}：</span>
+                        <span class="attr_value">{$ll.attr_value}；</span>
+                    </volist>
+                </div>
+                <div class="row_num">
+                    <div class="num left">数量：<if condition="$list.is_order_detail eq 1">{$list.goods_number}<else/><input type="tel" class="num_input" name="num[]" value="{$list.goods_number}" data-id="{$list.rec_id}" /></if></div>
+                    <div class="price left orange">单价：<em class="rmb">{$list.goods_price}</em></div>
+                    <div class="amount left none"><a href="#">删除</a></div>
+                </div>
+            </div>
+        </li>
+    </volist>
+</ul>

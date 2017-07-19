@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>{$_CFG.shop_name}会员中心首页</title>
+    <link type="text/css" rel="stylesheet" href="__CSS__/x-n.css">
+    <style type="text/css">
+        .main{margin:0 auto;overflow:hidden;max-width:640px;}
+        a{ color:#000;}
+        img{background: inherit;}
+        body{ font-size: 21px; line-height: 1; color: #000; font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "\9ED1\4F53", Arial, sans-serif;text-align:center;}
+        .allbrands{ width: 100px; border-right: 1px solid #ddd; position: fixed;z-index: 2; /*left: 0;*/ top: 0; bottom: 0; overflow: auto;height: 100%;}
+        .allbrands li{text-align: center;}
+        .allbrands li.on{ background-color: #000; color: #fff;}
+        .allbrands li a{color:#000;text-decoration: none;display: block;width: 100%;padding: 34px 0;}
+        .allbrands li.icon1 a{padding-bottom:10px}
+        .allbrands li.icon2 a{padding-bottom:10px}
+        .allbrands li.on a{color:#fff;}
+        .brandlist{ margin-left: 101px; background-color: #eee;}
+        .brandlist li{ border-bottom: 1px solid #ddd; border-top: 1px solid #ddd; background-color: #fff; margin-bottom: 14px;}
+        .brandlist a{ display:block; padding: 30px 0;position: relative;}
+        .brandinfo{ width: 188px; float: left; text-align: center;}
+        .brandinfo img{ border-radius: 100%;}
+        .brandinfo .name{ padding: 30px 0 20px; font-size: 20px;}
+        .brandinfo .pronum{ font-size: 16px; color: #888;}
+        .brandimg{ background:url(__IMG__/logox2.png) #eee no-repeat center; width:324px; height:324px; overflow:hidden; margin-left:188px;}
+        .shadow{ box-shadow: 0 0 10px #ccc; position: absolute; left: 0; top: -10px; width: 100%; height: 10px;}
+        .icon1{ background:url(__IMG__/iconfont-huiyuan.png) no-repeat center 9px;background-size: 32%;padding: 12px 0;}
+        .icon2{ background:url(__IMG__/iconfont-serve.png) no-repeat center 14px;background-size: 32%;padding: 12px 0;}
+        .spinner{margin: 0 auto;width: 150px;text-align: center;padding: 33px 0;display: none;}
+        .spinner > div {
+            width: 30px;
+            height: 30px;
+            background-color: #67CF22;
+            border-radius: 100%;
+            display: inline-block;
+            -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+            animation: bouncedelay 1.4s infinite ease-in-out;
+            /* Prevent first frame from flickering when animation starts */
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        .spinner .bounce1 {
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+        }
+
+        .spinner .bounce2 {
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+        }
+
+        @-webkit-keyframes bouncedelay {
+            0%, 80%, 100% { -webkit-transform: scale(0.0) }
+            40% { -webkit-transform: scale(1.0) }
+        }
+
+        @keyframes bouncedelay {
+            0%, 80%, 100% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            } 40% {
+                  transform: scale(1.0);
+                  -webkit-transform: scale(1.0);
+              }
+        }
+    </style>
+</head>
+<script type="text/javascript" src="__JS__/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__JS__/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="__JS__/Jiniu.min.js"></script>
+<body>
+<div class="main">
+    <ul class="brandlist" id="content">
+        <include file="Index:store" />
+    </ul>
+    <include file="Index:Menu" />
+    <script type="text/javascript">
+        $(function(){
+            $('img').lazyload({
+                effect:'fadeIn'
+            });
+            var curPage = 2;
+            var content = $('#content');
+            content.after('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
+            var loading = $('.spinner');
+            var stop=true;//触发开关，防止多次调用事件
+            $(window).on({'scroll' : function(){
+                var d_height = $(document).height(); //整个网页的高度;
+                var  w_height = $(window).height(); //浏览器窗口的高度;
+                if ($(this).scrollTop() + w_height + 100 >= d_height && $(this).scrollTop() > 100) {
+                    if(stop==true) {
+                        stop=false;
+                        $.ajax({
+                            url: "/Wap/Store/index?p=" + curPage,
+                            type: 'POST',
+                            dataType: 'json',
+                            beforeSend: function (jqXHR, settings) {
+                                loading.show();
+                            },
+                            success: function (response, status) {
+                                var str = '';
+                                var count = {$store_page_total};    //分页总数{$store_page_total};
+
+                                if (curPage <= count) {
+                                    $.each(response.contents.list, function (index, value) {
+                                        str += '<li>';
+                                        str += '<a href="' + value.url + '">';
+                                        str += '<div class="brandinfo">';
+                                        str += '<p class="logo"><img src="' + value.store_avatar + '" width="100" height="100" /></p>';
+                                        str += '<p class="name">' + value.store_name + '</p>';
+                                        str += '<p class="pronum">商品共' + value.goods_count + '件</p>';
+                                        str += '</div>';
+                                        str += '<div class="brandimg">';
+                                        str += '<img src="' + value.store_label + '" width="324" />';
+                                        str += '        </div></a>';
+                                        str += '</li>';
+                                    });
+                                    content.append(str);
+                                    ++curPage;
+                                    stop=true;
+                                } else{
+                                    loading.hide();
+                                };
+                            }
+                        });
+
+                    }
+
+                }
+            }
+            });
+
+        });
+    </script>
+</div>
+</body>
+</html>

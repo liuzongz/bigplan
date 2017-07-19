@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head>
+    <title></title>
+    <include file="Public:head2" />
+    <style>
+        .container{padding:10px;}
+        .title{font-weight: bolder;text-align: center}
+        .add_time{color:#999;text-align: center}
+        .author{text-align: right}
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+<if condition="$article">
+    <div class="container">
+        <h2 class="title">{$article.title}</h2>
+        <p class="add_time">{$article.add_time|date="Y-m-d H:i:s",###}</p>
+        <p class="content">{$article.content}</p>
+        <p class="author">作者：{$article['author']?:"匿名"}</p>
+    </div>
+   <else />
+    {$empty_article}
+</if>
+</body>
+</html>

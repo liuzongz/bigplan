@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"><head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="__JS__/constor.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ihDDHwCX7FaUlPhKV1o9iQa5OLBAu0lE"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_7jzqkdsq0h1o47vi.css">
+    <style type="text/css">
+        body{background-color: #eee;}
+        header{ max-width: 768px;background-color: #fff; }
+        .back{z-index: 99; position: absolute;top:0;left: 0; line-height: 2rem;width: 2rem;height: 2rem; text-align: center;}
+        .city_select{width:100%;height: 2rem;line-height: 2rem;text-align: center;}
+        .cityA{padding: .3rem 0; background: #fff;margin: .5rem 0;}
+
+        .cityA .setCity{max-width: 3rem; margin-left:.5rem;text-align: center;line-height: 1.4rem;   font-size: .6rem;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;word-break: break-all; }
+        .cityA .lc{line-height: 1.4rem;margin:  0 .1rem; }
+        .ipk{margin: 0 .5rem;height: 1.4rem; background: #eee;border:1px solid #eee;border-radius: .1rem;position: relative;}
+        .input_text{border:none;background: #eee;color: #a6a6a6;}
+        .ipk .iconS{width: 1.5rem;text-align: center;line-height: 1.4rem;}
+        .ipk .iconS i{font-size: .8rem;color: #a6a6a6;}
+        .ipk .pot{position: absolute;width: 1.2rem;text-align: center; right: .2rem;top:0;line-height: 1.4rem;}
+        .ipk .pot i{opacity: .5;}
+        .gb{background-color:#fff;margin-top: .5rem;}
+        .gb .la{padding-left: .5rem;width: 1.5rem; line-height: 2rem;}
+        .gb .gc{line-height: 2rem;}
+        .gb .sr{ width: 2rem;text-align: center;line-height: 2rem;}
+
+        #JS_header{position: fixed;width: 100%;top:0; max-width: 768px;background-color: #fff; z-index: 999;}
+        #JS_header .back{z-index: 99; position: absolute;top:0;left: 0; line-height: 2rem;width: 2rem;height: 2rem; text-align: center;}
+        #JS_header .city_select{width:100%;height: 2rem;line-height: 2rem;text-align: center;}
+        /* .presentCity div.changeCity.open{background: url(__IMG__/icon-up.png) no-repeat 14.2rem center;background-size: .5rem;}*/
+        .warpCityS{background-color: #eee; padding-bottom: .6rem;}
+        ul.cityStyle li{float: left;width: 4.2rem;margin:.2rem 0 .2rem .6rem; border: 1px solid #b5b5b5;border-radius: .1rem; text-align: center;height: 1.6rem;line-height: 1.6rem;text-align: center;font-size: .6rem;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;word-break: break-all;}
+        .warpCityS .song p.forLeftM{padding:.6rem 0 .3rem .6rem;}
+        .cityAll{}
+        .cityAll>ul>li{background-color: #eee;}
+        .cityAll>ul>li>a{position: relative; top: -2rem;display: block; height: 0; overflow: hidden;}
+        .cityAll>ul>li>a.itema{display: block;line-height: 1rem;padding-left: .6rem;}
+        .cityAll>ul>li> i.forlt{padding-left: .6rem;}
+        .cityAll>ul>li>ul{background: #fff;}
+        .cityAll>ul>li>ul>li{background-color: white;margin: 0 0 0 .6rem; line-height: 2rem;border-bottom: 1px solid #e2e2e2;}
+        .rightNavCity{position: fixed;right:0;top:4.1rem;padding: 0 .2rem;border-radius: .1rem;}
+        .rightNavCity ul li{text-align: center;}
+        .rightNavCity ul li a{color: #00aa88;text-align: center;font-size: .4rem;}
+        .floatUp{position: fixed;top:50%; left:5rem; text-align: center;width: 6rem;height: 3rem; }
+        .floatUp .textClass{padding: .3rem .4rem;font-size: 1.5rem; background:rgba(0,0,0,.6); color:white; }
+    </style>
+</head>
+<header>
+    <div style="position: relative;">
+        <div class="back"><i class="myF icon-left"></i></div>
+        <div class="city_select">
+            选择收货地址
+        </div>
+    </div>
+</header>
+<section>
+    <div class="cityA flex-wrap">
+        <div class="flex-wrap none" id="JS_cityOut">
+            <div  class="setCity flex-con" >
+                武汉市
+            </div>
+            <div class="lc">
+                <i class="myF icon-down" style="font-size: .6rem;"></i>
+            </div>
+        </div>
+        <div class="flex-con">
+            <div class="flex-wrap ipk">
+                <div class="iconS">
+                    <i class="myF icon-sousuo-sousuo"></i>
+                </div>
+                <input class="flex-con input_text" id="onfocus" type="text" placeholder="查找小区/大厦/学校等">
+                <div class="pot none" id="JS_close">
+                    <i class="myF icon-guanbi1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="gb flex-wrap" style="color: #4a964d;" href="">
+        <div class="la">
+            <i class="myF icon-dingwei1"></i>
+        </div>
+        <div class="flex-con gc">
+            定位当前位置
+        </div>
+        <div class="sr">
+            <i class="myF icon-right"></i>
+        </div>
+    </a>
+</section>
+<footer>
+    <div class="" id="JS_cityChange">
+        <div id="JS_header">
+            <div style="position: relative;">
+                <div class="back"><i class="myF icon-left"></i></div>
+                <div class="city_select">
+                    选择城市
+                </div>
+            </div>
+        </div>
+        <div style="height: 2rem;"></div>
+        <div class="cityAll clearfix">
+            <ul class="chao" id="JS_chao">
+                <li class="item" data-tag="热门">
+                    <a name="remen" id="JS_remen"> </a>
+                    <div class="warpCityS" style="border-bottom: 1px solid #e2e2e2;">
+                        <div class="song">
+                            <p class="forLeftM">热门城市</p>
+                            <ul class="cityStyle clearfix">
+                                <li>武汉</li>
+                                <li>成都</li>
+                                <li>重庆</li>
+                                <li>广州</li>
+                                <li>杭州</li>
+                                <li>南京</li>
+                                <li>上海</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="item" data-tag="A"><a class="itema" name="A" id="JS_A" ></a><i class="forlt">A</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="B"><a class="itema" name="B" id="JS_B" ></a><i class="forlt">B</i><ul class="lei"><li>超类</li><li>被子</li></ul></li>
+                <li class="item" data-tag="C"><a class="itema" name="C" id="JS_C" ></a><i class="forlt">C</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="D"><a class="itema" name="D" id="JS_D" ></a><i class="forlt">D</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="E"><a class="itema" name="E" id="JS_E" ></a><i class="forlt">E</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="F"><a class="itema" name="F" id="JS_F" ></a><i class="forlt">F</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="G"><a class="itema" name="G" id="JS_G" ></a><i class="forlt">G</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="H"><a class="itema" name="H" id="JS_H" ></a><i class="forlt">H</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="I"><a class="itema" name="I" id="JS_I" ></a><i class="forlt">I</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="J"><a class="itema" name="J" id="JS_J" ></a><i class="forlt">J</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="K"><a class="itema" name="K" id="JS_K" ></a><i class="forlt">K</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="L"><a class="itema" name="L" id="JS_L" ></a><i class="forlt">L</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="M"><a class="itema" name="M" id="JS_M" ></a><i class="forlt">M</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="N"><a class="itema" name="N" id="JS_N" ></a><i class="forlt">N</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="O"><a class="itema" name="O" id="JS_O" ></a><i class="forlt">O</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="P"><a class="itema" name="P" id="JS_P" ></a><i class="forlt">P</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="Q"><a class="itema" name="Q" id="JS_Q" ></a><i class="forlt">Q</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="R"><a class="itema" name="R" id="JS_R" ></a><i class="forlt">R</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="S"><a class="itema" name="S" id="JS_S" ></a><i class="forlt">S</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="T"><a class="itema" name="T" id="JS_T" ></a><i class="forlt">T</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="U"><a class="itema" name="U" id="JS_U" ></a><i class="forlt">U</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="V"><a class="itema" name="V" id="JS_V" ></a><i class="forlt">V</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="W"><a class="itema" name="W" id="JS_W" ></a><i class="forlt">W</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="X"><a class="itema" name="X" id="JS_X" ></a><i class="forlt">X</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="Y"><a class="itema" name="Y" id="JS_Y" ></a><i class="forlt">Y</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+                <li class="item" data-tag="Z"><a class="itema" name="Z" id="JS_Z" ></a><i class="forlt">Z</i><ul class="lei"><li>被子</li><li>被子</li></ul></li>
+            </ul>
+        </div>
+
+        <div class="rightNavCity" id="JS_rightNavCity">
+            <ul class="cityMoat">
+                <li><a href="#remen">热门</a></li>
+                <li><a href="#A">A</a></li>
+                <li><a href="#B">B</a></li>
+                <li><a href="#C">C</a></li>
+                <li><a href="#D">D</a></li>
+                <li><a href="#E">E</a></li>
+                <li><a href="#F">F</a></li>
+                <li><a href="#G">G</a></li>
+                <li><a href="#H">H</a></li>
+                <li><a href="#I">I</a></li>
+                <li><a href="#J">J</a></li>
+                <li><a href="#K">K</a></li>
+                <li><a href="#L">L</a></li>
+                <li><a href="#M">M</a></li>
+                <li><a href="#N">N</a></li>
+                <li><a href="#O">O</a></li>
+                <li><a href="#P">P</a></li>
+                <li><a href="#Q">Q</a></li>
+                <li><a href="#R">R</a></li>
+                <li><a href="#S">S</a></li>
+                <li><a href="#T">T</a></li>
+                <li><a href="#U">U</a></li>
+                <li><a href="#V">V</a></li>
+                <li><a href="#W">W</a></li>
+                <li><a href="#X">X</a></li>
+                <li><a href="#Y">Y</a></li>
+                <li><a href="#Z">Z</a></li>
+            </ul>
+        </div>
+        <div class="floatUp none" id="JS_floatUp">
+            <em class="textClass">A</em>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript">
+
+      /*  function textNluu(){
+            var flied = $('#onfocus').val();
+            if(flied.value !== null||flide.value !==''){
+                $('#JS_close').removeClass('none');
+            }
+        }*/
+
+       /* if($('#onfocus').focus() == true){
+            $('#JS_cityOut').removeClass('none');
+        }else {
+            $('#JS_cityOut').addClass('none');
+        }
+
+*/
+</script>
+<script type="text/javascript">
+    $(function() {
+        var liHight = ($(window).height() - ($('#JS_header').height()) * 2) / 27;
+        $(window).resize(function () {
+            fnSetliHight();
+        });
+        function fnSetliHight(){
+            $('#JS_rightNavCity ul li').css({'height': liHight, 'line-height': liHight + 'px'});
+        }fnSetliHight();
+    });
+    tap = 1;
+    $(window).on({
+        scroll:function(){
+            $('#JS_floatUp').removeClass('none');
+            log();
+        },touchmove:function(){
+            tap = 0;
+        },touchend:function () {
+            tap = 1;
+        }
+    });
+    var fnOutNone = function () {
+        $('#JS_floatUp').addClass('none');
+    };
+    var timer = null;
+    var oldTop = newTop = $(window).scrollTop();
+    function log(){
+        if(timer) clearTimeout(timer);
+        newTop = $(window).scrollTop();
+        if(newTop === oldTop && tap) {
+            clearTimeout(timer);
+            setTimeout(fnOutNone,1000);
+        } else{
+            oldTop = newTop;
+            timer = setTimeout(log,100);
+        }
+    }
+    $(window).scroll(function(){
+        var menu = $("#JS_floatUp em");
+        var items = $("#JS_chao").find(".item");
+        items.each(function(){
+            var m = $(this);
+            var mText = m.data('tag');
+            var itemsTop = m.offset().top- $('#JS_header').height();
+            var p = $(window).scrollTop();
+            if(p -itemsTop > 0 ){
+                menu.text(mText);
+            }else{
+                return false;
+            }
+        });
+    });
+</script>
+</html>

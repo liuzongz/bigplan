@@ -1,0 +1,15 @@
+<volist name="goods_list" id="goods" offset="0" length='10' empty="$goods_empty" mod="2" >
+    <if condition="$info.act_type eq 'discount'">
+        <include file="Active:discount" />
+        <elseif condition="$info.act_type eq 'kp'"/>
+        <include file="Active:kp" />
+        <elseif condition="$info.act_type eq 'team'"/>
+        <include file="Active:team" />
+        <elseif condition="$info.act_type eq 'integral'"/>
+        <include file="Active:integral" />
+        <elseif condition="$info.act_type eq 'panic'"/>
+        <include file="Active:panic" />
+        <else/>
+        <include file="Active:ordinary" />
+    </if>
+</volist>

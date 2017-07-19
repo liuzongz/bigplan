@@ -1,0 +1,44 @@
+<div class="bottom-fixd max640">
+    <ul class="act">
+        <li style="width: 25%; ">
+            <a href="{:U('Stock/index'). '?stock'}"  act="/Wap/Stock/index" >
+            <i class="myF icon-jinhuoz"></i>
+            <p>进货</p>
+            </a>
+        </li>
+        <li style="width: 25%;">
+            <a href="{:U('Stock/fenlei'). '?stock'}}" act="/Wap/Fenlei/index||/Wap/Brand/index">
+                <i class="myF icon-fenlei"></i>      <!--购物车-->
+                <p>分类</p>
+            </a>
+        </li>
+        <li style="width: 25%; ">
+            <a href="{:U('Cart/index') . '?stock'}" act="/Wap/Cart/index">
+                <i class="myF icon-gouwuche"></i>      <!--购物车-->
+                <p>购物车</p>
+            </a>
+        </li>
+        <li style="width: 25%; ">
+            <a href="{:U('User/index')}" act="/Wap/User/index">
+                <i class="myF icon-tuichu"></i>      <!--我的-->
+                <p style="width: 3rem;">退出进货</p>
+            </a>
+        </li>
+    </ul>
+</div>
+<script>
+    var current_action = '__ACTION__';
+    var li = $('.act li');
+    li.each(function(i){
+        var act = $(this).children('a').attr('act');
+        var a = $(this).find('a');
+        var i = $(this).find('i');
+        var arr = act.split("||");
+        if(arr.indexOf(current_action)>=0){
+            a.addClass("cur_page");
+            i.attr('class',i.attr('class')+'r');
+        }
+    });
+</script>
+<script>function myEvent(obj,ev,fn){if(obj.attachEvent){obj.attachEvent('on'+ev,fn);}else{obj.addEventListener(ev,fn,false);}}myEvent(window,'load',function(){var oRTT=document.getElementById('JS_backTop');var pH=document.documentElement.clientHeight;var scrollTop;window.onscroll=function(){scrollTop=document.documentElement.scrollTop||document.body.scrollTop;if(scrollTop>=pH){oRTT.style.display='block';}else{oRTT.style.display='none';}return scrollTop;};});</script>
+<div class="backTop none" id="JS_backTop" onclick=" $('body,html').animate({scrollTop:0},10);"><i class="myF icon-huidingbu"></i></div>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/swipe.js"></script>
+    <script type="text/javascript" src="/Public/Wap/js/common.js"></script>
+</head>
+<body>
+<header>
+    <include file="Public:header4" />
+    <div class="shopL-img">
+        <img src="{$store_info.store_banner}" onerror="this.src='__IMG__/logox2.png'" alt="">
+        <div class="shopL-word">
+            <div class="lt">
+                <div class="imgWarp"><img src="{$store_info['store_label']}" onerror="this.src='__IMG__/logox2.png'" alt=""></div>
+                <if condition="$store_info['grade_id'] eq 1">
+                    <div class="gd">
+                        <i class="myF icon-pinpai"></i>
+                        <em>{$user_head.title}</em>
+                    </div>
+                </if>
+            </div>
+            <div class="rt">
+                <div class="gzRs left" style="display: none;">149万粉丝</div>
+                <div class="gz right" style="margin-top: .2rem;"><i class="iW2"></i><em style="margin-right: .1rem;">关注</em></div>
+            </div>
+        </div>
+    </div>
+    <div class="shopNav_btu">
+        <ul>
+            <li <php>if(U()==U('info')) echo "class='cur'"</php>>
+            <a href="{:U('info',$II)}">
+                <i class="myF icon-cf-c14"></i>
+                <p>店铺首页</p>
+            </a>
+            </li>
+            <li <php>if(U()==U('gift')) echo "class='cur'"</php>>
+            <a href="{:U('gift',$II)}">
+                <i class="myF icon-ku"></i>
+                <p>全部商品</p>
+            </a>
+            </li>
+            <li >
+                <a href="#">
+                    <i class="myF icon-dianpujieshao"></i>
+                    <p>店铺介绍</p>
+                </a>
+            </li>
+            <li >
+                <a href="#">
+                    <i class="myF icon-liwu"></i>
+                    <p>促销活动</p>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+<section>
+    <php>$is_gift = U()==U('gift')</php>
+    <div class="comBack-all">
+        <div class="comBack">
+            <div class="againstH">
+               <a  class="imgClass" href="#"><img src="__IMG__/1.JPG" alt=""></a>
+            </div>
+            <ul class="comCp">
+                <volist name="cate.goods_list" id="goods" offset="0" length='4' empty="$goods_empty" mod="2" >
+                    <if condition="$info.act_type eq 'discount'">
+                        <include file="Active:discount" />
+                        <elseif condition="$info.act_type eq 'kp'"/>
+                        <include file="Active:kp" />
+                        <elseif condition="$info.act_type eq 'team'"/>
+                        <include file="Active:team" />
+                        <elseif condition="$info.act_type eq 'integral'"/>
+                        <include file="Active:integral" />
+                        <elseif condition="$info.act_type eq 'panic'"/>
+                        <include file="Active:panic" />
+                        <else/>
+                        <include file="Active:ordinary" />
+                    </if>
+                </volist>
+            </ul>
+             <div class="wareM_3">
+                 <span class="head_more"><a href=""><em style="line-height: 1.6rem;vertical-align: top;">查看更多</em> <i class="myF icon-right"></i></a></span>
+                 <ul>
+                     <li><a href="#"><img src="__IMG__/1.jpg" alt=""></a></li>
+                 </ul>
+             </div>
+        </div>
+    </div>
+</section>
+<footer>
+</footer>
+</body>
+<script>
+    $(document).ready(function(){
+
+    });
+    (function(){
+        var wrapper = "";
+        var tpl="";
+        var is_gift = "{$is_gift}"?1:0;
+        if(is_gift){
+            wrapper = '.list';
+            tpl='<li class="item">' +
+                    '<div class="img">' +
+                    '<span>' +
+                    '<a href="{url}"><img src="{goods_thumb}" ></a>' +
+                    '</span>' +
+                    '</div> ' +
+                    '<div class="txt">' +
+                    '<a href="{url}">{goods_name}</a>' +
+                    '</div> ' +
+                    '<div class="price"> ' +
+                    '<span class="right"><em class="rmb">{$ll.stock_price}</em>{$_CFG.integral_name}</span>' +
+                    '</div> ' +
+                    '<div class="btn">' +
+                    '<a href="{url}"><button>{$_CFG.integral_name}兑物</button></a>' +
+                    '</div>' +
+                    '</li>';
+        }else{
+            wrapper='.comCp_dp';
+            tpl='<li class="comImg">' +
+                    '<a href="{url}">' +
+                    '<img src="{goods_thumb}" onerror="this.src=\'/Public/Wap/images/logox2.png\'">' +
+                    '</a>' +
+                    '<p ><a class="sN_change" href="{url}">{goods_name}</a></p>' +
+                    '<div class="buy">' +
+                    '<div class="buyRMB"><em class="danW">¥</em><em>{$ll.shop_price}</em></div>' +
+                    '<div class="sellerNum">已售<em>123</em>件</div>' +
+                    '</div>' +
+                    '</li>';
+        }
+        var ob =  loadList({
+            tpl:tpl,
+            url_query:{
+                id:{$II['id']},
+                keywords:"{$II['keywords']}",
+            },
+            wrapper:wrapper,
+            request_url:"{:U('',array('ajax'=>1))}",
+
+        });
+
+        //处理定金
+        ob.dcallback = function(data){
+            var list = data.contents.goods_list;
+            for(var i in list){
+                list[i].shop_price = list[i].deposit_price||list.shop_price;
+            }
+            data.contents.goods_list = list;
+
+        }
+    })()
+
+
+
+</script>
+
+</html>

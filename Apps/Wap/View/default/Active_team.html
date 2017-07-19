@@ -1,0 +1,20 @@
+<li class="comImg team">
+    <div class="bgHot"><img src="__IMG__/hot.png" alt=""></div>
+    <a href="{$goods.url}">
+        <img src="{:echo_img($goods['goods_thumb'])}" />
+    </a>
+    <p class="">
+        <a class="sN_change" href="{$goods.url}">
+            {$goods.goods_name}
+        </a>
+    </p>
+    <div class="buy">
+        <!--<div class="moreTime">-->
+            <!--<div class="left"><del class="delSt">¥&lt;!&ndash;{$goods.stock_price}&ndash;&gt;129</del></div>-->
+        <!--</div>-->
+        <div class="buyRMB">
+            <div class="left"><!--<em class="danW">¥</em>--><em class="price">{$goods['act_format_price']}</em></div>
+            <div class="right">已售33件</div>
+        </div>
+    </div>
+</li>

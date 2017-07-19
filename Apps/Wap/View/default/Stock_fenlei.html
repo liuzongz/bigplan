@@ -1,0 +1,171 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<title>{$_CFG.shop_name}特约经销商商城</title>-->
+    <!--<meta name="keywords" content="" />-->
+    <!--<meta name="discription" content="" />-->
+    <!--<meta name="format-detection" content="telephone=no" />-->
+    <!--<meta http-equiv="Content-type" content="text/html; charset=utf-8" />-->
+    <!--<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />-->
+    <!--<meta content="yes" name="apple-mobile-web-app-capable" />-->
+    <!--<meta content="black" name="apple-mobile-web-app-status-bar-style" />-->
+    <!--<meta content="telephone=no" name="format-detection" />-->
+    <!--<meta content="no-cache" http-equiv="Pragma" />-->
+    <!--<meta content="no-store" http-equiv="Cache-Control" />-->
+    <!--<meta http-equiv="Expires" content="0" />-->
+    <!--<meta http-equiv="x-ua-compatible" content="ie=7" />-->
+    <!--<link rel="stylesheet" type="text/css" href="__CSS__/public.css" />-->
+    <!--<script type="text/javascript" src="__JS__/jquery.min.js"></script>-->
+    <!--<script type="text/javascript" src="__JS__/Jiniu.min.js"></script>-->
+    <!--<script type="text/javascript">-->
+        <!--!function(a){function b(){var b=g.getBoundingClientRect().width;b/c>640&&(b=640*c),a.rem=b/16,g.style.fontSize=a.rem+"px"}var c,d,e,f=a.document,g=f.documentElement,h=f.querySelector('meta[name="viewport"]'),i=f.querySelector('meta[name="flexible"]');if(h){/*console.warn("将根据已有的meta标签来设置缩放比例");*/var j=h.getAttribute("content").match(/initial-scale=(["']?)([d.]+)1?/);j&&(d=parseFloat(j[2]),c=parseInt(1/d))}else if(i){var j=i.getAttribute("content").match(/initial-dpr=(["']?)([d.]+)1?/);j&&(c=parseFloat(j[2]),d=parseFloat((1/c).toFixed(2)))}if(!c&&!d){var k=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),c=a.devicePixelRatio;c=k?c>=3?3:c>=2?2:1:1,d=1/c}if(g.setAttribute("data-dpr",c),!h)if(h=f.createElement("meta"),h.setAttribute("name","viewport"),h.setAttribute("content","initial-scale="+d+", maximum-scale="+d+", minimum-scale="+d+", user-scalable=no"),g.firstElementChild)g.firstElementChild.appendChild(h);else{var l=f.createElement("div");l.appendChild(h),f.write(l.innerHTML)}a.dpr=c,a.addEventListener("resize",function(){clearTimeout(e),e=setTimeout(b,30)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(e),e=setTimeout(b,30))},!1),"complete"===f.readyState?f.body.style.fontSize=12*c+"px":f.addEventListener("DOMContentLoaded",function(){f.body.style.fontSize=12*c+"px"},!1),b()}(window);-->
+    <!--</script>-->
+    <!--<style type="text/css">-->
+        <!--body{margin:0 auto;font-size:.5rem;position: relative;}-->
+        <!--header{/*position: relative;*/z-index:100;height:2rem;overflow:hidden;zoom:1;}-->
+        <!--div,span,input,select,button,section,ul,li{font-size:.6rem;font-family: 'microsoft yahei'}-->
+        <!--ul,li{margin:0;padding:0;list-style:none;}-->
+        <!--em{font-style:normal;}-->
+        <!--.left{float:left;}-->
+        <!--.right{float:right;}-->
+        <!--.del{text-decoration: line-through;color:#666;}-->
+        <!--.max64 {max-width:640px;}-->
+        <!--.shaixuan{height:2rem;position: fixed;z-index:10;width:100%;line-height:2rem;border-bottom:1px solid #e2e2e2;background:#efefef;}-->
+        <!--.shaixuan ul{height:auto;overflow:hidden;zoom:1;text-align:center;}-->
+        <!--.shaixuan ul li{float:left;width:20%;}-->
+        <!--.shaixuan ul li a{color:#c4c4c4;}-->
+        <!--.shaixuan ul li.current a {color:#ca0000}-->
+
+        <!--.table{height:auto;overflow:hidden;margin-top:.1rem;}-->
+        <!--.table .thead{height:1.5rem;overflow:hidden;zoom:1;line-height:1.58rem;padding:0 .5rem;background:#fff;}-->
+        <!--.table .thead .icon{display:block;width:.2rem;background:red;height:.8rem;margin:.34rem .4rem .34rem 0;}-->
+        <!--.table .thead .text{font-weight: bold;}-->
+        <!--.table .thead .more a{color:#d4d4d4;}-->
+        <!--.table .thead .more-icon{background:url('__IMG__/icon.png') no-repeat -1.5rem -5rem;background-size:2rem;display:block;width:.5rem;height:1rem;margin-top: .3rem;}-->
+        <!--.table .tbody ul{margin:.25rem;height:auto;overflow:hidden;zoom:1;font-weight:0;}-->
+        <!--.table .tbody li {background:#fff;text-align:center;margin:.12rem;float:left;position: relative;overflow:hiddne;}-->
+        <!--.table .tbody img{width:100%;}-->
+        <!--.table .tbody .img{}-->
+        <!--.table .tbody .img a{display:block;padding:.3rem;}-->
+        <!--.table .tbody .txt{padding:.3rem .5rem;opacity: .5;-webkit-opacity:.5;position: absolute;bottom:0;background:#000;left:0;}-->
+        <!--.table .tbody .txt a{color:#fff;}-->
+        <!--.table .two li{width:7.5rem;}-->
+        <!--.table .two li .txt{width:6.5rem;}-->
+        <!--.table .three li{width:4.925rem;}-->
+        <!--.table .three li .txt{width:3.925rem;}-->
+        <!--.table .three li .txt a{opacity: 1;-webkit-opacity:1;}-->
+        <!--.fenlei_ad{height:7rem;overflow:hidden;}-->
+        <!--.new{}-->
+        <!--.cate{}-->
+        <!--.goods_list .list .txt{position: static;opacity: 1;-webkit-opacity:1;background:#fff;}-->
+        <!--.goods_list .list .txt a{color:#999;}-->
+        <!--.goods_list .list .price{color:red;text-align:left;padding:.1rem .5rem;height:auto;overflow:hidden;zoom:1;}-->
+        <!--.goods_list .list .price .rmb{font-size:.8rem;}-->
+        <!--.goods_list .list .price .del{position:relative;margin-top:.2rem;}-->
+        <!--.goods_list .list .goods_empty{height:4rem;line-height:4rem;text-align:center;float:none;width:auto;}-->
+
+        <!--.spinner{margin: 0 auto;text-align: center;padding: .5rem 0;display: none;}-->
+        <!--.spinner > div {-->
+            <!--width: .4rem;-->
+            <!--height: .4rem;-->
+            <!--background-color: #67CF22;-->
+            <!--border-radius: 100%;-->
+            <!--display: inline-block;-->
+            <!-- -webkit-animation: bouncedelay 1.4s infinite ease-in-out;-->
+            <!--animation: bouncedelay 1.4s infinite ease-in-out;-->
+            <!--/* Prevent first frame from flickering when animation starts */-->
+            <!-- -webkit-animation-fill-mode: both;-->
+            <!--animation-fill-mode: both;-->
+        <!--}-->
+        <!--.spinner .bounce1 { -webkit-animation-delay: -0.32s; animation-delay: -0.32s; }-->
+        <!--.spinner .bounce2 { -webkit-animation-delay: -0.16s; animation-delay: -0.16s;}-->
+        <!--@-webkit-keyframes bouncedelay {-->
+            <!--0%, 80%, 100% { -webkit-transform: scale(0.0) }-->
+            <!--40% { -webkit-transform: scale(1.0) }-->
+        <!--}-->
+        <!--@keyframes bouncedelay {-->
+            <!--0%, 80%, 100% {-->
+                <!--transform: scale(0.0); -webkit-transform: scale(0.0);-->
+            <!--} 40% {-->
+                  <!--transform: scale(1.0);-webkit-transform: scale(1.0);-->
+              <!--}-->
+        <!--}-->
+
+    <!--</style>-->
+<!--</head>-->
+<!--<body class="max64">-->
+    <!--<header>-->
+        <!--<div class="shaixuan max64">-->
+            <!--<ul>-->
+                <!--<li class="item current"><a href="#">综合</a></li>-->
+                <!--<li class="item"><a href="#">销量</a></li>-->
+                <!--<li class="item"><a href="#">价格</a></li>-->
+                <!--<li class="item"><a href="#">店铺</a></li>-->
+                <!--<li class="item"><a href="#">筛选</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</header>-->
+    <!--<section>-->
+        <!--<div class="goods_list table">-->
+            <!--<ul class="list tbody" id="content">-->
+                <!--<volist name="goods_list" id="goods" empty="$goods_empty">-->
+                    <!--<li class="item left">-->
+                        <!--<div class="img"><a href="{$goods.url}"><img src="{$goods.goods_thumb}" onerror="this.src='__IMG__/logox2.png'"  /></a></div>-->
+                        <!--<div class="txt"><a href="{$goods.url}">{$goods.goods_name|msubstr=0,10}</a></div>-->
+                        <!--<div class="price">-->
+                            <!--<span class="del left">￥{$goods.shop_price}</span>-->
+                            <!--<span class="right">￥<em class="rmb">{:sprintf('%1.2f',$goods.stock_price)}</em></span>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</volist>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</section>-->
+    <!--<script type="text/javascript">-->
+        <!--$(function(){-->
+            <!--/*$('img').lazyload({-->
+                <!--effect:'fadeIn'-->
+            <!--});*/-->
+
+            <!--var curPage = 2, count = {$goods_page_total};//;    //分页总数;-->
+            <!--var content = $('#content');-->
+            <!--content.after('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');-->
+            <!--var loading = $('.spinner');-->
+            <!--var stop = true;//触发开关，防止多次调用事件-->
+            <!--$(window).on({'scroll' : function(){-->
+                <!--var d_height = $(document).height(); //整个网页的高度;-->
+                <!--var w_height = $(window).height(); //浏览器窗口的高度;-->
+                <!--var scrollTop = $(this).scrollTop();-->
+                <!--if (scrollTop + w_height + 100 >= d_height && scrollTop > 100) {-->
+                    <!--if(stop == true) {-->
+                        <!--stop = false;-->
+                        <!--var get_goods = function (response, status) {-->
+                            <!--var str = '';-->
+                            <!--if (curPage <= count) {-->
+                                <!--$.each(response.data.goods_list, function (index, value) {-->
+                                    <!--str += '<li class="item left">';-->
+                                    <!--str += '<div class="img"><a href="' + value.url + '"><img src="' + value.goods_thumb + '" onerror="this.src=\\'__IMG__/logox2.png\\'" /></a></div>';-->
+                                    <!--str += '<div class="txt"><a href="' + value.url + '">' + value.goods_name + '</a></div>';-->
+                                    <!--str += '<div class="price">';-->
+                                    <!--str += '<span class="del left">￥' + value.shop_price + '</span>';-->
+                                    <!--str += '<span class="right">￥<em class="rmb">' + value.stock_price + '</em></span>';-->
+                                    <!--str += '</div>';-->
+                                    <!--str += '</li>';-->
+                                <!--});-->
+                                <!--content.append(str);-->
+                                <!--++curPage;-->
+                                <!--stop = true;-->
+                            <!--} else {-->
+                                <!--loading.hide();-->
+                            <!--}-->
+                        <!--};-->
+                        <!--loading.show();-->
+                        <!--Jiniu.ajax("{:U('Stock/fenlei')}?id={$cat_info.cat_id}&ajax=1&p=" + curPage,'',get_goods,'GET','JSON');-->
+                    <!--}-->
+                <!--}-->
+            <!--}-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
+<!--</body>-->
+<!--</html>-->

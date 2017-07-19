@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .nucity select{font-size: .65rem;}
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+<div class="empty5 b-Buttom"></div>
+<div class="reg" style="min-height:450px;">
+    <form id="reg-form" action="{:U() . '?step=1'}" method="post">
+        <div class="border">
+            <span>劵面值：</span>
+            <select name="kp_type">
+                <volist name="type_list" id="list">
+                <option value="{$list.id}">{$list.nickname}</option>
+                </volist>
+            </select>
+        </div>
+        <div class="border">
+            <span>劵数量：</span>
+            <input type="number" name="number" placeholder="请输入劵数量" onkeypress="if (this.value > 100) this.value=10;">
+        </div>
+        <div class="border nucity">
+            <span style="vertical-align: top;">消费地区：</span>
+            <div style="display: inline-block;width: 12rem;">
+                <select name="province" class="province"><option value="">请选择</option></select>
+                <select name="city" class="city"><option value="">请选择</option></select>
+                <select name="area" class="area"><option value="">请选择</option></select>
+            </div>
+        </div>
+        <div class="border">
+            <span>消费商家：</span>
+            <input type="text"   name="shop" placeholder="请输入店名">
+        </div>
+        <div class="register"><button class="register-butt" type="submit">下一步</button></div>
+    </form>
+</div>
+<script type="text/javascript">
+    var get_region = function ($id, $obj){
+        var region = function (ex) {
+            if (ex.error == 0) {
+                var data = ex.data,str = '<option value="">请选择</option>';
+                $.each(data,function(ex,item){
+                    str += '<option value="' + item.region_id + '">' + item.region_name + '</option>';
+                });
+                $obj.html(str);
+            } else {
+                alert(ex.msg);
+            }
+        };
+        Jiniu.ajax("{:U('Rebate/region') . '?id='}" + $id,'',region,'GET','JSON');
+    };
+    $(function(){
+        var s = $('.province'),c = $('.city'), a = $('.area'),str = '<option value="">请选择</option>';
+        get_region(0, s);
+        s.change(function(){
+            a.html(str);
+            c.html(str);
+            get_region($(this).val(), c);
+        });
+        c.change(function(){
+            a.html(str);
+            get_region($(this).val(), a);
+        });
+    });
+</script>
+</body>
+</html>

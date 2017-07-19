@@ -1,0 +1,44 @@
+<div class="groupBuy">
+    <div class="rmbPic">
+        <div class="priceOut">
+            <div class="priceCome" style="color:#fe7902;">
+                <em>¥</em><em>{$_activity->price()->RMB}</em>
+                <php> if(intval($_activity->goods->data['market_price']) != 0): </php>
+                原价：¥<del style="color: #c4c4c4;font-size: .5rem;">{$_activity->goods->data['market_price']|price_format}</del>
+                <php> endif; </php>
+            </div>
+
+        </div>
+        <span class="groupBuyPs"><em>已有<em style="color:#fe7902;">{$_activity->dataOfOrder|count}</em>人参团</em></span>
+    </div>
+    <div class="salesAther1">
+        {$_activity->goods->data['goods_name']}
+        <php>if($_activity->goods->data['goods_short_name'] != ''):</php>
+            <em>[{$_activity->goods->data['goods_short_name']}]</em>
+        <php>endif;</php>
+    </div>
+    <div class="groupWord">{$_activity->config['num']['desc']}</div>
+</div>  <!--团购-->
+<ul>
+    <li class="sty3 none">
+        <em>优惠</em><em>满1000微币可包邮</em>
+    </li>
+    <li class="sty4 none">
+        <a href="#">
+            <em>规格:220ml</em>
+            <i class="iconR myF icon-right"></i>
+        </a>
+    </li>
+    <li class="sty8 ">
+        <div class="warpHv"><i class="icon03 myF icon-yes"></i><em>官方认证</em><i class="icon03 myF icon-yes"></i><em>担保交易</em><i class="icon03 myF icon-yes"></i><em>线下体验店</em></div>
+    </li>
+    <li class="sty10" style="line-height: normal;">
+        <p class="wanfa">拼团玩法•支付开团并邀请1人参团，人数不足自动退款</p>
+        <div class="techs">
+            <div class="tech1"><span class="techWord cur"><p>选择心仪产品</p></span><span class="techNus cur">01</span></div>
+            <div class="tech2"><span class="techWord"><p>支付开团或参团</p></span><span class="techNus">02</span></div>
+            <div class="tech3"><span class="techWord"><p>等待好友参团支付</p></span><span class="techNus">03</span></div>
+            <div class="tech4"><span class="techWord"><p>达到人数组团支付</p></span><span class="techNus">04</span></div>
+        </div>
+    </li> <!--拼团方式和流程介绍-->
+</ul>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>用户中心</title>
+    <meta name="keywords" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta name="description" content="即牛,万人接龙，武汉九紫春，武汉惠客汇品，微信营销工具，推广，活动" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <link rel="stylesheet" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_nco37921hs87u8fr.css">
+    <script src="__JS__/jquery.min.js"></script>
+    <script src="__JS__/jquery.cookie.js"></script>
+    <script src="__JS__/Jiniu.min.js"></script>
+    <script type="text/javascript">
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                    recalc = function () {
+                        var clientWidth = docEl.clientWidth;
+                        if (!clientWidth) return;
+                        if(clientWidth > 768)  clientWidth = 768;
+                        docEl.style.fontSize = clientWidth /10 + 'px';
+                        document.getElementsByTagName("body")[0].style.display = 'block';
+                    };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style type="text/css">
+        header{
+            position: relative;
+            width: 10rem;height: 5.3rem;
+            background-color: #00a0e9;
+        }
+        header .top{
+            position: absolute;top:0;
+            width: 9.4rem;height: 1.3rem;
+            padding: 0 .3rem;margin: 0 auto;
+            background-color: rgba(0,0,0,0);
+            align-items: stretch;  -webkit-align-items: stretch;
+            justify-content: space-between;   -webkit-justify-content: space-between;
+        }
+        header .top .cOut{
+            width: 2rem;
+            align-items: center;  -webkit-align-items: center;
+            justify-content: center;  -webkit-justify-content: center;
+            color: white;font-size: 1.2em;
+        }
+        header .top .cOut i{
+            font-size: 1em;margin-right: .1rem;
+        }
+        header .top .msg{
+            position: relative;
+            width: 1.3rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;  -webkit-justify-content: center;
+        }
+        header .top .msg i{
+            color: white;
+            animation: a-yy  3s linear infinite alternate;
+        }
+        @keyframes a-yy {
+            0%{  transform:rotate(-5deg) scale(1,1);}
+            40%{  transform:rotate(5deg) scale(1.1,1.2);}
+            60%{  transform:rotate(-5deg)  scale(1.1,1.2);}
+            80%{  transform:rotate(5deg)  scale(1.1,1.2);}
+            100%{  transform:rotate(-5deg)  scale(1.1,1.2);}
+        }
+        header .top .msg em{
+            position: absolute;right: .1rem;top:.2rem;
+            width: .5rem;height: .5rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center; -webkit-justify-content: center;
+            border-radius: 100%;font-size: .8em;
+            background-color: red;color: white;
+        }
+        header .user-msg{
+            position: absolute;top:1.2rem;
+            width: 10rem;margin: 0 auto;
+        }
+        header .user-msg .poe{
+            width: 2.5rem;height: 2.5rem;
+            margin: 0 auto;padding: .05rem;
+            -webkit-border-radius:100%;
+            -moz-border-radius:100%;
+            border-radius:100%;overflow: hidden;
+            border:.1rem solid #fff;
+            background:rgba(0,0,0,0);
+
+        }
+        header .user-msg .poe img{
+            max-width: 2.5rem;max-height: 2.5rem;
+            border-radius: 100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            align-items: center; -webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+        }
+        header .user-msg .user_id{
+            margin-top: .5rem;
+            color: white;  text-align: center;font-size: 1.4em;
+        }
+        section{
+            background-color: #f1f1f1;
+        }
+        .account{
+            height: 2rem;
+            margin-bottom:.4rem;
+            flex-flow: column wrap;  -webkit-flex-flow: column wrap;
+            align-items: center; -webkit-align-items: center;
+            justify-content: center; -webkit-justify-content: center;
+            background-color: #fff;
+        }
+        .account .title{
+            height: 1rem;
+            align-items: center;   -webkit-align-items: center;
+            color: red;font-size: 1.6em;  font-weight: bold;
+        }
+        .account .title .btn{
+            padding: .1rem;margin-left:.2rem;
+            border-radius: .1rem;
+            background-color: #0a6aa1;color: white;font-size:.5em;
+        }
+        .account .time{
+            color: #a8a5a5;
+        }
+        .user_btn{
+           width: 10rem; height:2.5rem;
+            margin-bottom: .4rem;
+            align-items: stretch; -webkit-align-items: stretch;
+            justify-content: center; -webkit-justify-content: center;
+            background-color: #fff;border-top:1px solid #d9d7d7;
+        }
+        .user_btn .b1, .user_btn .b2{
+            width: 5rem;
+            flex-flow: column wrap;-webkit-flex-flow: column wrap;
+            align-items: center;  -webkit-align-items: center;
+            justify-content: center; -webkit-justify-content: center;
+        }
+        .user_btn .b1 i, .user_btn .b2 i{
+            padding: .2rem; margin-bottom: .2rem; border-radius: 100%;
+            background-color: #f1f1f1;font-size: 2.5em;
+
+        }
+        .user_btn .b1{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border-right: 1px solid #e9e4e4;
+        }
+        .user_btn .b1 i{
+            color: red;
+        }
+        .user_btn .b2 i{
+            color:goldenrod;
+        }
+        ul.btn_all{
+            flex-flow: row wrap; -webkit-flex-flow: row wrap;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center; -webkit-justify-content: center;
+            background-color: #fff;
+        }
+        ul.btn_all li{
+            display: flex;  display:-webkit-flex;
+            width: 3.33333rem;height: 2rem;
+            align-items: stretch; -webkit-align-items: stretch;
+            border-top:1px solid #e9e4e4;
+            border-right: 1px solid #e9e4e4;
+            box-sizing: border-box;
+        }
+        ul.btn_all li:nth-child(3), ul.btn_all li:nth-child(6){
+            border-right:none;
+        }
+        ul.btn_all li a{
+            width: 100%;
+            flex-flow: column wrap; -webkit-flex-flow: column wrap;
+            align-items: center;-webkit-align-items: center;
+            justify-content: center;  -webkit-justify-content: center;
+        }
+        ul.btn_all li a i{
+            margin-bottom: .3rem;
+        }
+        .toSet{
+            background: rgba(0,0,0,0);margin: .6rem 0 3rem 0 ;
+            align-items: center;-webkit-align-items: center;
+            justify-content: space-around; -webkit-justify-content: space-around;
+        }
+        .toSet a{
+            width: 4.3rem;height: 1.6rem;
+            align-items: center;-webkit-align-items: center;
+            justify-content: space-around; -webkit-justify-content: space-around;
+            background-color: #00a0e9;border-radius: .3rem;
+            -webkit-box-shadow: 0px 3px 1px 1px #6baccb;
+            -moz-box-shadow: 0px 3px 1px 1px #6baccb;
+            box-shadow: 0px 3px 1px 1px #6baccb;
+            color: white;
+        }
+        .toSet a .a1{
+            font-size: 1.5em;
+            text-shadow: 2px 1px 1px #000
+        }
+        .toSet a .a1 em{
+            font-size: .6em;
+            text-shadow :none;
+        }
+        a.tel, a.close{
+
+        }
+        a.close{
+            position: fixed;bottom:.65rem;right: 5rem;
+        }
+        a.close i{
+            width: 1.2rem;height: 1.2rem;
+            padding: .2rem;
+            border-radius: 100%;
+            border:.1rem solid #fff;
+            background-color: #268ee9;color: white;
+        }
+        a.tel{
+            position: fixed;bottom:.4rem;right: 0rem;
+            height: .8rem;
+            padding: .1rem .3rem;align-items: center; -webkit-align-items: center;
+            border:.1rem solid #fff;  border-radius: .4rem;
+            background-color: #268ee9;color: white;
+        }
+        a.tel i{
+            padding: .1rem;margin-right: .2rem;
+            background-color: #fff;color:#268ee9;
+            border-radius: .2rem;font-size: 1.2em;
+        }
+        .company {
+            height: 1.5rem;
+            background-color: #2f8ee7;  color: #fff;
+            align-items: center; -webkit-align-items: center;
+            justify-content: center;-webkit-justify-content: center;
+        }
+    </style>
+</head>
+<body class="none">
+    <header>
+        <div class="top flex">
+            <a class="flex cOut" href="{:U('logout')}"><i class="myF icon-tuichu"></i>退出</a>
+            <a class="flex msg"><i class="myF icon-ptlingsheng anim"></i><em class="flex">1</em></a>
+        </div>
+        <div class="user-msg">
+            <div class="poe flex">
+                <img src="__IMG__/ac_01.png" />
+            </div>
+            <div class="user_id">即牛账号:{$user_info['user_name']}</div>
+        </div>
+    </header>
+    <section>
+        <!--账号到期才显示-->
+        <!--<div class="account flex">
+            <div class="title flex">您的账号已到期 <div class="btn">充值</div></div>
+            <div class="time">2017年16月54日  25:98到期</div>
+        </div>-->
+        <div class="user_btn flex">
+            <a class="flex b1" href=""><i class="myF icon-qianbao"></i>邀请有礼</a>
+            <a class="flex b2" href="{:U('Wallet/dynamic')}"><i class="myF icon-qianbao1"></i>我的钱包</a>
+        </div>
+        <ul class="btn_all flex">
+            <li><a class="flex" href="{:U('modify')}"><i class="myF icon-xiugaimima"></i>修改密码</a></li>
+            <li><a class="flex" href=""><i class="myF icon-lianxikefu"></i>联系客服</a></li>
+            <!--<li><a class="flex" href=""><i class="myF icon-fufei"></i>付费方式</a></li>-->
+            <!--<li><a class="flex" href="http://weixin.hkhp.net/help.html?id=103"><i class="myF icon-wenzhang"></i>活动教程</a></li>-->
+            <!--<li><a class="flex" href=""><i class="myF icon-anli"></i>案类库</a></li>-->
+            <li><a class="flex" href="{:get_server('HELP_SERVER','','id=103',1)}"><i class="myF icon-faqchangjianwenti"></i>常见问题</a></li>
+        </ul>
+        <div class="toSet flex">
+            <a class="flex" href="{$myActive}">
+                <div class="a1">我的活动<br /><em>(报名表在里面)</em></div>
+                <i class="myF icon-xiangyou"></i>
+            </a>
+            <a class="flex" href="">
+                <div class="a1">我的传单<br /><em>(我的传单)</em></div>
+                <i class="myF icon-xiangyou"></i>
+            </a>
+        </div>
+    </section>
+    <footer>
+
+        <!--<a class="close">
+            <i class="myF icon-msnui-close-fat"></i>
+        </a>-->
+        <a class="tel flex" href="tel:13329704340"><i class="myF icon-tubiao210"></i>咨询电话</a>
+        <div class="flex company" >即牛技术支持</div>
+    </footer>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>
+

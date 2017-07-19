@@ -1,0 +1,23 @@
+<li class="comImg panic">
+    <div class="bgHot"><img src="__IMG__/hot.png" alt=""></div>
+    <a href="{$goods.url}">
+        <img src="{:echo_img($goods['goods_thumb'])}" />
+    </a>
+    <p class="">
+        <a class="sN_change" href="{$goods.url}">
+            {$goods.goods_name}
+        </a>
+    </p>
+    <div class="buy">
+        <!--<div class="moreTime">-->
+            <!--<div class="left"><del class="delSt">¥{$goods.market_price}&ndash;&gt;129</del></div>-->
+
+        <!--</div>-->
+        <div class="buyRMB">
+            <div class="left"><em class="danW">¥</em><em class="price">{$goods.act_price}</em></div>
+            <!--<div class="right">-->
+                <!--<i class="xianliang">限量</i><em>仅剩<em></em>件</em>&lt;!&ndash;限量&ndash;&gt;-->
+            <!--</div>-->
+        </div>
+    </div>
+</li>

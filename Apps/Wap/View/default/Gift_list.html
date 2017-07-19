@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/swipe.js"></script>
+
+</head>
+<body>
+<include file="Public:header1" />
+<section>
+    <div class="comBack-all">
+        <div class="uListHead b-Buttom" >
+            <ul class="uNav">
+                <li class="lt <if condition="in_array($sort['sort'],array('new','collect','price',''))">cur</if>" id="JS__xl"><em>综合排序</em><i></i></li>
+                <li class="lt <if condition="$sort['sort'] eq 'sales'">cur</if> <if condition="$sort['order'] neq ''">dao</if>"><a href="{:U('Gift/fenlei') . '?id=' . $cat_info['cat_id'] . '&aid='. $aid . '&sort=sales' .'&keywords=' . $II['keywords']}<if condition="$sort['order'] eq ''">&order=desc</if>" >销量优先</a><i></i></li>
+                <li class="lt <if condition="$sort['sort'] eq 'credit'">cur</if> <if condition="$sort['order'] neq ''">dao</if>"><a href="{:U('Gift/fenlei') . '?id=' . $cat_info['cat_id'] . '&aid='. $aid .'&sort=credit' .'&keywords=' . $II['keywords']}<if condition="$sort['order'] eq ''">&order=desc</if>">信用排序</a><i></i></li>
+                <li class="rt"><i class="myF icon-pailie2"></i></li>
+            </ul>
+            <ul class="subNav none" id="JS__xx">
+                <li <if condition="$sort['sort'] eq ''">class="cur"</if>><a href="{:U('Gift/fenlei') . '?id=' . ($cat_info['cat_id']?:0) .'&keywords=' . $II['keywords']}&aid={$aid}">综合排序</a><i></i></li>
+                <li <if condition="$sort['sort'] eq 'new'">class="cur"</if>><a href="{:U('Gift/fenlei') . '?id=' . ($cat_info['cat_id']?:0) . '&sort=new' .'&keywords=' . $II['keywords']}&aid={$aid}">新品排序</a><i></i></li>
+                <li <if condition="$sort['sort'] eq 'collect'">class="cur"</if>><a href="{:U('Gift/fenlei') . '?id=' . ($cat_info['cat_id']?:0) . '&sort=collect' .'&keywords=' . $II['keywords']}&aid={$aid}">收藏排序</a><i></i></li>
+                <li <if condition="$sort['sort'] eq 'integral' and $sort['order'] eq ''">class="cur"</if>><a href="{:U('Gift/fenlei') . '?id=' . ($cat_info['cat_id']?:0) . '&sort=integral&order=asc' .'&keywords=' . $II['keywords']}&aid={$aid}">积分从低到高</a><i></i></li>
+                <li <if condition="$sort['sort'] eq 'integral' and $sort['order'] eq 'desc'">class="cur"</if>><a href="{:U('Gift/fenlei') . '?id=' . ($cat_info['cat_id']?:0) . '&sort=integral&order=desc' .'&keywords=' . $II['keywords']}&aid={$aid}">积分从高到低</a><i></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="comBack JNWidget" data-type="scroll" data-cfg="{url:'{:U('gift/get_goods_list').'?id='.$cat_info['cat_id']}&keywords={$II['keywords']}&aid={$aid}&sort={$II['sort']}&order={$II['order']}&p=',obj:$(window),show_box:'.comCp',show_status:'.list_botton',page_name:'p',star_load:1}">
+        <!--<div class="againstH">-->
+        <!--<a  class="imgClass" href="#"><img src="__IMG__/1.JPG" alt=""></a>-->
+        <!--</div>-->
+        <ul class="comCp"></ul>
+        <div class="list_botton"></div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            //下拉菜单
+            $("#JS__xl").click(function () {
+                $("#JS__xx").fadeToggle(300);
+            });
+            $("#JS__xx,#JS__xl").on("touchstart", function (event) {
+                event.stopPropagation();
+            });
+            $(document).on("touchstart", function () {
+                $("#JS__xx").fadeOut(300);
+            });
+            $(".uListHead ul.subNav li").click(function () {
+                $(this).addClass("cur").siblings().removeClass("cur");
+                $('#toggle').hide();
+            });
+        });
+
+    </script>
+</section>
+</body>

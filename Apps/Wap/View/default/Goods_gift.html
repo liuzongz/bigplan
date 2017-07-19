@@ -1,0 +1,19 @@
+<if condition="$gift_array and Empty($gift_array)">
+    <div class="pddc-gray-warp">
+        <ul class="ppdc-white-wrap">
+            <li class="clearfix">
+                <span class="key">赠品：</span>
+                <div class="value">
+                    <volist name="$gift_array" id="v">
+                        <div class="gift-item">
+                            <a href="__APP__/Wap/Product/detail/goods_id/{$v.gift_goodsid }/">
+                                {$v.gift_goodsname}
+                            </a>
+                            {$v.gift_amount}
+                        </div>
+                    </volist>
+                </div>
+            </li>
+        </ul>
+    </div>
+</if>

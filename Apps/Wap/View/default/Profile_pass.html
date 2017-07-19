@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head>
+    <include file="Public:head2" />
+
+    <style type="text/css">
+        .reg li.flex .yanzhen{width:3rem;height: 1.5rem;position: absolute;right: 0px;top: .3rem;border-left: 1px solid #ff9600;}
+        .reg li.flex{padding: 0 .5rem;height: 2rem; align-items: center;-webkit-align-items: center; border-bottom:1px solid #e2e2e2;}
+        .reg li.flex input{border: none;flex: 1;-webkit-flex:1;height: 1.5rem;font-size: .6rem;color: #a5a5a5;}
+        .reg li.flex span.wTh3{width: 3rem;margin-right: .5rem;}
+
+    </style>
+</head>
+<body style="margin:0 auto;">
+<include file="Public:header1" />
+<div class="zl">
+    <div class="nav-tab-top">
+        <ul>
+            <li><a href="{:U('Profile/index').'?store_token='.$store_token}">个人资料</a></li>
+            <li class="cur"><a href="{:U('Profile/pass').'?store_token='.$store_token}"><if condition="$user_is_set eq true">修改密码<else/>设置登录</if></a></li>
+            <li><a href="{:U('Profile/email').'?store_token='.$store_token}">修改邮箱</a></li>
+            <li><a href="{:U('Profile/address').'?store_token='.$store_token}">地址管理</a></li>
+        </ul>
+    </div>
+    <div class="empty5" style="border-bottom: 1px solid #e2e2e2;"></div>
+    <form action="{:U('Profile/pass')}" method="post" >
+        <ul class="reg">
+            <li class="flex"> <span class="wTh3">用户名</span>
+            <input type="text" name="user" value="{$user_info.user_name}" disabled="disabled" placeholder="此用户名将用于手动登录，设置后不能修改"></li>
+            <li class="flex"> <span class="wTh3">原始密码</span>
+                <input type="password" name="pass" placeholder="请输入原始密码"></li>
+            <li class="flex"> <span class="wTh3">新密码</span>
+                <input type="password" name="newpass" placeholder="请输入新密码"></li>
+            <li class="flex">  <span class="wTh3">确认密码</span>
+                <input type="password" name="newpass1" placeholder="请输入确认密码"></li>
+        </ul>
+        <div class="register"><button class="register-butt" type="submit">提交</button></div>
+    </form>
+
+</div>
+</body>
+</html>

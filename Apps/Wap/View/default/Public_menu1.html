@@ -1,0 +1,39 @@
+<div class="bottom-fixd max640">
+    <ul>
+
+        <li>
+            <a <if condition="!$is_weixin">href="{:U('index/index').'?store_token='.$store_token}"<else/>href="{:U('store/info', ['id'=>$store_token]).'?store_token='.$store_token}"</if> <if condition="$cur_page eq 'index'">class="cur_page"</if>>
+                <i class="myF icon-shouye<if condition="$cur_page eq 'index'">r</if>"></i>
+                <p>首页</p>
+            </a>
+        </li>
+        <php> if(!$is_weixin): </php>
+        <li>
+            <a href="{:U('gift/index').'?store_token='.$store_token}" <if condition="$cur_page eq 'gift'"> class="cur_page"</if>>
+                <i class="myF icon-ku<if condition="$cur_page eq 'gift'">r</if>"></i>       <!--兑物-->
+                <p>兑物</p>
+            </a>
+        </li>
+        <php> endif; </php>
+        <!--<li>
+            <a href="{:U('fenlei/index')}?{$dealer_suf}" <if condition="$cur_page eq 'fenlei'"> class="cur_page"</if>>
+                <i class="myF icon-fenlei<if condition="$cur_page eq 'fenlei'">r</if>"></i>      &lt;!&ndash;分类&ndash;&gt;
+                <p>分类</p>
+            </a>
+        </li>-->
+        <li>
+            <a href="{:U('cart/index').'?store_token='.$store_token}?{$dealer_suf}" <if condition="$cur_page eq 'cart'"> class="cur_page"</if>>
+                <i class="myF icon-gouwuche<if condition="$cur_page eq 'cart'">r</if>"></i>      <!--购物车-->
+                <p>购物车</p>
+            </a>
+        </li>
+        <li style="border-right:none; ">
+            <a href="{:get_server('PASSPORT_SERVER', '/User/index', ['store_token'=>$store_token], 1)}" <if condition="$cur_page eq 'user'"> class="cur_page"</if>>
+                <i class="myF icon-gerenzhongxin<if condition="$cur_page eq 'user'">r</if>"></i>      <!--我的-->
+                <p>我的</p>
+            </a>
+        </li>
+    </ul>
+</div>
+<script>function myEvent(obj,ev,fn){if(obj.attachEvent){obj.attachEvent('on'+ev,fn);}else{obj.addEventListener(ev,fn,false);}}myEvent(window,'load',function(){var oRTT=document.getElementById('JS_backTop');var pH=document.documentElement.clientHeight;var scrollTop;window.onscroll=function(){scrollTop=document.documentElement.scrollTop||document.body.scrollTop;if(scrollTop>=pH){oRTT.style.display='block';}else{oRTT.style.display='none';}return scrollTop;};});</script>
+<div class="backTop none" id="JS_backTop" onclick=" $('body,html').animate({scrollTop:0},10);"><i class="myF icon-huidingbu"></i></div>

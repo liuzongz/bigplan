@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="__JS__/swipe.js"></script>
+    <script src="__JS__/drag.js"></script>
+    <style>
+        #slider{margin: .3rem auto;  width: 10rem;  height: 1.5rem;  position: relative;  border-radius: 1px;  background-color: #dae2d0;  overflow: hidden;  text-align: center;  user-select: none;  -moz-user-select: none;  -webkit-user-select: none;  }
+        #slider_bg{position: absolute;  left: 0;  top: 0;  height: 100%;  background-color: #7AC23C;  z-index: 1;  }
+        #label{width:2rem;  position: absolute;  left: 0;  top: 0;  height: 1.5rem;  line-height: 1.5rem;  border: 1px solid #cccccc;  background: #fff;  z-index: 3;  cursor: move;   font-weight: 900;  }
+        #labelTip{position: absolute;  left: 0;  width: 100%;  height: 100%;  font-size: .6rem;  font-family: 'Microsoft Yahei', serif;  color: #333;  line-height:1.5rem;  text-align: center;  z-index: 2;  }
+        @keyframes myfirst { 0%   {left:0;} 25%  {left:4rem;} 50%  {left:8rem;} 100% {left:12rem;} }
+        @-moz-keyframes myfirst /* Firefox */  { 0%   {left:0;} 25%  {left:4rem;} 50%  {left:8rem;} 100% {left:12rem;} }
+        @-webkit-keyframes myfirst /* Safari and Chrome */  { 0%   {left:0;} 25%  {left:4rem;} 50%  {left:8rem;} 100% {left:12rem;} }
+        @-o-keyframes myfirst /* Opera */  { 0%   {left:0;} 25%  {left:4rem;} 50%  {left:8rem;} 100% {left:12rem;} }
+        .lighe{animation:myfirst 1s infinite linear; -moz-animation:myfirst 1s infinite linear; /* Firefox */  -webkit-animation:myfirst 1s infinite linear; /* Safari and Chrome */  -o-animation:myfirst 1s infinite linear; /* Opera */  z-index: 9999; position: absolute;left: 0; background:rgba(255,255,255,.2);width: 1rem;height: 1.5rem;display: inline-block;}
+    </style>
+</head>
+<body class="max768 forbg">
+<div class="signCc">
+    <div class="logo" style="height: 5rem;">
+        <img src="__IMG__/wp-de.png" class="none" />
+    </div>
+    <div class="signR">
+        <form id="reg-form" action="{$url.register}" method="post" enctype="application/x-www-form-urlencoded">
+            <ul>
+                <li>
+                    <input class="inp0 cur" type="text" name="user_name" id="user_name" placeholder="请输入用户名"/>
+                </li>
+
+                <li>
+                    <input class="inp2 cur" type="password" name="password" id="password" placeholder="请输入密码" />
+                </li>
+                <li>
+                    <input class="inp2 cur" type="password" name="reppassword" id="reppassword" placeholder="请再次输入密码" />
+                </li>
+                <li>
+                    <input class="inp1 cur" type="text" name="email" id="email" placeholder="手机号/邮箱（收取验证码）"/>
+                </li>
+                <li class="img_verify none">
+                    <div class="yBut">
+                        <input class="inp4  cur" type="text" name="verify" id="verify" value="" placeholder="请输入图型验证码" />
+                        <img class=" inp5" id="verify_btn" src="{:U('User/verify')}" style="border:0;top: .55rem;" />
+                    </div>
+                </li>
+
+                <li>
+                    <div class="yBut">
+                        <input class="inp4  cur" type="text" name="number" id="number" value="" placeholder="请输入收到的验证码" />
+                        <input class=" inp5" type="button" name="" id="number_btn" value="获取验证码" />
+                    </div>
+                </li>
+                <if condition="!empty($rec_info)">
+                    <li>
+                        <input class="inp2 cur" type="text" disabled value="推荐人：{$rec_info.reco_name}" />
+                        <input type="hidden" name="rec" value="{$II['rec']}" />
+                    </li>
+                </if>
+
+                <li>
+                    <input type="hidden" name="back_act" value="{$back_act}" />
+                    <input class="inp6" type="submit" name="" id="" value="完成注册" />
+                </li>
+
+                <li>
+                    <a href="{:U('User/login') . '?back_act=' . $back_act}">
+                        <p>有账户？立即登陆</p>
+                        <p class="oTher">RORGOT&nbsp;YOUR&nbsp;PASSWORD?</p>
+                    </a>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#reg-form').submit(function(){
+            var $user_name = $('#user_name').val(),
+                    $email = $('#email').val(),
+                    $password = $('#password').val(),
+                    $reppassword = $('#reppassword').val(),
+                    $number = $('#number').val(),       //手机验证码
+                    $verify = $('#verify').val(),       //图型验证码
+                    $number_btn = $('#number_btn');
+            if(!Jiniu.checkUser($user_name)){
+                alert('用户名只能由下划线、数字、字母组成，长度为6-15位')
+            } else if (!Jiniu.checkEmail($email) && !Jiniu.checkMobile($email)) {
+                alert('只能输入手机号码或邮箱！');
+            } else if ($password.length < 6 || $password.length > 18){ // || !isNaN($password)
+                alert('请输入正确的密码！必须大于6位小于18位');
+            } else if ($password != $reppassword) {
+                alert('两次密码输入不一致');
+            } else if ($number == '') {
+                alert('请输入收到的验证码！');
+                /*} else if ($verify == '') {
+                 alert('请输入图型验证码！');*/
+            } else {
+                return true;
+            }
+            return false;
+        });
+        $('#number_btn').on('click', function(){
+            var $email = $('#email').val(),
+                    $number = $('#number').val(),
+                    $verify = $('#verify').val();
+            if (!Jiniu.checkEmail($email) && !Jiniu.checkMobile($email)) {
+                alert('只能输入手机号码或邮箱！');
+
+            } else if ($verify == '') {
+                alert('请输入图型验证码！');
+            } else {
+                var result = function(ex){
+                    if (ex.error =! 0) {
+                        alert(ex.msg);
+                    } else {
+                        $('.img_verify').addClass('none');
+                    }
+
+                };
+                Jiniu.ajax('{:U("sendmsg")}','user=' + $email + '&verify=' + $verify,result,'POST','JSON');
+            }
+        });
+        $('#verify_btn').on('click', function(){
+            this.src = "{:U('User/verify') . '?rnd=' }'" + new Date().getTime();
+            $('#verify').val('').focus();
+        });
+        var email = '';
+        $('#email').on({'focus':function(){
+            email = $(this).val();
+        },'blur': function(){
+            if (email != $(this).val()) {
+                $('.img_verify').removeClass('none');
+            }
+        }});
+    </script>
+</div>
+</body>
+</html>

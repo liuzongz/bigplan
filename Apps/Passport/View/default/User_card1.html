@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <style type="text/css">
+        .main{position: relative;width: 16rem;height: 25rem;}
+        .main #img{width: 16rem;height: 25rem;}
+        .main .state{position: absolute;width: 16rem; top:14rem;left: 0; color: #2383cf;}
+        .main .state h1{text-align: center;}
+        .main .state p{margin-top: .9rem;font-size: .65rem;padding-left: 3rem;}
+        .main .state a{margin-top: 3rem;display: block;text-align: center; font-size: .75rem; color: #855007;}
+    </style>
+</head>
+<body style="background-color: #fe765e;">
+<div class="main" >
+    <img id="img" src="__IMG__/card1_2222.jpg">
+    <div class="state">
+        <h1>升级会员获取二维码</h1>
+        <p>本店累计消费满<em style="color: #ed1900;">￥{$default_money}</em>元,才可成为会员<br />
+        您已消费<em style="color: #ed1900;">{$money}</em>元,请继续努力!
+        </p>
+        <a href="{:get_server('WAP_SERVER', '/Store/info', ['id'=>$store_token, 'store_token'=>$store_token])}">继续去购物</a>
+    </div>
+</div>
+</body>
+</html>

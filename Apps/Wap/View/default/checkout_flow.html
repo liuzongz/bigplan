@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <include file="Public:head2" />
+</head>
+<body>
+
+<div class="main">
+    <include file="Public:header1" />
+    <div class="codeer">
+        <form action="{$url.orderfrm_sub}" name="orderfrm" class="orderfrm" id="JS_orderfrm" method="post" onsubmit="return false;">
+        <include file="checkout:address" />
+        <include file="checkout:transit" />
+        <include file="checkout:comments" />
+        <include file="checkout:receipt_box1" />
+        <include file="checkout:discount1" />
+        <include file="checkout:integral1" />
+        <include file="checkout:shipping" />
+        <include file="checkout:expenses" />
+        <include file="checkout:settle" />
+            <input type="hidden" name="form_token" value="{$form_token}">
+            <input type="hidden" name="flow_type" value="{$flow_type}">
+        </form>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){order.init()});
+    var order = {};
+    order.init = function(){
+        $('.shipping').on('change',function(){
+            order.total();
+        });
+        $('.receipt').on('change',function(){
+            if ($(this).val() == 1){
+                $('.receipt_box .box_content').show();
+            } else {
+                $('.receipt_box .box_content').hide();
+            }
+            order.total();
+        });
+        $('.bonus').on('change',function(){
+            if ($(this).val() == 1){
+                $('.discount .box_content').show();
+            } else {
+                $('.discount .box_content').hide();
+            }
+        });
+        $('.integral').on('change',function(){
+            if ($(this).val() == 1){
+                $('.integral_box .box_content').show();
+            } else {
+                $('.integral_box .box_content').hide();
+            }
+            order.total();
+        });
+        $('.address1').find('input:radio').on('change', function(){
+            var s = $('#JS_add');
+            if ($(this).val() == '0') {
+                s.removeClass('none');
+            } else {
+                //$('#JS_address_id').val($(this).val());
+                s.addClass('none');
+            }
+            order.total();
+        });
+        $('.region').on('change', function(){
+            var s = $(this).val();
+            var a = $(this).data('ss');
+            if (a == 2) {
+                order.get_region(s,$('.area'));
+            } else if (a == 1) {
+                $('.area').html('<option value="">--请选择--</option>');
+                order.get_region(s,$('.city'));
+            } else {
+                order.get_region(s);
+            }
+
+        });
+        order.get_region(1,$('.provice'));
+        $('.save_address').on('click', function(){
+            var obj = $('.address1').find('input.input_radio:radio:checked');
+            var s = obj.val();
+            if (s == undefined || s == 'undefined' || isNaN(s)) {
+                alert('请选择地址！');
+            } else if ( s == 0) {
+                var data            = 'nick=' + $('.consignee_name').val();
+                    data            += '&mobile=' + $('.mobile').val();
+                    //data            += '&tel=' + $('.tel').val();
+                    data            += '&prov=' + $('.provice').val();
+                    data            += '&city=' + $('.city').val();
+                    data            += '&dist=' + $('.area').val();
+                    data            += '&addr=' + $('.xiangxi_addr').val();
+                    data            += '&best=' + $('.besttime').val();
+                var addresult = function($result){
+                    if ($result.error > 0 ) {
+                        alert($result.message);
+                    } else {
+                        location.reload();
+                    }
+                };
+                Jiniu.ajax('{$url.add_consignee}',data,addresult,'POST','JSON');
+            } else {
+                obj = obj.parent();
+                var ss = $('.address_list');
+                    ss.find('.list_id').val(s);
+                    ss.find('.list_nick').text(obj.find('.cons_name').text());
+                    ss.find('.list_tel').text(obj.find('.cons_tel').text());
+                    ss.find('.list_addr').text(obj.find('.cons_addr').text());
+                ss.removeClass('none');
+                $('.edit_address').removeClass('none');
+                obj.parent().addClass('none');
+            }
+            order.total();
+        });
+        $('.edit_address').on('click', function(){
+            $(this).addClass('none');
+            $('.address_list').addClass('none');
+            $('.address_listAndAdd').removeClass('none');
+        });
+        $('#JS_addnew').on('click', function(){
+            $('.JS_add').toggleClass('none');
+        });
+        $('#JS_submit').on('click',function(){
+            var id = $('#JS_address_id').val();
+            if (isNaN(id) || id <= 0) {
+                alert('请先设置收货地址！');
+            } else {
+                orderfrm.submit();
+            }
+        });
+        //$('body').find('input').on('change',order.total);
+        order.total();
+    };
+    order.get_region = function($id,$obj){
+        var s = function($result){
+            if ($result.error > 0 ) {
+                alert($result.message);
+            } else {
+                var option = '<option value="">--请选择--</option>';
+                $.each($result.contents, function(i,item){
+                    option += '<option value="' + item.region_id + '">' + item.region_name + '</option>';
+                 });
+                if ($obj)
+                $obj.html(option);
+            }
+        };
+        Jiniu.ajax('{$url.get_region}','id=' + $id, s,'POST', 'JSON');
+    };
+    order.total = function(){
+        var data = '',rec = '';
+        data += 'addr_id=' + $('#JS_address_id').val();
+        $('.transit').find('.rec_id').each(function(i,item){
+            if (i == 0){
+                rec += $(item).val();
+            } else {
+                rec += '|' + $(item).val();
+            }
+        });
+        data += '&rec=' + rec;
+        if ($('.receipt_box').find('input.receipt:checked').val() == 1) {
+            data += '&is_inv=1&inv_type=' + $('.receipt_type').val();
+            data += '&inv_cont=' + $('.receipt_content').val();
+            data += '&inv_title=' + $('.receipt_title').val();
+        }
+        if ($('.discount').find('input.bonus:checked').val() == 1) {
+            data += '&is_bonus=1&bonus_id=' + $('.bonus_id').val();
+            data += '&bonus_sn=' + $('.bonus_sn').val();
+        }
+        if ($('.integral_box').find('input.integral:checked').val() == 1) {
+            data += '&is_integral=1&integral_number=' + $('.integral_number').val();
+        }
+        data += '&shipping=' + $('input.shipping:checked').val();
+        var $result = function(res){
+            if (res.error == 1) {
+                $('#JS_addnew').click();
+            } else if (res.error > 0) {
+                if(res.error === 2) window.location.href = "{:U('Cart/index')}";
+                alert(res.msg);
+                return false;
+            }
+            var total = res.data;
+            var s = $('.expenses'), t = $('.settle');
+            s.find('.goods_amout').text(total.goods_price_formated);
+            s.find('.shipping_amout').text(total.shipping_fee_formated);
+            t.find('.total_amount').text(total.amount_formated);
+            return true;
+        };
+        Jiniu.ajax('{$url.get_total}', data, $result, 'POST', 'JSON');
+    }
+    $(function () {
+        var add = parseInt("{:count($consignee_list)}");
+        if(add > 0) $('.save_address').click();
+    });
+
+</script>
+</body>
+</html>

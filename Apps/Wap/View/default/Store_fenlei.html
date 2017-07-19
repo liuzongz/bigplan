@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include file="Public:head2" />
+    <script type="text/javascript" src="/Public/Wap/js/common.js"></script>
+</head>
+<body>
+<header>
+    <include file="Public:header1" />
+</header>
+<section>
+    <div class="comBack-all">
+        <div class="uListHead b-Buttom" >
+            <ul class="uNav">
+                <li class="lt cur" id="JS__xl"><em>综合排序</em><i></i></li>
+                <li class="lt"><em>销量优先</em><i></i></li>
+                <li class="lt"><em>信用</em><i></i></li>
+                <li class="rt"><i class="myF icon-pailie2"></i></li>
+            </ul>
+        </div>
+        <div class="allShop">
+            <div class="page_msg">暂时没有店铺显示</div>
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    $(document).ready(function(){
+        WebApp.get("{:U('get_store_list') . '?id=' . $id}",$('.allShop'));
+
+        $(".JS_zhi").each(function(){
+            var jiage = ($(this).text().replace(/[^0-9]+/g, '')/1000000);
+            if(jiage >= 1){
+                $(this).text("¥" + jiage+"万");
+            }
+        });
+        function myclickfun(){
+            $(this).addClass("cur").siblings().removeClass("cur");
+        }
+        $(".uListHead ul.uNav li.lt").on('click',myclickfun);
+
+    });
+    var ob =  loadList({
+        tpl:'',
+        url_query:{
+            sort:"{$II['sort']}",
+            order:"{$II['order']}",
+            keywords:"{$II['keywords']}",
+            ids:{:json_encode($ids)},
+    },
+    wrapper:'.comCp',
+            request_url:"{:U('Store/index',array('ajax'=>1))}",
+
+    });
+    ob.scallback = function(){
+
+    }
+</script>
+
+</html>

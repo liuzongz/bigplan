@@ -1,0 +1,70 @@
+<header>
+    <div class="head-warp max768">
+        <div class="head">
+            <PHP>$default ='javascript:history.go(-1)'; </PHP>
+            <a class="left" href="{$user_head['backUrl']?:$default}">
+                <i class="myF icon-left"></i>{$user_head['backUrl'] ? $user_head['backText'] : "返回"}
+            </a>
+
+            <h3>{$user_head.title}</h3>
+            <a class="right <if condition="$store_token eq C('jzc_store')">none</if>" id="manu-cd" href="javascript:void(0)">
+                <i class="myF icon-caidan"></i>
+                <script>
+                    (function(){
+                        var main_navs = [];
+                        main_navs.push("{:U('Index/index')}");
+                        main_navs.push("{:U('Gift/index')}");
+                        main_navs.push("{:U('Fenlei/index')}");
+                        main_navs.push("{:U('Cart/index')}");
+                        main_navs.push("{:U('User/index')}");
+                        main_navs.push("{:U('Stock/fenlei')}");
+                        var current_url = "{:U()}";
+                        var id = "{:isset($II['id']) ? isset($II['id']) : '' }"||false;
+                        if(main_navs.indexOf(current_url)>=0&&!id){
+                            $('.head a.left,a.right').addClass("none");
+                        }
+                        //分类单独去除
+
+                    })()
+
+                    $(document).ready(function(){
+                        $('#manu-cd').click(function(){
+                            $('#toggle').toggle();
+                        });
+                        $('#toggle,#manu-cd').on("touchstart",function(event){
+                            event.stopPropagation();
+                        });
+                        $(document).on("touchstart",function(){
+                            $('#toggle').hide();
+                        });
+
+                    });
+                </script>
+            </a>
+
+        </div>
+
+        <div class="hide-nav none" id="toggle">
+            <div class="menu">
+
+                <a href="{:U('store/info', ['id'=>$store_token]).'?store_token='.$store_token}"><i class="myF icon-shouye"></i>
+                    <p>首页</p>
+                </a>
+                <if condition="!$is_weixin">
+                <a href="{:U('Fenlei/index').'?store_token='.$store_token}"><i class="myF icon-fenlei"></i>
+                    <p>分类</p>
+                </a>
+                </if>
+                <a href="{:U('cart/index').'?store_token='.$store_token}"><i class="myF icon-gouwuche"></i>
+                    <p>购物车</p>
+                </a>
+                <a href="{:get_server('PASSPORT_SERVER', '/User/index', ['store_token'=>$store_token], 1)}"><i class="myF icon-gerenzhongxin"></i>
+                    <p>个人中心</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%;height: 2rem;"></div>
+    <script>function myEvent(obj,ev,fn){if(obj.attachEvent){obj.attachEvent('on'+ev,fn);}else{obj.addEventListener(ev,fn,false);}}myEvent(window,'load',function(){var oRTT=document.getElementById('JS_backTop');var pH=document.documentElement.clientHeight;var scrollTop;window.onscroll=function(){scrollTop=document.documentElement.scrollTop||document.body.scrollTop;if(scrollTop>=pH){oRTT.style.display='block';}else{oRTT.style.display='none';}return scrollTop;};});</script>
+    <div class="backTop none" id="JS_backTop" onclick=" $('body,html').animate({scrollTop:0},10);"><i class="myF icon-huidingbu"></i></div>
+</header>

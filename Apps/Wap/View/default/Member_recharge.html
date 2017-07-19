@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>余额充值</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> 
+  <meta name="apple-mobile-web-app-capable" content="yes" /> 
+  <meta name="apple-Wap-web-app-status-bar-style" content="black" /> 
+  <meta name="format-detection" content="telephone=no" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/reset.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="__CSS__/huiyuan.css" /> 
+ </head> 
+ <body> 
+  <header id="header"> </header>
+  <input type="hidden" id="memberid" value="{$memberid}"/>
+  <div class="m-center"> 
+   <ul class="mc-cnt">
+       <notempty name="res">
+       <volist name="res" id="v">
+     <li> <a href="javascript:;"> 
+    <div class="record-detail"> 
+     <span class="name">订单号：{$v.pdr_sn}</span> 
+     <span class="date">充值时间：{$v.pdr_payment_time|date=('H:i:s'),###}</span> 
+    </div> 
+    <div class="pay-detail"> 
+     <span class="money">{$v.pdr_amount}</span> 
+     <span class="state">{$v.pdr_payment_time|date=('Y-m-d'),###}</span> 
+    </div> </a> 
+     </li>
+      </volist>
+       <else />
+       <span>暂无记录</span>
+       </notempty>
+   </ul> 
+  </div>
+  <div>{$page}</div>
+  <script type="text/html" id="voucher-list-tmpl">
+
+</script> 
+  <div id="footer">
+</div> 
+  <script type="text/javascript" src="__JS__/zepto.min.js"></script> 
+  <script type="text/javascript" src="__JS__/template.js"></script> 
+  <script type="text/javascript" src="__JS__/config.js"></script> 
+  <script type="text/javascript" src="__JS__/common.js"></script> 
+  <script type="text/javascript" src="__JS__/simple-plugin.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/common-top.js"></script> 
+  <script type="text/javascript" src="__JS__/tmpl/footer.js"></script> 
+  
+ </body>
+</html>
